@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { FONTS, FONT_SIZE } from '../config/constants';
+import Fonts from '../config/constants/Fonts';
+import FontSize from '../config/constants/FontSize';
 import HomeNavigator from './HomeNavigator';
 import {StyleSheet} from 'react-native';
 import Boarding from '../screens/boarding';
@@ -58,8 +59,8 @@ export default RootNavigator = () => {
 
 const styles = StyleSheet.create({
   headerTitle: {
-    fontFamily: FONTS.POPPINS_BOLD,
-    fontSize: FONT_SIZE.BODY_18,
+    fontFamily: Fonts.POPPINS_BOLD,
+    fontSize: FontSize.BODY_18,
   },
 });
 

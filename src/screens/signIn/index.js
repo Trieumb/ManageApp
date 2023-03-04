@@ -9,7 +9,7 @@ import {
     ImageBackground
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
-import { COLORS } from '../../config/constants';
+import Colors from '../../config/constants/Colors';
 import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
 
 const SingIn = () => {
@@ -30,8 +30,8 @@ const SingIn = () => {
                     placeholder="Mật khẩu"
                     autoCapitalize={false}>
                 </TextInput>
-                <BigCustomButton disable={false} children='Đăng Nhập'>
-                    <Text>{children}</Text>
+                <BigCustomButton disable={false}>
+                    Đăng nhập
                 </BigCustomButton>
             </View>
             <View style={styles.footerSignin}>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     headerSignin: {
         flex: 1,
-        backgroundColor: COLORS.SECONDARY,
+        backgroundColor: Colors.SECONDARY,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
     },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         borderRadius: 5,
-        backgroundColor: COLORS.WHITE,
+        backgroundColor: Colors.WHITE,
         marginLeft: 30,
         marginVertical: 20,
         alignItems: 'center',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         width: WINDOW_WITH - 60,
         height: 40,
         borderRadius: 40,
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: Colors.PRIMARY,
         marginLeft: 30,
         padding: 10,
         alignItems: 'center',
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     },
     footerSignin: {
         height: "20%",
-        backgroundColor: COLORS.SECONDARY,
+        backgroundColor: Colors.SECONDARY,
     }
 })

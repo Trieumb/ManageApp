@@ -7,7 +7,10 @@ import {
     Text,
     View,
 } from 'react-native';
-import { COLORS, FONTS, FONT_SIZE } from '../config/constants';
+import Colors from '../config/constants/Colors';
+import Fonts from '../config/constants/Fonts';
+import FontSize from '../config/constants/FontSize';
+
 
 const BigCustomButton = ({
     children,
@@ -17,18 +20,12 @@ const BigCustomButton = ({
     return (
         <>
             {!disable ? (
-                <Pressable
-                    style={({ pressed }) =>
-                        pressed
-                            ? [styles.button, styles.pressed]
-                            : [styles.button]
-                    }
-                    onPress={onPress}>
-                    <Text style={[styles.text]}>{children}</Text>
+                <Pressable onPress={onPress} style={styles.button}>
+                    <Text style={styles.text}>{children}</Text>
                 </Pressable>
             ) : (
                 <View style={[styles.disableButton]}>
-                    <LoadingSpinner color={COLORS.WHITE} />
+                    <LoadingSpinner color={Colors.WHITE} />
                 </View>
             )}
         </>
@@ -39,34 +36,31 @@ export default BigCustomButton;
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: Colors.PRIMARY,
         width:WINDOW_WITH - 60,
-        height: 40,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 16,
+        paddingVertical: 8,
     },
     disableButton: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: Colors.SECONDARY,
         width:WINDOW_WITH - 60,
-        height: 40,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 16,
+        paddingVertical: 8,
     },
     pressed: {
         opacity: 0.25,
     },
     text: {
-        paddingVertical: 16,
-        fontFamily: FONTS.POPPINS,
+        fontFamily: Fonts.POPPINS,
         fontWeight: 'bold',
-        fontSize: FONT_SIZE.H5,
-        color: COLORS.WHITE,
+        fontSize: FontSize.H5,
+        color: Colors.WHITE,
     },
     disableText: {
-        backgroundColor: COLORS.NEUTRAL_20,
+        backgroundColor: Colors.NEUTRAL_20,
     },
 });

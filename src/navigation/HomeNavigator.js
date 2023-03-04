@@ -1,51 +1,53 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import {
-//   CustomerManager,
-//   JobManager,
-//   Timekeeping,
-//   InventoryManager
-// } from '../screens'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomerManager from '../screens/customerManage';
 import JobManager from '../screens/jobManager';
 import Timekeeping from '../screens/timekeeping';
 import InventoryManager from '../screens/inventoryManager';
+import UserManager from '../screens/userManager';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLORS, FONTS, FONT_SIZE} from '../config/constants';
+import Colors from '../config/constants/Colors';
+import FontSize from '../config/constants/FontSize';
 
 const HomeTab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 const HomeNavigator = () => {
   return (
-    <HomeTab.Navigator
+    <Drawer.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === 'JobManager') {
+          if (route.name === 'Công việc') {
             iconName = focused
               ? 'home'
               : 'home-outline';
-          } else if (route.name === 'CustomerManager') {
+          } else if (route.name === 'Khách hàng') {
             iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === 'InventoryManager') {
+          } else if (route.name === 'Kho') {
             iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
-          } else if (route.name === 'Timekeeping') {
+          } else if (route.name === 'Chấm công') {
             iconName = focused ? 'ios-list' : 'ios-list-outline';
-          }
+          } else if (route.name === 'Tài khoản') {
+          iconName = focused ? 'ios-list' : 'ios-list-outline';
+        }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: COLORS.PRIMARY,
-        tabBarInactiveTintColor: COLORS.DARKGRAY,
+        tabBarActiveTintColor: Colors.PRIMARY,
+        tabBarInactiveTintColor: Colors.DARKGRAY,
         headerShown: false,
         tabBarLabelStyle: {
-          fontSize: FONT_SIZE.BODY,
+          fontSize: FontSize.BODY,
         }
       })}
     >
-      <HomeTab.Screen name="JobManager" component={JobManager} />
-      <HomeTab.Screen name="CustomerManager" component={CustomerManager} />
-      <HomeTab.Screen name="Timekeeping" component={Timekeeping} />
-      <HomeTab.Screen name="InventoryManager" component={InventoryManager} />
-    </HomeTab.Navigator>
+      <Drawer.Screen name="Công việc" component={JobManager} />
+      <Drawer.Screen name="Khách hàng" component={CustomerManager} />
+      <Drawer.Screen name="Kho" component={Timekeeping} />
+      <Drawer.Screen name="Chấm công" component={InventoryManager} />
+      <Drawer.Screen name="Tài khoản" component={UserManager} />
+    </Drawer.Navigator>
   )
 }
 

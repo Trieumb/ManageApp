@@ -10,4 +10,5 @@ export default {
     DARKGRAY: '#999999',
     DANGER: '#EB5757',
     NEUTRAL_20: '#D9D9D9',
+    SUB: '#909090',
   };
