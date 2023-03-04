@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, Disable} from 'react-native';
+import { StyleSheet, Disable, Text} from 'react-native';
 
 const AddButton = () => {
   return (
     <Disable>
-      
+        <Text>ok</Text>
     </Disable>
   )
 }

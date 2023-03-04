@@ -1,14 +1,24 @@
 import React from 'react'
-import { StyleSheet, Disable, View, Text, Image, TextInput, ImageBackground } from 'react-native';
-import { COLORS, DEMENSION_WINDOW } from '../../config/constants';
+import {
+    StyleSheet,
+    Disable,
+    View,
+    Text,
+    Image,
+    TextInput,
+    ImageBackground
+} from 'react-native';
+import BigCustomButton from '../../components/BigCustomButton';
+import { COLORS } from '../../config/constants';
+import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
 
 const SingIn = () => {
     return (
         <View style={styles.container}>
             <View style={styles.headerSignin}>
                 <Image source={require('../../assets/images/together.jpg.jpg')}
-                 resizeMode="stretch"
-                 style={styles.ImageSignin}></Image>
+                    resizeMode="stretch"
+                    style={styles.ImageSignin}></Image>
             </View>
             <View style={styles.contentSignin}>
                 <TextInput
@@ -20,9 +30,9 @@ const SingIn = () => {
                     placeholder="Mật khẩu"
                     autoCapitalize={false}>
                 </TextInput>
-                <Disable style={styles.butonSignin}>
-                    <Text>Đăng Nhập</Text>
-                </Disable>
+                <BigCustomButton disable={false} children='Đăng Nhập'>
+                    <Text>{children}</Text>
+                </BigCustomButton>
             </View>
             <View style={styles.footerSignin}>
             </View>
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
         height: "40%",
     },
     inputSignin: {
-        width: DEMENSION_WINDOW.WINDOW_WITH - 60,
+        width: WINDOW_WITH - 60,
         height: 40,
         flexDirection: 'row',
         borderRadius: 5,
@@ -59,7 +69,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     butonSignin: {
-        width: DEMENSION_WINDOW.WINDOW_WITH - 60,
+        width: WINDOW_WITH - 60,
         height: 40,
         borderRadius: 40,
         backgroundColor: COLORS.PRIMARY,

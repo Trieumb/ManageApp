@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { View , Text} from 'react-native';
 
 const UserManager = () => {
-  return (
-    <div>UserManager</div>
-  )
+    return (
+        <View>
+            <Text>UserManager</Text>
+        </View>
+    )
 }
 
 export default UserManager

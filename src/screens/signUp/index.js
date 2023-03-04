@@ -2,7 +2,9 @@ import React from 'react'
 
 const SignUp = () => {
   return (
-    <div>Register</div>
+    <View>
+      <Text>JobManager</Text>
+    </View>
   )
 }
 

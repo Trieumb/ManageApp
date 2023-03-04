@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { Text, View } from 'react-native';
 
 const JobManager = () => {
   return (
-    <div>JobManage</div>
+    <View>
+      <Text>JobManager</Text>
+    </View>
   )
 }
 

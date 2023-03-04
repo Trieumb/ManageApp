@@ -1,9 +1,11 @@
 import React from 'react'
-
+import { Text, View } from 'react-native'
 const Boarding = () => {
-  return (
-    <div>Boarding</div>
-  )
+    return (
+        <View>
+            <Text>JobManager</Text>
+        </View>
+    )
 }
 
 export default Boarding

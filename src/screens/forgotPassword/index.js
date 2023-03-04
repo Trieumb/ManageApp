@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { Text, View } from 'react-native';
 
 const ForgotPassword = () => {
   return (
-    <div>ForgotPassword</div>
+    <View>
+      <Text>ForgotPassword</Text>
+    </View>
   )
 }
 

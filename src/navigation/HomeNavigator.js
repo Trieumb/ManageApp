@@ -1,11 +1,15 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  CustomerManager,
-  JobManager,
-  Timekeeping,
-  InventoryManager
-} from '../screens'
+// import {
+//   CustomerManager,
+//   JobManager,
+//   Timekeeping,
+//   InventoryManager
+// } from '../screens'
+import CustomerManager from '../screens/customerManage';
+import JobManager from '../screens/jobManager';
+import Timekeeping from '../screens/timekeeping';
+import InventoryManager from '../screens/inventoryManager';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, FONT_SIZE} from '../config/constants';
 

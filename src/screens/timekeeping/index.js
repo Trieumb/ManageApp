@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { Text, View } from 'react-native';
 
 const Timekeeping = () => {
   return (
-    <div>Timekeeping</div>
+    <View>
+      <Text>Timekeeping</Text>
+    </View>
   )
 }
 

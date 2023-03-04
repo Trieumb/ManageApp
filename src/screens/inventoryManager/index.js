@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { Text, View } from 'react-native';
 
 const InventoryManager = () => {
   return (
-    <div>InventoryManager</div>
+    <View>
+      <Text>JobManager</Text>
+  </View>
   )
 }
 

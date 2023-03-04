@@ -1,11 +1,11 @@
 import React from 'react';
+import LoadingSpinner from './LoadingSpinner';
+import { WINDOW_WITH } from '../config/constants/DimensionsWindown';
 import {
     Pressable,
     StyleSheet,
     Text,
     View,
-    TextStyle,
-    ViewStyle
 } from 'react-native';
 import { COLORS, FONTS, FONT_SIZE } from '../config/constants';
 
@@ -13,9 +13,6 @@ const BigCustomButton = ({
     children,
     onPress,
     disable,
-    ViewStyle,
-    TextStyle,
-    disable
 }) => {
     return (
         <>
@@ -23,14 +20,14 @@ const BigCustomButton = ({
                 <Pressable
                     style={({ pressed }) =>
                         pressed
-                            ? [styles.button, styles.pressed, ViewStyle]
-                            : [styles.button, ViewStyle]
+                            ? [styles.button, styles.pressed]
+                            : [styles.button]
                     }
                     onPress={onPress}>
-                    <Text style={[styles.text, TextStyle]}>{children}</Text>
+                    <Text style={[styles.text]}>{children}</Text>
                 </Pressable>
             ) : (
-                <View style={[styles.disableButton, ViewStyle]}>
+                <View style={[styles.disableButton]}>
                     <LoadingSpinner color={COLORS.WHITE} />
                 </View>
             )}
@@ -43,7 +40,7 @@ export default BigCustomButton;
 const styles = StyleSheet.create({
     button: {
         backgroundColor: COLORS.PRIMARY,
-        width: DEMENSION_WINDOW.WINDOW_WITH - 60,
+        width:WINDOW_WITH - 60,
         height: 40,
         borderRadius: 8,
         justifyContent: 'center',
@@ -52,7 +49,7 @@ const styles = StyleSheet.create({
     },
     disableButton: {
         backgroundColor: COLORS.PRIMARY,
-        width: DEMENSION_WINDOW.WINDOW_WITH - 60,
+        width:WINDOW_WITH - 60,
         height: 40,
         borderRadius: 8,
         justifyContent: 'center',

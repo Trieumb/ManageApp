@@ -3,19 +3,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FONTS, FONT_SIZE } from '../config/constants';
 import HomeNavigator from './HomeNavigator';
-import {
-  Boarding,
-  SignIn,
-  SignUp,
-  ForgotPassword,
-} from '../screens';
+import {StyleSheet} from 'react-native';
+import Boarding from '../screens/boarding';
+import SignUp from '../screens/signUp';
+import SingIn from '../screens/signIn';
+import ForgotPassword from '../screens/forgotPassword';
 
 const RootStack = createNativeStackNavigator();
 
 export default RootNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='HomeNavigator'
+      <RootStack.Navigator initialRouteName='HomeNavigator'
         screenOptions={{
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerTitle,
@@ -37,7 +36,7 @@ export default RootNavigator = () => {
             />
             <RootStack.Screen
               name="SignIn"
-              component={SignIn}
+              component={SingIn}
               options={{ headerShown: false }}
             />
             <RootStack.Screen
@@ -52,7 +51,7 @@ export default RootNavigator = () => {
             />
           </>
         )}
-      </Stack.Navigator>
+      </RootStack.Navigator>
     </NavigationContainer>
   )
 };
