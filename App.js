@@ -7,13 +7,14 @@
 
 import React from 'react';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import RootNavigator from './src/navigation/RootNavigator';
 import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
+import RootNavigator from './src/navigation/RootNavigator';
+
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';

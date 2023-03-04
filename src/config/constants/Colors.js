@@ -7,5 +7,7 @@ export default {
     DANGER: '#EB5757',
     BLACK_O2: 'rgba(138, 149, 158, 0.2)',
     BACKDROP: 'rgba(0,0,0,0.5)',
+    DARKGRAY: '#999999',
+    DANGER: '#EB5757',
+    NEUTRAL_20: '#D9D9D9',
   };
-  
