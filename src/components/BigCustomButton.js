@@ -38,15 +38,16 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: Colors.PRIMARY,
         width:WINDOW_WITH - 60,
-        borderRadius: 8,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 8,
+        paddingVertical: 10,
+        marginVertical: 5
     },
     disableButton: {
         backgroundColor: Colors.SECONDARY,
         width:WINDOW_WITH - 60,
-        borderRadius: 8,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 8,
