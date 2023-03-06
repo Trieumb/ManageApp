@@ -7,46 +7,60 @@ import Timekeeping from '../screens/timekeeping';
 import InventoryManager from '../screens/inventoryManager';
 import UserManager from '../screens/userManager';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomDrawer from '../components/CustomDrawer';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
+import Fonts from '../config/constants/Fonts';
 
 const HomeTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const HomeNavigator = () => {
   return (
-    <Drawer.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          if (route.name === 'Công việc') {
-            iconName = focused
-              ? 'home'
-              : 'home-outline';
-          } else if (route.name === 'Khách hàng') {
-            iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === 'Kho') {
-            iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
-          } else if (route.name === 'Chấm công') {
-            iconName = focused ? 'ios-list' : 'ios-list-outline';
-          } else if (route.name === 'Tài khoản') {
-          iconName = focused ? 'ios-list' : 'ios-list-outline';
+    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}/>} 
+    screenOptions = { {headerShown: true,
+      drawerActiveBackgroundColor: Colors.PRIMARY,
+      drawerActiveTintColor: Colors.WHITE,
+      drawerInactiveTintColor: Colors.BACKDROP,
+      drawerLabelStyle:{
+        marginLeft: 10,
+        fontFamily: Fonts.POPPINS,
+        fontSize: FontSize.BODY_18,
+      },
+    headerStyle: {
+      backgroundColor: Colors.BG,
+      elevation: 3,
+      shadowOpacity: 0,
+    }}}>
+      <Drawer.Screen name="Công việc" component={JobManager} options={{
+        drawerIcon: ({ color }) => {
+          <Ionicons name='home-outline' size={20} color={color} />
         }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: Colors.PRIMARY,
-        tabBarInactiveTintColor: Colors.DARKGRAY,
-        headerShown: false,
-        tabBarLabelStyle: {
-          fontSize: FontSize.BODY,
-        }
-      })}
-    >
-      <Drawer.Screen name="Công việc" component={JobManager} />
-      <Drawer.Screen name="Khách hàng" component={CustomerManager} />
-      <Drawer.Screen name="Kho" component={Timekeeping} />
-      <Drawer.Screen name="Chấm công" component={InventoryManager} />
-      <Drawer.Screen name="Tài khoản" component={UserManager} />
+      }} />
+      <Drawer.Screen name="Khách hàng" component={CustomerManager}
+        options={{
+          drawerIcon: ({ color }) => {
+            <Ionicons name='home-outline' size={20} color={color} />
+          }
+        }} />
+      <Drawer.Screen name="Kho" component={Timekeeping}
+        options={{
+          drawerIcon: ({ color }) => {
+            <Ionicons name='home-outline' size={20} color={color} />
+          }
+        }} />
+      <Drawer.Screen name="Chấm công" component={InventoryManager}
+        options={{
+          drawerIcon: ({ color }) => {
+            <Ionicons name='home-outline' size={20} color={color} />
+          }
+        }} />
+      <Drawer.Screen name="Tài khoản" component={UserManager}
+        options={{
+          drawerIcon: ({ color }) => {
+            <Ionicons name='person-outline' size={20} color={color} />
+          }
+        }} />
     </Drawer.Navigator>
   )
 }

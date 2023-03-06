@@ -20,7 +20,7 @@ export default RootNavigator = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerTitle,
         }}>
-        {true ? (
+        {false ? (
           <>
             <RootStack.Screen
               name="HomeNavigator"

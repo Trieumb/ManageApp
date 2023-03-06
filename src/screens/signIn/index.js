@@ -1,38 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     StyleSheet,
-    Disable,
+    Pressable,
     View,
     Text,
     Image,
     TextInput,
-    ImageBackground
+    Alert,
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
+import CustomInput from '../../components/CustomInput';
 import Colors from '../../config/constants/Colors';
+import FontSize from '../../config/constants/FontSize';
+import Fonts from '../../config/constants/Fonts';
 import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
+import { useForm, Controller } from 'react-hook-form';
+
+
+const onSignIn = (data) => {
+    Alert.alert(JSON.stringify(data));
+}
 
 const SingIn = () => {
+    const {
+        control,
+        formState: { errors },
+        handleSubmit,
+    } = useForm();
+
     return (
         <View style={styles.container}>
             <View style={styles.headerSignin}>
                 <Image source={require('../../assets/images/together.jpg.jpg')}
                     resizeMode="stretch"
                     style={styles.ImageSignin}></Image>
+                <Text style={styles.textHeader}>Cùng nhau đi đến thành công!</Text>
             </View>
-            <View style={styles.contentSignin}>
-                <TextInput
-                    style={styles.input}
+            <View style={styles.formSignin}>
+                <Text style={styles.titleFormSignin}>Đăng nhập</Text>
+                <CustomInput
+                    name="email"
                     placeholder="Email"
-                    autoCapitalize={false}>
-                </TextInput>
-                <TextInput style={styles.inputSignin}
-                    placeholder="Mật khẩu"
-                    autoCapitalize={false}>
-                </TextInput>
-                <BigCustomButton disable={false}>
+                    control={control}
+                    rules={{ required: 'Email không để trống!' }}
+                />
+                <CustomInput
+                    name="password"
+                    placeholder="Password"
+                    secureTextEntry
+                    control={control}
+                    rules={{
+                        required: 'Mật khẩu không để trống!',
+                        minLength: {
+                            value: 8,
+                            message: 'Mật khẩu nên để từ 8 kí tự!',
+                        },
+                    }}
+                />
+                <BigCustomButton disable={false} onPress={handleSubmit(onSignIn)}>
                     Đăng nhập
                 </BigCustomButton>
+                <Pressable style={styles.ButtonForgotPassword}>
+                    <Text style={styles.textForgotPassword}>Quên mật khẩu?</Text>
+                </Pressable>
             </View>
             <View style={styles.footerSignin}>
             </View>
@@ -48,40 +78,47 @@ const styles = StyleSheet.create({
     },
     headerSignin: {
         flex: 1,
-        backgroundColor: Colors.SECONDARY,
+        paddingTop: 20,
+        backgroundColor: Colors.WHITE,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.SECONDARY
+    },
+    textHeader: {
+        color: Colors.PRIMARY,
+        paddingTop: 20,
+        fontSize: FontSize.H5
     },
     ImageSignin: {
-
+        width: "60%",
+        height: "70%",
+        borderRadius: 8
     },
-    contentSignin: {
-        height: "40%",
-    },
-    inputSignin: {
-        width: WINDOW_WITH - 60,
-        height: 40,
-        flexDirection: 'row',
-        borderRadius: 5,
+    formSignin: {
         backgroundColor: Colors.WHITE,
-        marginLeft: 30,
-        marginVertical: 20,
-        alignItems: 'center',
-    },
-    butonSignin: {
-        width: WINDOW_WITH - 60,
-        height: 40,
-        borderRadius: 40,
-        backgroundColor: Colors.PRIMARY,
-        marginLeft: 30,
-        padding: 10,
-        alignItems: 'center',
+        height: "50%",
         justifyContent: 'center',
-        marginTop: 10,
-        marginBottom: 20,
+        paddingLeft: 30
+    },
+    titleFormSignin: {
+        color: Colors.PRIMARY,
+        fontSize: FontSize.H5,
+        marginBottom: 10,
     },
     footerSignin: {
-        height: "20%",
+        height: "8%",
         backgroundColor: Colors.SECONDARY,
+    },
+    ButtonForgotPassword: {
+        alignItems: 'flex-end',
+        marginRight: 30,
+        padding: 5,
+    },
+    textForgotPassword: {
+        color: Colors.PRIMARY
     }
+
 })

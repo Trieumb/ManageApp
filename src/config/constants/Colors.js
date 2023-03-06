@@ -1,8 +1,9 @@
 export default {
-    PRIMARY: '#223671',
+    PRIMARY: '#6d64ff',
     WHITE: '#FFFFFF',
+    BLACK: 'black',
     BG: '#F5F5F5',
-    SECONDARY: '#F26526',
+    SECONDARY: '#bdc8d1',
     YELLOW: '#F2C94C',
     DANGER: '#EB5757',
     BLACK_O2: 'rgba(138, 149, 158, 0.2)',
