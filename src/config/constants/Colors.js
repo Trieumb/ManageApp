@@ -12,4 +12,5 @@ export default {
     DANGER: '#EB5757',
     NEUTRAL_20: '#D9D9D9',
     SUB: '#909090',
+    HEADER: "#EEEEEE",
   };

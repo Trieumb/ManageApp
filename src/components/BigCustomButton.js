@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 10,
-        marginVertical: 5
+        paddingVertical: 12,
+        marginVertical: 8,
+        marginTop: 15,
     },
     disableButton: {
         backgroundColor: Colors.SECONDARY,
@@ -50,14 +51,15 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 8,
+        paddingVertical: 10,
+        marginVertical: 10,
     },
     pressed: {
         opacity: 0.25,
     },
     text: {
         fontFamily: Fonts.POPPINS,
-        fontWeight: 'bold',
+        fontWeight: '600',
         fontSize: FontSize.H5,
         color: Colors.WHITE,
     },
