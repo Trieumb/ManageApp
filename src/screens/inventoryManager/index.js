@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 
 const InventoryManager = () => {
   return (
     <View>
-      <Text>JobManager</Text>
-  </View>
-  )
-}
+      <Text>Inventory Manager</Text>
+    </View>
+  );
+};
 
-export default InventoryManager
+export default InventoryManager;

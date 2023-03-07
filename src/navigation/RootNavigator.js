@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Fonts from '../config/constants/Fonts';
 import FontSize from '../config/constants/FontSize';
 import HomeNavigator from './HomeNavigator';
@@ -15,17 +15,18 @@ const RootStack = createNativeStackNavigator();
 export default RootNavigator = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName='HomeNavigator'
+      <RootStack.Navigator
+        initialRouteName="HomeNavigator"
         screenOptions={{
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerTitle,
         }}>
-        {false ? (
+        {true ? (
           <>
             <RootStack.Screen
               name="HomeNavigator"
               component={HomeNavigator}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
           </>
         ) : (
@@ -33,28 +34,28 @@ export default RootNavigator = () => {
             <RootStack.Screen
               name="Boarding"
               component={Boarding}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <RootStack.Screen
               name="SignIn"
               component={SingIn}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <RootStack.Screen
               name="Signup"
               component={SignUp}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <RootStack.Screen
               name="ForgotPassword"
               component={ForgotPassword}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
           </>
         )}
       </RootStack.Navigator>
     </NavigationContainer>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -63,4 +64,3 @@ const styles = StyleSheet.create({
     fontSize: FontSize.BODY_18,
   },
 });
-
