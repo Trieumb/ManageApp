@@ -16,15 +16,16 @@ export default CustomButton;
 const styles = StyleSheet.create({
     button: {
       backgroundColor: Colors.PRIMARY,
-      width: "50%",
       borderRadius:8,
+      width: "20%",
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: 8,
+      padding: 5,
+      margin: 5,
     },
     text: {
       color: Colors.WHITE,
-      fontSize: FontSize.H5,
+      fontSize: FontSize.BODY,
       fontFamily: Fonts.POPPINS,
     }
 })

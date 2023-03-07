@@ -9,6 +9,9 @@ import Boarding from '../screens/boarding';
 import SignUp from '../screens/signUp';
 import SingIn from '../screens/signIn';
 import ForgotPassword from '../screens/forgotPassword';
+import AddTask from '../screens/jobManager/AddTask';
+import JobManager from '../screens/jobManager';
+import UpdateTask from '../screens/jobManager/UpdateTask';
 
 const RootStack = createNativeStackNavigator();
 
@@ -26,6 +29,16 @@ export default RootNavigator = () => {
             <RootStack.Screen
               name="HomeNavigator"
               component={HomeNavigator}
+              options={{headerShown: false}}
+            />
+            <RootStack.Screen
+              name="addTask"
+              component={AddTask}
+              options={{headerShown: false}}
+            />
+            <RootStack.Screen
+              name="UpdateTask"
+              component={UpdateTask}
               options={{headerShown: false}}
             />
           </>

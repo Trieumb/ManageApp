@@ -13,13 +13,9 @@ import CustomInput from '../../components/CustomInput';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
-import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
-import { useForm, Controller } from 'react-hook-form';
-
-
-const onSignIn = (data) => {
-    Alert.alert(JSON.stringify(data));
-}
+import { useForm} from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { loginThunk } from '../../redux/thunks/auth.thunks';
 
 const SingIn = () => {
     const {
@@ -28,6 +24,12 @@ const SingIn = () => {
         handleSubmit,
     } = useForm();
 
+    const dispatch = useDispatch();
+    const onSignIn = async(data) => {
+        dispatch(loginThunk(data))
+        Alert.alert(JSON.stringify(data));
+    }
+    
     return (
         <View style={styles.container}>
             <View style={styles.headerSignin}>
@@ -118,7 +120,9 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     textForgotPassword: {
-        color: Colors.PRIMARY
+        color: Colors.PRIMARY,
+        fontFamily: Fonts.POPPINS,
+        fontSize: FontSize.BODY
     }
 
 })
