@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import {scaleUI} from '../../config/constants/ScaleUI';
-import Colors from '../../config/constants/Colors';
 import Card from '../../components/Card';
+import Colors from '../../config/constants/Colors';
+import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeSection from './TimeSection';
 
 const Timekeeping = () => {
