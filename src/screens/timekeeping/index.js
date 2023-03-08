@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
+
 import Card from '../../components/Card';
 import Colors from '../../config/constants/Colors';
 import {scaleUI} from '../../config/constants/ScaleUI';
