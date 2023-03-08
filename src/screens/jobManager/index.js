@@ -6,27 +6,27 @@ import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
 
-const data = [
+const dataJob = [
   {
     "key": "56gdffdgdfg",
     "dateStart": "14/02",
-    "dateEnd": "19/02",
+    "dateEnd": "18/02",
     "receive": "Hải",
     "detail": " Sản xuất thang Trúc Bạch - Hà Nội",
   },
   {
     "key": "56gdffdgdfghfhgfhfgg",
-    "dateStart": "18/02",
-    "dateEnd": "30/02",
+    "dateStart": "19/02",
+    "dateEnd": "21/02",
     "receive": "Hải",
-    "detail": " Cải thiện chất lượng ứng dụng trong thời gian ngắn hơn với ít nỗ lực hơn. Đơn giản hóa việc kiểm tra , phân loại và khắc phục sự cố. Cẩn thận triển khai các tính năng và giám sát việc áp dụng. Xác định, ưu tiên và khắc phục sớm các vấn đề về độ ổn định và hiệu suất .",
+    "detail": "Sản xuất cửa thang Tiền Hải - Thái Bình, kích thước rộng 700 cao 1000. \n Sản xuất khung cabin và sàn thang Cẩm Phả - Quảng Ninh, kich thước cao 900, rộng 600, sâu 600 ",
   },
   {
     "key": "56gdffdgdfghooofhgfhfgg",
     "dateStart": "18/02",
-    "dateEnd": "30/02",
-    "receive": "Hải",
-    "detail": " Cải thiện chất lượng ứng dụng trong thời gian ngắn hơn với ít nỗ lực hơn. Đơn giản hóa việc kiểm tra , phân loại và khắc phục sự cố. Cẩn thận triển khai các tính năng và giám sát việc áp dụng. Xác định, ưu tiên và khắc phục sớm các vấn đề về độ ổn định và hiệu suất .",
+    "dateEnd": "25/02",
+    "receive": "Hùng to",
+    "detail": "Lắp đặt thang Việt Trì - Phú Thọ",
   }
 ]
 
@@ -35,10 +35,6 @@ const JobManager = () => {
   const navigation = useNavigation()
   const handleOnpress = () => {
     navigation.navigate('Kho');
-  }
-
-  const onGotoAddTask = () => {
-    navigation.navigate('addTask');
   }
 
   const onGotoUpdteTask = () => {
@@ -88,20 +84,13 @@ const JobManager = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList data={data}
+        <FlatList data={dataJob}
           keyExtractor={item => item.key}
           renderItem={({ item, index }) => {
             return <FlatListItem item={item} index={index} />
           }}>
         </FlatList>
       </View>
-
-      <View style={styles.buttonAddContainer}>
-        <Pressable onPress={onGotoAddTask} style={styles.addButton}>
-          <Text style={styles.addText}>+</Text>
-        </Pressable>
-      </View>
-
     </View>
   )
 }
@@ -111,9 +100,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.SECONDARY
-  },
-  a: {
-    flexDirection: "row"
   },
   flatListContainer: {
     backgroundColor: Colors.WHITE,
@@ -158,22 +144,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 5
   },
-  buttonAddContainer: {
-    position: "absolute",
-    bottom: 0,
-    right: 0
-  },
-  addButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: Colors.PRIMARY,
-    alignItems: "center",
-    justifyContent: 'center',
-    margin: 10
-  },
-  addText: {
-    color: Colors.WHITE,
-    fontSize: FontSize.H5
-  }
 })

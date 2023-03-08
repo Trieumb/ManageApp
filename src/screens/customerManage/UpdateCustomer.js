@@ -18,7 +18,7 @@ import FontSize from '../../config/constants/FontSize';
 import { useNavigation } from '@react-navigation/native';
 import LineHeight from '../../config/constants/LineHeight';
 
-const UpdateTask = () => {
+const UpdateCustomer = () => {
     const {
         control,
         formState: { errors },
@@ -41,30 +41,42 @@ const UpdateTask = () => {
             />
             <ImageBackground style={styles.header}>
                 <CustomButtonBack onPress={onGotoBack} />
-                <Text style={styles.textHeader}>Sửa kế hoạch công việc</Text>
+                <Text style={styles.textHeader}>Sửa thông tin khách hàng</Text>
             </ImageBackground>
             <ScrollView style={styles.body}>
                 <CustomInput
-                    name="dateStart"
-                    placeholder="Ngày khởi tạo"
+                    name="name"
+                    placeholder="Tên khách hàng"
                     control={control}
                     rules={{ required: 'Không để trống!' }}
                 />
                 <CustomInput
-                    name="dateEnd"
-                    placeholder="Ngày hoàn thành"
+                    name="address"
+                    placeholder="Địa chỉ"
                     control={control}
                     rules={{}}
                 />
                 <CustomInput
-                    name="receiver"
-                    placeholder="Người nhận"
+                    name="phone"
+                    placeholder="Số ĐT"
                     control={control}
-                    rules={{}}
+                    rules={{require: 'Không để trống!'}}
                 />
                 <CustomInput
-                    name="content"
-                    placeholder="Chi tiết công việc"
+                    name="installationDate"
+                    placeholder="Ngày lắp đặt"
+                    control={control}
+                    rules={{ required: 'Không để trống!' }}
+                />
+                 <CustomInput
+                    name="category"
+                    placeholder="Loại thang"
+                    control={control}
+                    rules={{ required: 'Không để trống!' }}
+                />
+                 <CustomInput
+                    name="description"
+                    placeholder="Mô tả"
                     control={control}
                     rules={{ required: 'Không để trống!' }}
                 />
@@ -78,7 +90,7 @@ const UpdateTask = () => {
     )
 }
 
-export default UpdateTask
+export default UpdateCustomer
 
 const styles = StyleSheet.create({
     container: {

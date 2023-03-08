@@ -1,26 +1,25 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import JobManager from '../screens/jobManager';
 import { StyleSheet } from 'react-native';
-import AddTask from '../screens/jobManager/AddTask';
+import AddCustomer from '../screens/customerManage/AddCustomer';
+import CustomerManager from '../screens/customerManage';
 import Colors from '../config/constants/Colors';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontSize from '../config/constants/FontSize';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
-const JobNavigation = () => {
+const CustomerNavigation = () => {
     return (
         <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
               let iconName;
-              if (route.name === 'Công việc') {
+              if (route.name === 'Khách hàng') {
                   iconName = focused
                       ? 'list-circle'
                       : 'list-circle-outline';
-              } else if (route.name === 'Thêm') {
+              } else if (route.name === 'Thêm khách hàng') {
                   iconName = focused ? 'add-circle-sharp' : 'add-circle-outline';
               } 
               return <Ionicons name={iconName} size={size} color={color} />;   
@@ -32,16 +31,16 @@ const JobNavigation = () => {
               fontSize:FontSize.BODY,
           }
       })}>
-        <Tab.Screen name="Công việc" component={JobManager} />
+        <Tab.Screen name="Khách hàng" component={CustomerManager} />
         <Tab.Screen
-          name="Thêm"
-          component={AddTask}
+          name="Thêm khách hàng"
+          component={AddCustomer}
           options={{headerShown: false}}
         />
       </Tab.Navigator>
     )
 }
-export default JobNavigation;
+export default CustomerNavigation;
 
 const styles = StyleSheet.create({
     headerTitle: {
