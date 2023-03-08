@@ -22,3 +22,10 @@ export default {
   NEUTRAL_20: '#D9D9D9',
   SUB: '#909090',
 };
+
+export const TIME_KEEPING_COLORS = {
+  off: '#EB5757',
+  working: '#3DC13C',
+  leave: '#1ABCD7',
+  halfday: '#F2C94C',
+};
