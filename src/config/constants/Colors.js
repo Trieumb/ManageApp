@@ -29,3 +29,4 @@ export const TIME_KEEPING_COLORS = {
   leave: '#1ABCD7',
   halfday: '#F2C94C',
 };
+    

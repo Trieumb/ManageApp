@@ -5,7 +5,7 @@ import {
     View,
     Text,
     Image,
-    TextInput,
+    ScrollView,
     Alert,
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
@@ -13,11 +13,14 @@ import CustomInput from '../../components/CustomInput';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
-import { useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { loginThunk } from '../../redux/thunks/auth.thunks';
+import { useNavigation } from '@react-navigation/native';
 
 const SingIn = () => {
+
+    const navigation = useNavigation();
     const {
         control,
         formState: { errors },
@@ -25,11 +28,17 @@ const SingIn = () => {
     } = useForm();
 
     const dispatch = useDispatch();
-    const onSignIn = async(data) => {
+    const onSignIn = async (data) => {
         dispatch(loginThunk(data))
         Alert.alert(JSON.stringify(data));
     }
-    
+
+    const OnGotoForgotPassword = () => {
+        navigation.navigate('ForgotPassword')
+    }
+    const OnGotoSignUp = () => {
+        navigation.navigate('SignUp')
+    }
     return (
         <View style={styles.container}>
             <View style={styles.headerSignin}>
@@ -38,7 +47,7 @@ const SingIn = () => {
                     style={styles.ImageSignin}></Image>
                 <Text style={styles.textHeader}>Cùng nhau đi đến thành công!</Text>
             </View>
-            <View style={styles.formSignin}>
+            <ScrollView style={styles.formSignin}>
                 <Text style={styles.titleFormSignin}>Đăng nhập</Text>
                 <CustomInput
                     name="email"
@@ -48,7 +57,7 @@ const SingIn = () => {
                 />
                 <CustomInput
                     name="password"
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     secureTextEntry
                     control={control}
                     rules={{
@@ -62,10 +71,17 @@ const SingIn = () => {
                 <BigCustomButton disable={false} onPress={handleSubmit(onSignIn)}>
                     Đăng nhập
                 </BigCustomButton>
-                <Pressable style={styles.ButtonForgotPassword}>
-                    <Text style={styles.textForgotPassword}>Quên mật khẩu?</Text>
-                </Pressable>
-            </View>
+                <View style={styles.signUpButtonContainer}>
+                    <Pressable onPress={OnGotoSignUp}>
+                        <Text style={styles.textSignUp}>Đăng kí?</Text>
+                    </Pressable>
+                    <Text style={styles.textSignUp}>|</Text>
+                    <Pressable onPress={OnGotoForgotPassword}>
+                        <Text style={styles.textSignUp}>Quên mật khẩu?</Text>
+                    </Pressable>
+                </View>
+
+            </ScrollView>
             <View style={styles.footerSignin}>
             </View>
         </View>
@@ -80,6 +96,7 @@ const styles = StyleSheet.create({
     },
     headerSignin: {
         flex: 1,
+        height: "30%",
         paddingTop: 20,
         backgroundColor: Colors.WHITE,
         borderBottomLeftRadius: 20,
@@ -101,28 +118,33 @@ const styles = StyleSheet.create({
     },
     formSignin: {
         backgroundColor: Colors.WHITE,
-        height: "50%",
-        justifyContent: 'center',
+        flex: 1,
         paddingLeft: 30
     },
     titleFormSignin: {
         color: Colors.PRIMARY,
         fontSize: FontSize.H5,
-        marginBottom: 10,
+        marginTop: 20,
+        marginBottom: 10
     },
     footerSignin: {
         height: "8%",
         backgroundColor: Colors.SECONDARY,
+    },
+    signUpButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginRight: 30
     },
     ButtonForgotPassword: {
         alignItems: 'flex-end',
         marginRight: 30,
         padding: 5,
     },
-    textForgotPassword: {
+    textSignUp: {
         color: Colors.PRIMARY,
         fontFamily: Fonts.POPPINS,
-        fontSize: FontSize.BODY
+        fontSize: FontSize.BODY,
+        padding: 5,
     }
-
 })

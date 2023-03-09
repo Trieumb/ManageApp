@@ -8,7 +8,10 @@ import {
     StatusBar,
     Pressable,
 } from 'react-native';
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import {
+    DrawerContentScrollView,
+    DrawerItemList
+} from '@react-navigation/drawer';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
@@ -23,7 +26,7 @@ const CustomDrawer = (props) => {
                 translucent={true}
             />
             <View style={styles.container}>
-                <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: Colors.SECONDARY}}>
+                <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: Colors.SECONDARY }}>
                     <ImageBackground
                         style={styles.imageBakground}>
                         <Text style={styles.author}>Xin chào! Trieumb</Text>
@@ -31,8 +34,8 @@ const CustomDrawer = (props) => {
                             style={styles.image} />
                     </ImageBackground>
                     <View style={styles.listDrawerContainer}>
-                        <DrawerItemList  {...props}/>
-                    </View>   
+                        <DrawerItemList  {...props} />
+                    </View>
                 </DrawerContentScrollView>
                 <View style={styles.footer}>
                     <Pressable style={styles.buttonFooter}>
@@ -43,8 +46,8 @@ const CustomDrawer = (props) => {
                     </Pressable>
                     <Pressable style={styles.buttonFooter}>
                         <View style={styles.buttonItem}>
-                        <Ionicons name='exit-outline' size={20} />
-                        <Text style={styles.textFooter}>Đăng xuất</Text>
+                            <Ionicons name='exit-outline' size={20} />
+                            <Text style={styles.textFooter}>Đăng xuất</Text>
                         </View>
                     </Pressable>
                 </View>
@@ -102,6 +105,6 @@ const styles = StyleSheet.create({
     textFooter: {
         fontSize: FontSize.BODY,
         fontFamily: Fonts.POPPINS_BOLD,
-        
+
     }
 })
