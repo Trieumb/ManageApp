@@ -1,5 +1,5 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeNavigator from './HomeNavigator';
 import AddTask from '../screens/jobManager/AddTask';
 import CustomerNavigation from './CustomerNavigator';
@@ -9,33 +9,33 @@ import UpdateCustomer from '../screens/customerManage/UpdateCustomer';
 const MainStack = createNativeStackNavigator();
 
 export default AuthNavigation = () => {
-    return (
-        <MainStack.Navigator>
-            <MainStack.Screen
-              name="HomeNavigator"
-              component={HomeNavigator}
-              options={{ headerShown: false }}
-            />
-            <MainStack.Screen
-             name="addTask"
-             component={AddTask}
-             options={{ headerShown: false }}
-            />
-            <MainStack.Screen
-             name="UpdateTask"
-             component={UpdateTask}
-             options={{ headerShown: false }}
-            />
-            <MainStack.Screen
-             name="CustomerNavigator"
-             component={CustomerNavigation}
-             options={{ headerShown: false }}
-            />
-            <MainStack.Screen
-             name="UpdateCustomer"
-             component={UpdateCustomer}
-             options={{ headerShown: false }}
-            />
-        </MainStack.Navigator>
-    )
-}
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen
+        name="HomeNavigator"
+        component={HomeNavigator}
+        options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name="addTask"
+        component={AddTask}
+        options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name="UpdateTask"
+        component={UpdateTask}
+        options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name="CustomerNavigator"
+        component={CustomerNavigation}
+        options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name="UpdateCustomer"
+        component={UpdateCustomer}
+        options={{headerShown: false}}
+      />
+    </MainStack.Navigator>
+  );
+};

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {
   SafeAreaView,
   StatusBar,
@@ -14,9 +14,8 @@ import {
   useColorScheme,
 } from 'react-native';
 import RootNavigator from './src/navigation/RootNavigator';
-import { Provider } from 'react-redux';
-import store from './src/redux/store';
-
+import {Provider} from 'react-redux';
+import {store} from './src/redux/store';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
