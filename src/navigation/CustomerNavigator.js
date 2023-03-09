@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
 import AddCustomer from '../screens/customerManage/AddCustomer';
 import CustomerManager from '../screens/customerManage';
 import Colors from '../config/constants/Colors';
@@ -41,9 +40,3 @@ const CustomerNavigation = () => {
     )
 }
 export default CustomerNavigation;
-
-const styles = StyleSheet.create({
-    headerTitle: {
-
-    }
-})

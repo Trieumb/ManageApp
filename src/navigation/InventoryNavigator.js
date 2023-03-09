@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
 import InventoryManager from '../screens/inventoryManager';
 import GoodsReceived from '../screens/inventoryManager/GoodsReceived';
 import GoodsDelivery from '../screens/inventoryManager/GoodsDelivery';
@@ -50,9 +49,3 @@ const InventoryNavigation = () => {
   )
 }
 export default InventoryNavigation;
-
-const styles = StyleSheet.create({
-  headerTitle: {
-
-  }
-})

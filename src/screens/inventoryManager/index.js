@@ -1,5 +1,7 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+import FontSize from '../../config/constants/FontSize';
+import Colors from '../../config/constants/Colors';
 
 const InventoryManager = () => {
 

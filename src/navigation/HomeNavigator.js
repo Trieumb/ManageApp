@@ -30,7 +30,7 @@ const HomeNavigator = () => {
           fontSize: FontSize.BODY_18,
         },
         headerStyle: {
-          backgroundColor: Colors.HEADER,
+          backgroundColor: Colors.BG,
           elevation: 3,
           shadowOpacity: 0,
         },
@@ -40,30 +40,36 @@ const HomeNavigator = () => {
           fontSize: FontSize.H5
         },
       }}>
-      <Drawer.Screen name="Kế hoạch công việc" component={JobNavigation} options={{
-        drawerIcon: ({ color }) => {
-          <Ionicons name='home-outline' size={20} color={color} />
-        }
-      }} />
-      <Drawer.Screen name="Quản lý khách hàng" component={CustomerNavigation}
+      <Drawer.Screen
+        name="Công việc"
+        component={JobNavigation}
         options={{
-          drawerIcon: ({ color }) => {
-            <IconFontisso name='persons' size={20} color={color} />
-          }
-        }} />
-      <Drawer.Screen name="Quản lý kho" component={InventoryNavigation}
+          drawerIcon: ({color}) => {
+            <Ionicons name="home-outline" size={20} color={color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Khách hàng"
+        component={CustomerNavigation}
         options={{
-          drawerIcon: ({ color }) => {
-            <IconMeterial name='warehouse' size={20} color={color} />
-          }
-        }} />
-      <Drawer.Screen name="Chấm công" component={Timekeeping}
+          drawerIcon: ({color}) => {
+            <Ionicons name="home-outline" size={20} color={color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Chấm công"
+        component={Timekeeping}
         options={{
-          drawerIcon: ({ color }) => {
-            <Ionicons name='finger-print' size={20} color={color} />
-          }
-        }} />
-      <Drawer.Screen name="Tài khoản" component={UserManager}
+          drawerIcon: ({color}) => {
+            <Ionicons name="home-outline" size={20} color={color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Kho"
+        component={InventoryNavigation}
         options={{
           drawerIcon: ({color}) => {
             <Ionicons name="home-outline" size={20} color={color} />;
