@@ -14,7 +14,6 @@ import JobNavigation from './JobNavigator';
 import CustomerNavigation from './CustomerNavigator';
 import InventoryNavigation from './InventoryNavigator';
 
-const HomeTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const HomeNavigator = () => {
@@ -66,12 +65,22 @@ const HomeNavigator = () => {
         }} />
       <Drawer.Screen name="Tài khoản" component={UserManager}
         options={{
-          drawerIcon: ({ color }) => {
-            <Ionicons name='person-outline' size={20} color={color} />
-          }
-        }} />
+          drawerIcon: ({color}) => {
+            <Ionicons name="home-outline" size={20} color={color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Tài khoản"
+        component={UserManager}
+        options={{
+          drawerIcon: ({color}) => {
+            <Ionicons name="person-outline" size={20} color={color} />;
+          },
+        }}
+      />
     </Drawer.Navigator>
-  )
-}
+  );
+};
 
-export default HomeNavigator
+export default HomeNavigator;

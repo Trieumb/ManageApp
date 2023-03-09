@@ -1,34 +1,5 @@
 import React from 'react';
-import { Text, View, FlatList, StyleSheet} from 'react-native';
-import Colors from '../../config/constants/Colors';
-import FontSize from '../../config/constants/FontSize';
-
-const dataWarahouse = [
-  {
-    "id" : 1,
-    "code": "TD01",
-    'name': "Tủ điện 600x400",
-    'quantity': 12,
-  },
-  {
-    "id" : 2,
-    "code": "RL01",
-    'name': "Role Index 4 chân",
-    'quantity': 30,
-  },
-  {
-    "id" : 3,
-    "code": "CKGB01",
-    'name': "Gối bi 45",
-    'quantity': 10,
-  },
-  {
-    "id" : 4,
-    "code": "CKGB01",
-    'name': "Gối bi 45",
-    'quantity': 10,
-  }
-]
+import {Text, View} from 'react-native';
 
 const InventoryManager = () => {
 
