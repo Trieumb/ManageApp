@@ -1,6 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
-export const getUserByUid = async (uid) => {
+export const getUserByUid = async uid => {
   try {
     const res = await firestore().collection('users').doc(uid).get();
     return res;

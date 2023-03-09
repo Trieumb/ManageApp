@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
-import { WINDOW_WITH } from '../config/constants/DimensionsWindown';
+import {WINDOW_WITH} from '../config/constants/DimensionsWindown';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
@@ -30,7 +30,9 @@ const CustomInput = ({
               onChangeText={onChange}
               onBlur={onBlur}
               placeholder={placeholder}
+              placeholderTextColor={Colors.BLACK_O2}
               style={styles.input}
+              autoCapitalize="none"
               secureTextEntry={secureTextEntry}
             />
           </View>
@@ -53,16 +55,17 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   input: {
-      paddingLeft: 10,
-      fontFamily: Fonts.POPPINS,
-      fontSize: FontSize.BODY,
+    paddingLeft: 10,
+    fontFamily: Fonts.POPPINS,
+    fontSize: FontSize.BODY,
+    color: Colors.BLACK,
   },
   textError: {
     color: Colors.DANGER,
     marginLeft: 30,
-    paddingVertical:2,
-    alignSelf: 'stretch'
-  }
+    paddingVertical: 2,
+    alignSelf: 'stretch',
+  },
 });
 
 export default CustomInput;

@@ -2,18 +2,21 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import FontSize from '../../config/constants/FontSize';
 import Colors from '../../config/constants/Colors';
-
 const InventoryManager = () => {
-
-  const FlatListItem = ({ item, index }) => {
+  const FlatListItem = ({item, index}) => {
     return (
-      <View style={{backgroundColor: index % 2 == 1 ? Colors.HEADER : Colors.WHITE,
-       padding: 10, flexDirection: 'row', justifyContent: 'center' }}>
+      <View
+        style={{
+          backgroundColor: index % 2 == 1 ? Colors.HEADER : Colors.WHITE,
+          padding: 10,
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
         <Text style={styles.flatListItem}>{item.code}</Text>
         <Text style={styles.flatListItemName}>{item.name}</Text>
         <Text style={styles.flatListItem}>{item.quantity}</Text>
       </View>
-    )
+    );
   };
   const HeaderFlatList = () => {
     return (
@@ -22,37 +25,37 @@ const InventoryManager = () => {
         <Text style={styles.flatListItemHeaderName}>Tên VT</Text>
         <Text style={styles.flatListItemHeader}>Số lượng</Text>
       </View>
-    )
+    );
   };
 
   return (
     <View style={styles.flarListContainer}>
-         <FlatList data={dataWarahouse}
-          ListHeaderComponent={HeaderFlatList}
-          keyExtractor={item => item.id}
-          renderItem={({ item, index }) => {
-            return <FlatListItem item={item} index={index} />
-          }}>
-        </FlatList>
-  </View>
-  )
-}
+      <FlatList
+        data={dataWarahouse}
+        ListHeaderComponent={HeaderFlatList}
+        keyExtractor={item => item.id}
+        renderItem={({item, index}) => {
+          return <FlatListItem item={item} index={index} />;
+        }}></FlatList>
+    </View>
+  );
+};
 
-export default InventoryManager
+export default InventoryManager;
 
 const styles = StyleSheet.create({
   flatListContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  flatListItem:{
-      paddingVertical: 10,
-      width: "25%",
-      fontSize: FontSize.BODY,
-  },
-  flatListItemName:{
+  flatListItem: {
     paddingVertical: 10,
-    width: "45%",
+    width: '25%',
+    fontSize: FontSize.BODY,
+  },
+  flatListItemName: {
+    paddingVertical: 10,
+    width: '45%',
     fontSize: FontSize.BODY,
   },
   flatListTitle: {
@@ -64,11 +67,11 @@ const styles = StyleSheet.create({
   flatListItemHeader: {
     color: Colors.WHITE,
     fontSize: FontSize.BODY_18,
-    width: "25%",
+    width: '25%',
   },
-  flatListItemHeaderName:{
-    width: "45%",
+  flatListItemHeaderName: {
+    width: '45%',
     color: Colors.WHITE,
     fontSize: FontSize.BODY_18,
-  }
-})
+  },
+});

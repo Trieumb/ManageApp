@@ -1,13 +1,14 @@
 import auth from '@react-native-firebase/auth';
 
-export const loginWithEmail = async (data) => {
+export const loginWithEmail = async data => {
   try {
     const res = await auth().signInWithEmailAndPassword(
-      data.email,
+      data.email.trim(),
       data.password,
     );
     return res;
   } catch (error) {
+    console.log(error);
     if (error.code === 'auth/user-not-found') {
       throw new Error('That email address is not found.');
     }
@@ -20,7 +21,7 @@ export const loginWithEmail = async (data) => {
   }
 };
 
-export const signupWithEmail = async (data) => {
+export const signupWithEmail = async data => {
   try {
     const res = await auth().createUserWithEmailAndPassword(
       data.email,
@@ -38,8 +39,7 @@ export const signupWithEmail = async (data) => {
   }
 };
 
-
-export const resetPasswordWithEmail = async (email) => {
+export const resetPasswordWithEmail = async email => {
   try {
     const res = await auth().sendPasswordResetEmail(email);
     return res;
@@ -50,7 +50,7 @@ export const resetPasswordWithEmail = async (email) => {
   }
 };
 
-export const reauthenticateWithCredential = async (currentPassword) => {
+export const reauthenticateWithCredential = async currentPassword => {
   try {
     const user = auth().currentUser;
     if (!user || !user.email) {
@@ -70,7 +70,7 @@ export const reauthenticateWithCredential = async (currentPassword) => {
   }
 };
 
-export const updatePasswordOnFirebase = async (newPassword) => {
+export const updatePasswordOnFirebase = async newPassword => {
   try {
     const user = auth().currentUser;
     if (!user) {
@@ -82,5 +82,13 @@ export const updatePasswordOnFirebase = async (newPassword) => {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
+  }
+};
+
+export const logOut = async () => {
+  try {
+    await auth().signOut();
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
