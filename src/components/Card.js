@@ -6,7 +6,7 @@ const Card = ({
   children,
   shadow,
   bgColor = Colors.WHITE,
-  shadowColor = Colors.PRIMARY,
+  shadowColor = Colors.PRIMARY_600,
   padding = 16,
 }) => {
   const finalShadow = useMemo(() => (shadow ? 4 : 0), [shadow]);

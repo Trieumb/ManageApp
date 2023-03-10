@@ -4,16 +4,20 @@ import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import {useDispatch, useSelector} from 'react-redux';
 import {isUserAuthenticatedSelector} from '../redux/selectors/auth.selector';
+import {checkLoginThunk} from '../redux/thunks/auth.thunks';
 
 
-export default RootNavigator = () => {
-
+export default  RootNavigator = () => {
+  const dispatch = useDispatch();
   const authenticated = useSelector(isUserAuthenticatedSelector);
-  console.log(authenticated);
+  useEffect(() => {
+    dispatch(checkLoginThunk());
+  }, []);
   return (
     <NavigationContainer>
       {authenticated ? <MainNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
-};
+}
+
 
