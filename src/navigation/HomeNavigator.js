@@ -4,7 +4,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import Timekeeping from '../screens/timekeeping';
 import UserManager from '../screens/userManager';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFontisso from 'react-native-vector-icons/Fontisto';
 import CustomDrawer from '../components/CustomDrawer';
 import Colors from '../config/constants/Colors';
@@ -42,85 +42,28 @@ const HomeNavigator = () => {
         },
       }}>
       <Drawer.Screen
-        name="Công việc"
+        name="Quản lý công việc"
         component={JobNavigation}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="home-outline" size={20} color={color} />;
-          },
-        }}
-      />
-      <Drawer.Screen
-        name="Khách hàng"
-        component={CustomerNavigation}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="home-outline" size={20} color={color} />;
-          },
-        }}
-      />
-      <Drawer.Screen
-        name="Chấm công"
-        component={Timekeeping}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="home-outline" size={20} color={color} />;
-          },
-        }}
-      />
-      <Drawer.Screen
-        name="Kho"
-        component={InventoryNavigation}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="home-outline" size={20} color={color} />;
-          },
-        }}
       />
       <Drawer.Screen
         name="Quản lý khách hàng"
         component={CustomerNavigation}
-        options={{
-          drawerIcon: ({color}) => {
-            <IconFontisso name="persons" size={20} color={color} />;
-          },
-        }}
+       
       />
       <Drawer.Screen
         name="Quản lý kho"
         component={InventoryNavigation}
-        options={{
-          drawerIcon: ({color}) => {
-            <IconMeterial name="warehouse" size={20} color={color} />;
-          },
-        }}
+       
       />
       <Drawer.Screen
         name="Chấm công"
         component={Timekeeping}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="finger-print" size={20} color={color} />;
-          },
-        }}
+       
       />
       <Drawer.Screen
         name="Tài khoản"
         component={UserManager}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="home-outline" size={20} color={color} />;
-          },
-        }}
-      />
-      <Drawer.Screen
-        name="Tài khoản User"
-        component={UserManager}
-        options={{
-          drawerIcon: ({color}) => {
-            <Ionicons name="person-outline" size={20} color={color} />;
-          },
-        }}
+       
       />
     </Drawer.Navigator>
   );

@@ -1,10 +1,13 @@
-import { Text, View, StyleSheet, Pressable, FlatList, Alert } from 'react-native';
+import React, {useEffect} from 'react';
+import { Text, View, StyleSheet, Pressable, FlatList, Alert,ActivityIndicator } from 'react-native';
 import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJobs } from '../../redux/thunks/job.thunks';
 
 const dataJob = [
   {
@@ -33,9 +36,13 @@ const dataJob = [
 const JobManager = () => {
 
   const navigation = useNavigation()
-  const handleOnpress = () => {
-    navigation.navigate('Kho');
-  }
+  const jobs = useSelector((state) => state.jobs.jobsData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchJobs());
+    console.log(jobs);
+  }, []);
 
   const onGotoUpdteTask = () => {
     navigation.navigate('UpdateTask');
@@ -56,19 +63,19 @@ const JobManager = () => {
       <View style={styles.flatListContainer}>
         <View style={styles.dateContainer}>
           <Text style={styles.textTitleItem}>Ngày tạo : </Text>
-          <Text style={styles.textDate}>{item.dateStart}</Text>
+          <Text style={styles.textDate}>{item.value.dateStart}</Text>
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.textTitleItem}>Hoàn thành trước ngày : </Text>
-          <Text style={styles.textDate}>{item.dateEnd}</Text>
+          <Text style={styles.textDate}>{item.value.dateEnd}</Text>
         </View>
         <View style={styles.receiveContainer}>
           <Text style={styles.textTitleItem}>Người nhận : </Text>
-          <Text style={styles.textDate}>{item.receive}</Text>
+          <Text style={styles.textDate}>{item.value.receiver}</Text>
         </View>
         <View>
           <Text style={[styles.textTitleItem, styles.textTitleDetail]}>Chi tiết công việc : </Text>
-          <Text style={styles.textDetail}>{item.detail}</Text>
+          <Text style={styles.textDetail}>{item.value.content}</Text>
         </View>
         <View style={styles.buttonActiveContainer}>
           <CustomButton style={styles.button} onPress={onGotoUpdteTask}>
@@ -84,7 +91,7 @@ const JobManager = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList data={dataJob}
+        <FlatList data={jobs}
           keyExtractor={item => item.key}
           renderItem={({ item, index }) => {
             return <FlatListItem item={item} index={index} />

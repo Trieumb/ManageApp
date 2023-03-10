@@ -14,6 +14,7 @@ export const loginThunk = createAsyncThunk(
       const user = res.user;
       const userId = res.user?.uid;
       const resultData = {userId: userId, user: user};
+      console.log(user);
       return resultData;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});

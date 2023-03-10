@@ -30,6 +30,10 @@ const InventoryNavigation = () => {
         tabBarActiveTintColor: Colors.PRIMARY,
         tabBarInactiveTintColor: Colors.DARKGRAY,
         headerShown: false,
+        tabBarStyle:{
+          height: 60,
+          backgroundColor: Colors.PRIMARY_100,
+       },
         tabBarLabelStyle: {
           fontSize: FontSize.BODY,
         }
