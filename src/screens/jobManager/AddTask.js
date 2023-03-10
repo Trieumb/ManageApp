@@ -4,14 +4,11 @@ import {
     StyleSheet,
     Text,
     Alert,
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    ImageBackground
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
 import CustomInput from '../../components/CustomInput';
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
@@ -74,7 +71,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.WHITE
     },
-   titleBody: {
+    titleBody: {
         color: Colors.PRIMARY,
         fontFamily: Fonts.POPPINS_BOLD,
         fontSize: FontSize.H5,
