@@ -3,7 +3,6 @@ import React, {useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import dayjs from 'dayjs';
-
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import {scaleUI} from '../../config/constants/ScaleUI';
