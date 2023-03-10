@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import FontSize from '../../config/constants/FontSize';
 import Colors from '../../config/constants/Colors';
 const InventoryManager = () => {
@@ -27,7 +27,7 @@ const InventoryManager = () => {
       </View>
     );
   };
-
+  const dataWarahouse = [];
   return (
     <View style={styles.flarListContainer}>
       <FlatList
