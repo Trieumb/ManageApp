@@ -8,8 +8,6 @@ import {isUserAuthenticatedSelector} from '../redux/selectors/auth.selector';
 
 export default RootNavigator = () => {
 
-  const {isSignedIn} = useSelector((state) => state.auth.isSignedIn)
-
   const authenticated = useSelector(isUserAuthenticatedSelector);
   console.log(authenticated);
   return (
