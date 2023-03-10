@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   aux: {
     fontSize: FontSize.BODY,
+    color: Colors.PRIMARY_900,
   },
   deleteContainer: {
     justifyContent: 'center',

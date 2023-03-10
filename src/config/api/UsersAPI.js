@@ -1,44 +1,55 @@
-import database from '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/database';
 
-export const getUserByUid = async uid => {
+const database = firebase.app().database(
+  //process.env.FIREBASE_REALTIME_URL,
+  'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
+);
+
+export const writeUserData = async ({uid, name, email, role}) => {
   try {
-    const res = await firestore().collection('users').doc(uid).get();
-    return res;
+    const data = await database.ref(`users/${uid}`).set({
+      name,
+      email,
+      role,
+    });
+    console.log('write data: ', data);
+    return data;
   } catch (error) {
-    let errorMessage = 'User not found!';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    throw new Error(errorMessage);
+    console.log(error);
+    throw error;
   }
 };
 
-export const createUserWithUid = async (uid, newUser) => {
+export const getUserInfoById = async ({uid}) => {
   try {
-    const res = await firestore().collection('users').doc(uid).set(newUser);
-    console.log('create user with id res: ', res);
-    return res;
+    const snapshot = await database.ref(`users/${uid}`).once('value');
+    var name = (snapshot.val() && snapshot.val().name) || 'Anonymous';
+    var email = (snapshot.val() && snapshot.val().email) || 'No email';
+    var role = (snapshot.val() && snapshot.val().role) || 'Anonymous';
+    const data = {uid, name, email, role};
+    console.log('get data: ', data);
+    return data;
   } catch (error) {
-    let errorMessage = 'Could not create new user!';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    throw new Error(errorMessage);
+    console.log(error);
+    throw error;
   }
 };
 
-export const updateUserById = async (uid, updatedUser) => {
+export const getAllUsers = async () => {
   try {
-    const res = await firestore()
-      .collection('users')
-      .doc(uid)
-      .update(updatedUser);
-    return res;
+    const snapshot = await database.ref('users').once('value');
+    const users = [];
+    snapshot.forEach(snapshot => {
+      users.push({
+        uid: snapshot.key,
+        name: snapshot.val().name,
+        email: snapshot.val().email,
+        role: snapshot.val().role,
+      });
+    });
+    return {users};
   } catch (error) {
-    let errorMessage = 'Could not update user!';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    throw new Error(errorMessage);
+    console.log('error', error);
+    throw error;
   }
 };
