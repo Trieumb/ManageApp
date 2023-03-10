@@ -15,10 +15,18 @@ import UserItem from './UserItem';
 import {useDispatch, useSelector} from 'react-redux';
 import {userListSelector} from '../../redux/selectors/users.selector';
 import {getAllUsersThunk} from '../../redux/thunks/user.thunk';
+import {useNavigation} from '@react-navigation/native';
 const UserManager = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const userList = useSelector(userListSelector);
-  console.log('userList', userList);
+  const handlePressCard = id => {
+    console.log('On press card', id);
+    navigation.navigate('EditUser');
+  };
+  const handlePressDelete = id => {
+    console.log('On press delete', id);
+  };
   useEffect(() => {
     dispatch(getAllUsersThunk());
   }, []);
@@ -26,13 +34,15 @@ const UserManager = () => {
     <View style={styles.container}>
       <FlatList
         data={userList}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.uid}
         renderItem={({item}) => (
           <UserItem
             name={item.name}
-            id={item.id}
+            id={item.uid}
             role={item.role}
             email={item.email}
+            onPressCard={handlePressCard}
+            onPressDelete={handlePressDelete}
           />
         )}
       />

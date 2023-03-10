@@ -4,25 +4,31 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
-const UserItem = ({id, name, email, role}) => {
+import {useNavigation} from '@react-navigation/native';
+const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
   return (
-    <View style={styles.itemContainer}>
-      <Icon name="user" size={80} color={Colors.PRIMARY} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.aux}>Email: {email}</Text>
-        <Text style={styles.aux}>Role: {role}</Text>
+    <TouchableOpacity
+      onPress={() => {
+        onPressCard(id);
+      }}>
+      <View style={styles.itemContainer}>
+        <Icon name="user" size={80} color={Colors.PRIMARY} />
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.aux}>Email: {email}</Text>
+          <Text style={styles.aux}>Role: {role}</Text>
+        </View>
+        <View style={styles.deleteContainer}>
+          <TouchableOpacity
+            style={styles.deleteIcon}
+            onPress={() => {
+              onPressDelete(id);
+            }}>
+            <Icon name="trash" size={24} color={Colors.WHITE} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.deleteContainer}>
-        <TouchableOpacity
-          style={styles.deleteIcon}
-          onPress={() => {
-            console.log('On Delete', id);
-          }}>
-          <Icon name="trash" size={24} color={Colors.WHITE} />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

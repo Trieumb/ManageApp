@@ -11,6 +11,7 @@ import {isUserAuthenticatedSelector} from '../redux/selectors/auth.selector';
 import {checkLoginThunk} from '../redux/thunks/auth.thunks';
 export default RootNavigator = () => {
   const dispatch = useDispatch();
+  const isSignedIn = useSelector(state => state.auth.isSignedIn);
   const authenticated = useSelector(isUserAuthenticatedSelector);
   useEffect(() => {
     dispatch(checkLoginThunk());

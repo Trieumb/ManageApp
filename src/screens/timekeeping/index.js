@@ -3,14 +3,15 @@ import React, {useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import dayjs from 'dayjs';
-
+import {useDispatch, useSelector} from 'react-redux';
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeSection from './TimeSection';
+import {userIdSelector} from '../../redux/selectors/auth.selector';
 
 // mock user id
-const userId = '45wU1ds665gllQ4TYciuABKrZYc2';
+//const userId = '45wU1ds665gllQ4TYciuABKrZYc2';
 
 const getDateNow = () => {
   return dayjs().format('YYYY-MM-DD');
@@ -19,7 +20,8 @@ const getDateNow = () => {
 const Timekeeping = () => {
   const [monthData, setMonthData] = useState([]);
   const [markedDatesData, setMarkedDatesData] = useState({});
-
+  const userId = useSelector(userIdSelector);
+  console.log('userId: ', userId);
   const workingDays = useMemo(() => {
     if (monthData?.length > 0) {
       return monthData.reduce((acc, curr) => {
