@@ -71,7 +71,7 @@ const TimeKeepingModal = ({
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => closeCheckDayModal(overtime)}>
-            <Text style={styles.modalButtonText}>Close</Text>
+            <Text style={styles.modalButtonText}>Đóng</Text>
           </TouchableOpacity>
         </View>
       </View>
