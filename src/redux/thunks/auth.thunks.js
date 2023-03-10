@@ -11,9 +11,8 @@ export const loginThunk = createAsyncThunk(
     try {
       console.log(data);
       const res = await loginWithEmail(data);
-      const user = res.user;
       const userId = res.user?.uid;
-      const resultData = {userId: userId, user: user};
+      const resultData = {userId};
       return resultData;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});
@@ -26,9 +25,8 @@ export const signupThunk = createAsyncThunk(
     try {
       console.log(data);
       const res = await signupWithEmail(data);
-      const user = res.user;
       const userId = res.user?.uid;
-      const resultData = {userId: userId, user: user};
+      const resultData = {userId};
       return resultData;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});
