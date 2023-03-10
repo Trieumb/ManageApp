@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,23 +12,16 @@ import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 
 import UserItem from './UserItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {userListSelector} from '../../redux/selectors/users.selector';
+import {getAllUsersThunk} from '../../redux/thunks/user.thunk';
 const UserManager = () => {
-  const initialUserList = [
-    {
-      id: 'id_1',
-      name: 'PHAN VAN MINH',
-      email: 'minhbka@gmail.com',
-      role: 'employee',
-    },
-    {
-      id: 'id_2',
-      name: 'NGUYEN VAN TRIEU',
-      email: 'minhbka@gmail.com',
-      role: 'admin',
-    },
-  ];
-  const [userList, setUserList] = useState(initialUserList);
-
+  const dispatch = useDispatch();
+  const userList = useSelector(userListSelector);
+  console.log('userList', userList);
+  useEffect(() => {
+    dispatch(getAllUsersThunk());
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList
