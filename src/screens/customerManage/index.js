@@ -13,6 +13,7 @@ import FooterCustom from '../../components/FooterCustom';
 import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
 import LineHeight from '../../config/constants/LineHeight';
 import { useNavigation } from '@react-navigation/native';
+import CustomSearchInput from '../../components/CustomSearchInput';
 
 const dataCustomer = [
   {
@@ -53,6 +54,7 @@ const CustomerManager = () => {
   const onGotoUpdteCustomer = () => {
     navigation.navigate('UpdateCustomer')
   }
+  
   const deleteCustomer = () => {
     Alert.alert('Alert', 'Bạn có muốn xóa không?', [
       {
@@ -99,13 +101,7 @@ const CustomerManager = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.search}>
-        <Ionicons name='search' size={20} color={Colors.PRIMARY} />
-        <TextInput
-          style={styles.inputSearch}
-          placeholder="Tìm kiếm"
-        />
-      </View>
+      <CustomSearchInput/>
       <View style={styles.flatListRender}>
         <FlatList data={dataCustomer}
           keyExtractor={item => item.key}
@@ -147,22 +143,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     justifyContent: "center",
-  },
-  search: {
-    flexDirection: "row",
-    height: 40,
-    backgroundColor: Colors.WHITE,
-    alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: Colors.PRIMARY,
-    borderRadius: 10,
-    paddingLeft: 10,
-    margin: 10
-  },
-  inputSearch: {
-    width: WINDOW_WITH - 60,
-    fontSize: FontSize.BODY,
-    lineHeight: LineHeight.BODY,
   },
   flatListContainer: {
     flexDirection: 'row',

@@ -1,13 +1,10 @@
-import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Fonts from '../config/constants/Fonts';
-import FontSize from '../config/constants/FontSize';
-import {StyleSheet} from 'react-native';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import {useDispatch, useSelector} from 'react-redux';
 import {isUserAuthenticatedSelector} from '../redux/selectors/auth.selector';
+
 import {checkLoginThunk} from '../redux/thunks/auth.thunks';
 export default RootNavigator = () => {
   const dispatch = useDispatch();
@@ -15,15 +12,15 @@ export default RootNavigator = () => {
   useEffect(() => {
     dispatch(checkLoginThunk());
   }, []);
+
+export default RootNavigator = () => {
+  const {isSignedIn} = useSelector((state) => state.auth.isSignedIn)
+  const authenticated = useSelector(isUserAuthenticatedSelector);
+  console.log(authenticated);
   return (
     <NavigationContainer>
-      {authenticated ? <MainNavigator /> : <AuthNavigator />}
+      {isSignedIn ? <MainNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };
-const styles = StyleSheet.create({
-  headerTitle: {
-    fontFamily: Fonts.POPPINS_BOLD,
-    fontSize: FontSize.BODY_18,
-  },
-});
+

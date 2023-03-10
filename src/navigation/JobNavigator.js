@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import JobManager from '../screens/jobManager';
-import {StyleSheet} from 'react-native';
 import AddTask from '../screens/jobManager/AddTask';
 import Colors from '../config/constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -24,6 +23,10 @@ const JobNavigation = () => {
         },
         tabBarActiveTintColor: Colors.PRIMARY,
         tabBarInactiveTintColor: Colors.DARKGRAY,
+        tabBarStyle:{
+           height: 60,
+           backgroundColor: Colors.PRIMARY_100,
+        },
         headerShown: false,
         tabBarLabelStyle: {
           fontSize: FontSize.BODY,
@@ -39,7 +42,3 @@ const JobNavigation = () => {
   );
 };
 export default JobNavigation;
-
-const styles = StyleSheet.create({
-  headerTitle: {},
-});

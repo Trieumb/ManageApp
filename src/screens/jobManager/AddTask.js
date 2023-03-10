@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     StyleSheet,
     Text,
     Alert,
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    ImageBackground
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -16,26 +13,47 @@ import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJobs, saveJobDataToFirebase } from '../../redux/thunks/job.thunks';
 
 const AddTask = () => {
+
+    const dispatch = useDispatch();
+
+    const [resetInput, setResetInput] = useState(false);
+
+    const handleResetInput = () => {
+        setResetInput(true);
+    }
+    useEffect(() => {
+        if (resetInput) {
+            setResetInput(false);
+        }
+    }, [resetInput]);
     const {
         control,
+        reset,
         formState: { errors },
         handleSubmit,
     } = useForm();
 
     const navigation = useNavigation();
     const addTask = (data) => {
-        Alert.alert(JSON.stringify(data));
+        dispatch(saveJobDataToFirebase(data));
+        handleResetInput();
+        dispatch(fetchJobs());
+        navigation.goBack();
     }
     const onGotoBack = () => {
-        navigation.navigate('JobManager')
+        navigation.goBack();
     }
     return (
         <View style={styles.container}>
             <ScrollView style={styles.body}>
                 <Text style={styles.titleBody}>Thêm kế hoạch</Text>
                 <CustomInput
+                    reset={reset}
+                    resetInput={resetInput}
                     name="dateStart"
                     placeholder="Ngày khởi tạo"
                     control={control}
@@ -74,9 +92,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.WHITE
     },
-   titleBody: {
+    titleBody: {
         color: Colors.PRIMARY,
-        fontFamily: Fonts.POPPINS_BOLD,
+        fontFamily: Fonts.POPPINS,
         fontSize: FontSize.H5,
         paddingVertical: 15,
     },
