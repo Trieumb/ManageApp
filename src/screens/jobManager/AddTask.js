@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
 import CustomInput from '../../components/CustomInput';
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
