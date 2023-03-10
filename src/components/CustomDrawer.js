@@ -40,13 +40,13 @@ const CustomDrawer = (props) => {
                 <View style={styles.footer}>
                     <Pressable style={styles.buttonFooter}>
                         <View style={styles.buttonItem}>
-                            <Ionicons name='logo-facebook' size={20} />
+                            <Ionicons name='logo-facebook' size={20} color={Colors.PRIMARY_400}/>
                             <Text style={styles.textFooter}>ThangMayHaNoi</Text>
                         </View>
                     </Pressable>
                     <Pressable style={styles.buttonFooter}>
                         <View style={styles.buttonItem}>
-                            <Ionicons name='exit-outline' size={20} />
+                            <Ionicons name='exit-outline' size={20} color={Colors.PRIMARY_400}/>
                             <Text style={styles.textFooter}>Đăng xuất</Text>
                         </View>
                     </Pressable>
@@ -85,16 +85,16 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     author: {
-        color: Colors.BLACK,
+        color: Colors.PRIMARY_600,
         fontFamily: Fonts.POPPINS_BOLD,
         fontSize: FontSize.BODY_18,
-        marginRight: 20
+        marginRight: 10
     },
     footer: {
         backgroundColor: "transparent",
         padding: 10,
         borderTopWidth: 1,
-        borderTopColor: Colors.SECONDARY,
+        borderTopColor: Colors.PRIMARY_200,
     },
     buttonFooter: {
         paddingVertical: 10,
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     textFooter: {
         fontSize: FontSize.BODY,
         fontFamily: Fonts.POPPINS_BOLD,
+        color: Colors.PRIMARY_600
 
     }
 })

@@ -4,22 +4,18 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import RadioGroup from 'react-native-radio-buttons-group';
-
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeSection from './TimeSection';
+import Api_URL from '../../config/api/Api_URL';
 
 // NOTE: PLEASE CHANGE IT WITH USERID FROM AUTH REDUX
 // mock user id
 const userId = '45wU1ds665gllQ4TYciuABKrZYc2';
 
-const db = firebase
-  .app()
-  .database(
-    'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
-  );
+const db = firebase.app().database(Api_URL);
 
 const radioButtonsData = [
   {

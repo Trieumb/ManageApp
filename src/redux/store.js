@@ -1,10 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authSlice from './reducers/auth.slice';
-import usersSlice from './reducers/user.slice';
+import jobSlice from './reducers/job.slice';
+//import {useSelector as rawUseSelector, TypedUseSelectorHook} from 'react-redux';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    users: usersSlice.reducer,
+    jobs: jobSlice.reducer,
   },
 });
+ export default store
+//export const useSelector = rawUseSelector;
