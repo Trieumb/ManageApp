@@ -4,12 +4,18 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import RadioGroup from 'react-native-radio-buttons-group';
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
+=======
+>>>>>>> b1391f3b6e59e3c1fdb8ad6272dc29e5771230ba
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import {scaleUI} from '../../config/constants/ScaleUI';
+<<<<<<< HEAD
 import { userIdSelector } from '../../redux/selectors/auth.selector';
+=======
+>>>>>>> b1391f3b6e59e3c1fdb8ad6272dc29e5771230ba
 import TimeSection from './TimeSection';
 
 
@@ -210,7 +216,7 @@ const Timekeeping = () => {
       .update({
         type: selectedOption.value,
       });
-      setSelectedDayData({...selectedDayData, type: selectedOption.value});
+    setSelectedDayData({...selectedDayData, type: selectedOption.value});
   };
 
   const onUpdateDate = () => {};
