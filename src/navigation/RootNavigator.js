@@ -12,7 +12,7 @@ export default RootNavigator = () => {
   console.log(authenticated);
   return (
     <NavigationContainer>
-      {isSignedIn ? <MainNavigator /> : <AuthNavigator />}
+      {authenticated ? <MainNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };
