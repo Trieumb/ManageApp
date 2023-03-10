@@ -1,5 +1,15 @@
 import auth from '@react-native-firebase/auth';
 import {getUserInfoById, getAllUsers, writeUserData} from './UsersAPI';
+export const getLoginStatus = async callback => {
+  try {
+    auth().onAuthStateChanged(user => {
+      return callback(user);
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 export const loginWithEmail = async data => {
   try {
