@@ -47,6 +47,12 @@ const SingUp = () => {
       <ScrollView style={styles.formSignin}>
         <Text style={styles.titleFormSignin}>Đăng Kí</Text>
         <CustomInput
+          name="name"
+          placeholder="Họ và tên"
+          control={control}
+          rules={{required: 'Họ và tên không để trống!'}}
+        />
+        <CustomInput
           name="email"
           placeholder="Email"
           control={control}

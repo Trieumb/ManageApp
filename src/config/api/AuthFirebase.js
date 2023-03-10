@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import {getUserInfoById, getAllUsers, writeUserData} from './UsersAPI';
 
 export const loginWithEmail = async data => {
   try {
@@ -27,6 +28,7 @@ export const signupWithEmail = async data => {
       data.email,
       data.password,
     );
+    await writeUserData(res.user?.uid, data.name, res.user?.email, 'employee');
     return res;
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {

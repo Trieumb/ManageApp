@@ -54,7 +54,7 @@ const InventoryManager = () => {
       </View>
     )
   };
-
+  const dataWarahouse = [];
   return (
     <View>
       <CustomSearchInput/>
