@@ -15,9 +15,7 @@ import Api_URL from '../../config/api/Api_URL';
 // mock user id
 const userId = '45wU1ds665gllQ4TYciuABKrZYc2';
 
-const db = firebase
-  .app()
-  .database(Api_URL);
+const db = firebase.app().database(Api_URL);
 
 const radioButtonsData = [
   {
