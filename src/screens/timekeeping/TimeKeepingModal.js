@@ -30,10 +30,10 @@ const TimeKeepingModal = ({
   };
 
   useEffect(() => {
-    if (selectedOption.value !== 'working') {
+    if (selectedOption?.value !== 'working') {
       setOvertime(0);
     }
-  }, [selectedOption.value]);
+  }, [selectedOption?.value]);
 
   return (
     <Modal
@@ -64,7 +64,7 @@ const TimeKeepingModal = ({
                 keyboardType="decimal-pad"
                 style={styles.input}
                 placeholder="Nhập số giờ tăng ca"
-                defaultValue={overtime.toString()}
+                defaultValue={overtime?.toString()}
               />
             </View>
           </View>
