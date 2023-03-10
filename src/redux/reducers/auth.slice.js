@@ -2,7 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 import {Alert} from 'react-native';
 
-import {loginThunk, signupThunk, logoutThunk} from '../thunks/auth.thunks';
+import {
+  checkLoginThunk,
+  loginThunk,
+  signupThunk,
+  logoutThunk,
+} from '../thunks/auth.thunks';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -14,6 +19,23 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      .addCase(checkLoginThunk.pending, state => {
+        state.isLoading = true;
+        state.isSignedIn = false;
+      })
+      .addCase(checkLoginThunk.fulfilled, (state, action) => {
+        if (action.payload) {
+          console.log('payload', action.payload);
+          state.userUid = action.payload.userId;
+          if (state.userUid) state.isSignedIn = true;
+          else state.isSignedIn = false;
+        }
+        state.isLoading = false;
+      })
+      .addCase(checkLoginThunk.rejected, (state, _) => {
+        state.isLoading = false;
+        state.isSignedIn = false;
+      })
       .addCase(loginThunk.pending, state => {
         state.isLoading = true;
         state.isSignedIn = false;
