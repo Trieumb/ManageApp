@@ -11,8 +11,7 @@ export const writeUserThunk = createAsyncThunk(
     try {
       console.log(data);
       const res = await writeUserData(data);
-
-      return data;
+      return res;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});
     }

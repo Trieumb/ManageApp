@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { saveJobDataToFirebase, fetchJobs } from '../thunks/job.thunks';
+import { saveJobDataToFirebase, fetchJobs, deleteJob} from '../thunks/job.thunks';
 
 const initialState = {
     jobsData: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const jobSlice = createSlice({
-    name: 'job',
+    name: 'jobs',
     initialState,
     reducers: {
     },
@@ -27,12 +27,20 @@ const jobSlice = createSlice({
         });
         builder.addCase(fetchJobs.pending, (state) => {
           state.isLoading = true;
-        })
+        });
         builder.addCase(fetchJobs.fulfilled, (state, action) => {
           state.isLoading = false;
           state.jobsData = action.payload;
-        })
+        });
         builder.addCase(fetchJobs.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+        });
+        builder.addCase(deleteJob.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.jobsData = action.payload;
+        });
+        builder.addCase(deleteJob.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.error.message;
         });

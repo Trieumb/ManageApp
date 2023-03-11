@@ -1,26 +1,21 @@
 import {firebase} from '@react-native-firebase/database';
 import dayjs from 'dayjs';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import RadioGroup from 'react-native-radio-buttons-group';
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import {scaleUI} from '../../config/constants/ScaleUI';
+import TimeKeepingModal from './TimeKeepingModal';
 import TimeSection from './TimeSection';
-
-
-// const userId = useSelector(userIdSelector);
-
-const userId = "c9GKUPPv1aQ3gHb1hqUethHLMAo2";
-console.log(userId);
+import { userIdSelector } from '../../redux/selectors/auth.selector';
+import { useSelector } from 'react-redux';
+import Api_URL from '../../config/api/Api_URL';
 
 const db = firebase
   .app()
-  .database(
-    'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
-  );
+  .database( Api_URL);
 
 const radioButtonsData = [
   {
@@ -45,40 +40,67 @@ const radioButtonsData = [
   },
 ];
 
-const getDateNow = () => {
-  return dayjs().format('YYYY-MM-DD');
-};
-
 const Timekeeping = () => {
+
+  const userId = useSelector(userIdSelector);
+
   const [monthData, setMonthData] = useState([]);
   const [selectedDayData, setSelectedDayData] = useState({});
   const [markedDatesData, setMarkedDatesData] = useState({});
   const [isCheckDayModalVisible, setIsCheckDayModalVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState({});
+  const [selectedDay, setSelectedDay] = useState({});
+  const [initRadioButtonsData, setInitRadioButtonsData] =
+    useState(radioButtonsData);
 
-  const getInitSelectedRadioBtn = useCallback(
-    () =>
-      radioButtonsData.map(item => {
-        return item.value === selectedDayData?.type
-          ? {...item, selected: true}
-          : item;
-      }),
-    [selectedDayData],
-  );
-
-  const [radioButtons, setRadioButtons] = useState(getInitSelectedRadioBtn);
+  const [radioButtonsArrayState, setRadioButtonsArrayState] = useState([]);
 
   useEffect(() => {
-    if (isCheckDayModalVisible) {
-      console.log('run 72');
-      setRadioButtons(getInitSelectedRadioBtn);
-    }
-  }, [isCheckDayModalVisible]);
+    console.log(userId);
+    const checkAndCreateMonthData = async () => {
+      const newDate = dayjs().format('YYYY-MM');
+
+      const data = await db
+        .ref(`timekeeping/${userId}/${newDate}`)
+        .once('value');
+      let monthResData = data.val();
+
+      if (!monthResData) {
+        const numDays = dayjs(
+          `${dayjs().get('year')}-${dayjs().get('month') + 1}`,
+          'YYYY-MM',
+        ).daysInMonth();
+
+        monthResData = [];
+
+        for (let i = 0; i < numDays; i++) {
+          monthResData.push({
+            day: i + 1,
+            overtime: 0,
+            type: 'working',
+          });
+        }
+
+        await db.ref(`timekeeping/${userId}/${newDate}`).set(monthResData);
+      }
+
+      const transformMonthData = monthResData.reduce((acc, curr) => {
+        acc[dayjs(`${newDate}-${curr.day}`).format('YYYY-MM-DD')] = {
+          selected: true,
+          selectedColor: TIME_KEEPING_COLORS[curr?.type],
+        };
+        return acc;
+      }, {});
+
+      setMarkedDatesData(transformMonthData);
+      setMonthData(monthResData);
+    };
+    checkAndCreateMonthData();
+  }, []);
 
   const workingDays = useMemo(() => {
     if (monthData?.length > 0) {
       return monthData.reduce((acc, curr) => {
-        if (curr.type === 'working') {
+        if (curr?.type === 'working') {
           acc++;
         }
         return acc;
@@ -90,7 +112,7 @@ const Timekeeping = () => {
   const absentDays = useMemo(() => {
     if (monthData?.length > 0) {
       return monthData.reduce((acc, curr) => {
-        if (curr.type === 'off') {
+        if (curr?.type === 'off') {
           acc++;
         }
         return acc;
@@ -102,7 +124,7 @@ const Timekeeping = () => {
   const leaveDays = useMemo(() => {
     if (monthData?.length > 0) {
       return monthData.reduce((acc, curr) => {
-        if (curr.type === 'leave') {
+        if (curr?.type === 'leave') {
           acc++;
         }
         return acc;
@@ -114,7 +136,7 @@ const Timekeeping = () => {
   const halfWorkingDays = useMemo(() => {
     if (monthData?.length > 0) {
       return monthData.reduce((acc, curr) => {
-        if (curr.type === 'halfday') {
+        if (curr?.type === 'halfday') {
           acc++;
         }
         return acc;
@@ -123,28 +145,118 @@ const Timekeeping = () => {
     return 0;
   }, [monthData]);
 
-  const handleMonthChange = ({year, month}) => {
-    const newDate = dayjs(`${year}-${month}`).format('YYYY-MM');
+  const totalOvertime = useMemo(() => {
+    if (monthData?.length > 0) {
+      return monthData.reduce((acc, curr) => {
+        acc += curr.overtime;
+        return acc;
+      }, 0);
+    }
+    return 0;
+  }, [monthData]);
 
-    db.ref(`timekeeping/${userId}/${newDate}`).on('value', snapshot => {
-      if (snapshot?.val()?.length > 0) {
-        const transformMonthData = snapshot?.val()?.reduce((acc, curr) => {
-          acc[dayjs(`${newDate}-${curr.day}`).format('YYYY-MM-DD')] = {
-            selected: true,
-            selectedColor: TIME_KEEPING_COLORS[curr.type],
-          };
-          return acc;
-        }, {});
-        setMarkedDatesData(transformMonthData);
-      } else {
-        setMarkedDatesData({});
+  const handleMonthChange = async date => {
+    const newDate = dayjs(`${date.year}-${date.month}`).format('YYYY-MM');
+
+    const data = await db.ref(`timekeeping/${userId}/${newDate}`).once('value');
+    let monthResData = data.val();
+
+    if (!monthResData) {
+      const numDays = dayjs(
+        `${date.year}-${date.month}`,
+        'YYYY-MM',
+      ).daysInMonth();
+
+      monthResData = [];
+
+      for (let i = 0; i < numDays; i++) {
+        monthResData.push({
+          day: i + 1,
+          overtime: 0,
+          type: 'working',
+        });
       }
-      setMonthData(snapshot?.val());
-    });
+
+      await db.ref(`timekeeping/${userId}/${newDate}`).set(monthResData);
+    }
+
+    const transformMonthData = monthResData.reduce((acc, curr) => {
+      acc[dayjs(`${newDate}-${curr.day}`).format('YYYY-MM-DD')] = {
+        selected: true,
+        selectedColor: TIME_KEEPING_COLORS[curr?.type],
+      };
+      return acc;
+    }, {});
+
+    setMarkedDatesData(transformMonthData);
+    setMonthData(monthResData);
   };
 
+  const handleOpenModal = useCallback(() => {
+    setIsCheckDayModalVisible(true);
+  }, []);
+
+  const handleUpdateSelectedDayData = useCallback(
+    async (radioButtonsArray, overtimeValue) => {
+      console.log('202: ', overtimeValue);
+      // lâý type được selectedselecFirebase
+      const selectedOption = radioButtonsArray.find(
+        item => item.selected === true,
+      );
+
+      if (!selectedOption) {
+        return;
+      }
+
+      // Tạo mới date date nếu chưa có trên Firebase
+      if (!selectedDayData) {
+        await db
+          .ref(
+            `timekeeping/${userId}/${selectedDay.year}-${
+              selectedDay.month < 10
+                ? '0' + selectedDay.month
+                : selectedDay.month
+            }/${selectedDay.day - 1}`,
+          )
+          .set({
+            day: selectedDay.day,
+            type: selectedOption.value,
+            overtime: selectedOption.value === 'working' ? overtimeValue : 0,
+          });
+
+        setSelectedDayData({...selectedDayData, type: selectedOption.value});
+
+        return;
+      }
+
+      // cập nhật trên Firebase
+      await db
+        .ref(
+          `timekeeping/${userId}/${selectedDay.year}-${
+            selectedDay.month < 10 ? '0' + selectedDay.month : selectedDay.month
+          }/${selectedDay.day - 1}`,
+        )
+        .update({
+          type: selectedOption.value,
+          overtime: selectedOption.value === 'working' ? overtimeValue : 0,
+        });
+
+      await handleMonthChange(selectedDay);
+
+      setSelectedDayData({...selectedDayData, type: selectedOption.value});
+    },
+    [selectedDay, selectedDayData],
+  );
+
+  const handleCloseModal = useCallback(
+    async overtimeValue => {
+      await handleUpdateSelectedDayData(radioButtonsArrayState, overtimeValue);
+      setIsCheckDayModalVisible(false);
+    },
+    [handleUpdateSelectedDayData, radioButtonsArrayState],
+  );
+
   const showCheckDayModal = async date => {
-    console.log('checkday');
     const data = await db
       .ref(
         `timekeeping/${userId}/${date.year}-${
@@ -159,61 +271,23 @@ const Timekeeping = () => {
       setSelectedDayData(data.val());
     }
 
-    setSelectedDate(date);
-    setIsCheckDayModalVisible(true);
-  };
-
-  const closeCheckDayModal = () => {
-    setIsCheckDayModalVisible(false);
-    setSelectedDayData({});
-  };
-
-  const onPressRadioButton = async radioButtonsArray => {
-    // lâý type được selectedselecFirebase
-    const selectedOption = radioButtonsArray.find(
-      item => item.selected === true,
-    );
-
-    if (!selectedOption) {
-      return;
-    }
-
-    // Tạo mới date date nếu chưa có trên Firebase
-    if (!selectedDayData) {
-      await db
-        .ref(
-          `timekeeping/${userId}/${selectedDate.year}-${
-            selectedDate.month < 10
-              ? '0' + selectedDate.month
-              : selectedDate.month
-          }/${selectedDate.day - 1}`,
-        )
-        .set({
-          day: selectedDate.day,
-          type: selectedOption.value,
-          overtime: 0,
-        });
-      setSelectedDayData({...selectedDayData, type: selectedOption.value});
-
-      return;
-    }
-
-    // cập nhật trên Firebase
-    await db
-      .ref(
-        `timekeeping/${userId}/${selectedDate.year}-${
-          selectedDate.month < 10
-            ? '0' + selectedDate.month
-            : selectedDate.month
-        }/${selectedDate.day - 1}`,
-      )
-      .update({
-        type: selectedOption.value,
+    if (data && data?.val()) {
+      const newInitRadioButtonsData = radioButtonsData.map(item => {
+        return item.value === data.val().type
+          ? {...item, selected: true}
+          : {...item, selected: false};
       });
-    setSelectedDayData({...selectedDayData, type: selectedOption.value});
+
+      setInitRadioButtonsData(newInitRadioButtonsData);
+    }
+
+    setSelectedDay(date);
+    handleOpenModal();
   };
 
-  const onUpdateDate = () => {};
+  const onPressRadioButton = radioButtonsArray => {
+    setRadioButtonsArrayState(radioButtonsArray);
+  };
 
   return (
     <View style={styles.screen}>
@@ -247,35 +321,19 @@ const Timekeeping = () => {
         />
         <TimeSection
           title="Số giờ tăng ca"
-          value={46.5}
+          value={totalOvertime}
           color={Colors.PRIMARY}
         />
       </Card>
-
-      <Modal
-        visible={isCheckDayModalVisible}
-        onRequestClose={() => setIsCheckDayModalVisible(false)}
-        transparent>
-        <TouchableOpacity
-          style={styles.modalBackground}
-          onPress={() => closeCheckDayModal()}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.selectedDate}>
-              Date: {selectedDate.dateString}
-            </Text>
-            <View style={styles.radioContainer}>
-              <RadioGroup
-                containerStyle={styles.radio}
-                radioButtons={radioButtons}
-                onPress={onPressRadioButton}
-              />
-            </View>
-            <TouchableOpacity style={styles.modalButton} onPress={onUpdateDate}>
-              <Text style={styles.modalButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      </Modal>
+      {/* Modal */}
+      <TimeKeepingModal
+        isCheckDayModalVisible={isCheckDayModalVisible}
+        closeCheckDayModal={handleCloseModal}
+        selectedDayData={selectedDayData}
+        selectedDay={selectedDay}
+        initRadioButtonsData={initRadioButtonsData}
+        onPressRadioButton={onPressRadioButton}
+      />
     </View>
   );
 };

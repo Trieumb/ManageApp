@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -12,12 +12,20 @@ import {
     DrawerContentScrollView,
     DrawerItemList
 } from '@react-navigation/drawer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { logoutThunk } from "../redux/thunks/auth.thunks";
+import { useDispatch } from "react-redux";
 
 const CustomDrawer = (props) => {
+
+    const dispatch = useDispatch();
+    const handlePress = () => {
+        dispatch(logoutThunk());
+        console.log("LogedOut Success!");
+    }
     return (
         <>
             <StatusBar
@@ -30,7 +38,7 @@ const CustomDrawer = (props) => {
                     <ImageBackground
                         style={styles.imageBakground}>
                         <Text style={styles.author}>Xin chào! Trieumb</Text>
-                        <Image source={{ uri: 'https://www.pngitem.com/pimgs/m/523-5236058_nh-icon-hot-hnh-hd-png-download.png' }}
+                        <Image source={require('../assets/images/avata.png')}
                             style={styles.image} />
                     </ImageBackground>
                     <View style={styles.listDrawerContainer}>
@@ -44,7 +52,7 @@ const CustomDrawer = (props) => {
                             <Text style={styles.textFooter}>ThangMayHaNoi</Text>
                         </View>
                     </Pressable>
-                    <Pressable style={styles.buttonFooter}>
+                    <Pressable style={styles.buttonFooter} onPress={handlePress}>
                         <View style={styles.buttonItem}>
                             <Ionicons name='exit-outline' size={20} color={Colors.PRIMARY_400}/>
                             <Text style={styles.textFooter}>Đăng xuất</Text>

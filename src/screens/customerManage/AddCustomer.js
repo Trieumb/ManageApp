@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     StyleSheet,
     Text,
-    Alert,
     ScrollView,
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
@@ -13,26 +12,43 @@ import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 import { useNavigation } from '@react-navigation/native';
+import { fetchCustomers, saveCustomerData } from '../../redux/thunks/customer.thunk';
+import { useDispatch } from 'react-redux';
 
 const AddCustomer = () => {
+
+    const dispatch = useDispatch();
+    const [resetInput, setResetInput] = useState(false);
+
+    const handleResetInput = () => {
+        setResetInput(true);
+    }
+    useEffect(() => {
+        if (resetInput) {
+            setResetInput(false);
+        }
+    }, [resetInput]);
     const {
         control,
+        reset,
         formState: { errors },
         handleSubmit,
     } = useForm();
 
     const navigation = useNavigation();
     const addCustomer = (data) => {
-        Alert.alert(JSON.stringify(data));
-    }
-    const onGotoBack = () => {
-        navigation.navigate('CustomerNavigator')
+        dispatch(saveCustomerData(data));
+        handleResetInput();
+        dispatch(fetchCustomers());
+        navigation.goBack();
     }
     return (
         <View style={styles.container}>
             <ScrollView style={styles.body}>
                 <Text style={styles.titleBody}>Thêm khách hàng</Text>
                 <CustomInput
+                    reset={reset}
+                    resetInput={resetInput}
                     name="name"
                     placeholder="Tên khách hàng"
                     control={control}
@@ -46,9 +62,10 @@ const AddCustomer = () => {
                 />
                 <CustomInput
                     name="phone"
+                    keyboardType="numeric"
                     placeholder="Số ĐT"
                     control={control}
-                    rules={{require: 'Không để trống!'}}
+                    rules={{ require: 'Không để trống!' }}
                 />
                 <CustomInput
                     name="installationDate"
@@ -56,13 +73,13 @@ const AddCustomer = () => {
                     control={control}
                     rules={{ required: 'Không để trống!' }}
                 />
-                 <CustomInput
+                <CustomInput
                     name="category"
                     placeholder="Loại thang"
                     control={control}
                     rules={{ required: 'Không để trống!' }}
                 />
-                 <CustomInput
+                <CustomInput
                     name="description"
                     placeholder="Mô tả"
                     control={control}

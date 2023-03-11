@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text, View, StyleSheet, TextInput,
   FlatList, Alert, Pressable, Modal, ScrollView
@@ -10,128 +10,114 @@ import FontSize from '../../config/constants/FontSize';
 import CustomButton from '../../components/CustomButton';
 import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import FooterCustom from '../../components/FooterCustom';
-import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
-import LineHeight from '../../config/constants/LineHeight';
 import { useNavigation } from '@react-navigation/native';
 import CustomSearchInput from '../../components/CustomSearchInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCustomers  , deleteCustomer } from '../../redux/thunks/customer.thunk';
+import { customersList } from '../../redux/selectors/customer.selector';
 
-const dataCustomer = [
-  {
-    "key": "56gdffdgdfg",
-    "name": "Anh Dũng",
-    "phone": "0972604961",
-    "address": "Phủ Lý Hà Nam",
-    "installationDate": "12/11/2019",
-    "category": "Thang tời",
-    "description": " Thang tời thực phẩm, tải trọng 150kg, ray 5k, bảng gọi trên khung bao",
-
-  },
-  {
-    "key": "56gdffdgdfghfhgfhfgg",
-    "name": "Chị Minh",
-    "phone": "0971 967 168",
-    "address": "12L05 KĐT Định Công - Hà Nội",
-    "installationDate": "12/04/2020",
-    "category": "Thang tời",
-    "description": " Thang tời thuốc thành phẩm, tải trọng 250kg,5 stop, ray 8k, bảng gọi thang máy 5 nút",
-  },
-  {
-    "key": "56gdffdgdfghooofhgfhfgg",
-    "name": "Phạm Hương",
-    "phone": "0979 188 166",
-    "address": "Sapa - Lào Cai",
-    "installationDate": "08/06/2022",
-    "category": "Thang đối trọng",
-    "description": " Thang tời thực phẩm, tải trọng 150kg, ray 5k, 3 stop",
-  }
-]
 
 const CustomerManager = () => {
 
-  const [isModaVisible, setIsModaVisible] = useState(false);
+  const [modaVisible, setModaVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const customers = useSelector((state) => state.customers.customersData)
+
+  useEffect(() => {
+    dispatch(fetchCustomers());
+    console.log(customers);
+  }, [dispatch])
 
   const onGotoUpdteCustomer = () => {
     navigation.navigate('UpdateCustomer')
   }
-  
-  const deleteCustomer = () => {
-    Alert.alert('Alert', 'Bạn có muốn xóa không?', [
+
+  const handleDeleteCustomer = (id) => {
+    Alert.alert('Xóa dữ liệu', 'Bạn có muốn xóa không?', [
       {
         text: 'Thoát',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ]);
+      { text: 'OK', onPress: () => dispatch(deleteCustomer(id)) },
+    ],
+      { cancelable: false });
+    dispatch(fetchCustomers());
   }
 
+  const showModal = (item) => {
+    setSelectedItem(item);
+    setModaVisible(true);
+  }; 
 
-  const FlatListItem = ({ item, index }) => {
+  const FlatListItem = ({ item, showModal }) => {
     return (
       <View style={styles.flatListContainer}>
         <ScrollView>
           <View style={styles.dateContainer}>
             <Text style={styles.textTitleItem}>Tên khách hàng: </Text>
-            <Text style={styles.textDate}>{item.name}</Text>
+            <Text style={styles.textDate}>{item.value.name}</Text>
           </View>
           <View style={styles.dateContainer}>
             <Text style={styles.textTitleItem}>Địa chỉ : </Text>
-            <Text style={styles.textDate}>{item.address}</Text>
+            <Text style={styles.textDate}>{item.value.address}</Text>
           </View>
           <View style={styles.receiveContainer}>
             <Text style={styles.textTitleItem}>Số ĐT : </Text>
-            <Text style={styles.textDate}>{item.phone}</Text>
+            <Text style={styles.textDate}>{item.value.phone}</Text>
           </View>
           <View style={styles.buttonActiveContainer}>
-          <CustomButton style={styles.button} onPress={onGotoUpdteCustomer}>
-            Sửa
-          </CustomButton>
-          <CustomButton style={styles.button} onPress={deleteCustomer}>
-            Xóa
-          </CustomButton>
-        </View>
+            <CustomButton style={styles.button} onPress={onGotoUpdteCustomer}>
+              Sửa
+            </CustomButton>
+            <CustomButton style={styles.button} onPress={() => handleDeleteCustomer(item.id)}>
+              Xóa
+            </CustomButton>
+          </View>
         </ScrollView>
-        <Pressable onPress={() => setIsModaVisible(true)}>
+        <Pressable onPress={() => showModal(item)}>
           <IconMeterial name='account-details' size={20} color={Colors.PRIMARY} />
         </Pressable>
-      </View>
-    )
-  };
-
-  return (
-    <View style={styles.container}>
-      <CustomSearchInput/>
-      <View style={styles.flatListRender}>
-        <FlatList data={dataCustomer}
-          keyExtractor={item => item.key}
-          renderItem={({ item, index }) => {
-            return <FlatListItem item={item} index={index} />
-          }}>
-        </FlatList>
-      </View>
-      <Modal
+        <Modal
         animationType="fade"
-        visible={isModaVisible}
-        onRequestClose={() => setIsModaVisible(false)}>
+        visible={modaVisible}
+        onRequestClose={() => setModaVisible(false)}>
         <View style={styles.modalHeader}>
-          <Pressable style={styles.buttonBack} onPress={() => setIsModaVisible(!isModaVisible)}>
+          <Pressable style={styles.buttonBack} onPress={() => setModaVisible(false)}>
             <Ionicons name="chevron-back" size={20} style={styles.icon} />
             <Text style={styles.textModalHeader}>Quay lại</Text>
           </Pressable>
         </View>
         <ScrollView style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalItem}>Tên khách hàng : {dataCustomer[1].name}</Text>
-            <Text style={styles.modalItem}>Địa chỉ : {dataCustomer[1].address}</Text>
-            <Text style={styles.modalItem}>Số ĐT: {dataCustomer[1].phone}</Text>
-            <Text style={styles.modalItem}>Ngày lắp đặt: {dataCustomer[1].installationDate}</Text>
-            <Text style={styles.modalItem}>Loại thang: {dataCustomer[1].category}</Text>
-            <Text style={styles.modalItem}>Mô tả: {dataCustomer[1].description}</Text>
+            <Text style={styles.modalItem}>Tên khách hàng : {selectedItem && selectedItem.value.name}</Text>
+            <Text style={styles.modalItem}>Địa chỉ : {selectedItem && selectedItem.value.address}</Text>
+            <Text style={styles.modalItem}>Số ĐT: {selectedItem && selectedItem.value.phone}</Text>
+            <Text style={styles.modalItem}>Ngày lắp đặt: {selectedItem && selectedItem.value.installationDate}</Text>
+            <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.value.category}</Text>
+            <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.value.description}</Text>
           </View>
         </ScrollView>
         <FooterCustom />
       </Modal>
+      </View>
+    )
+  };
+
+  return (
+    <View style={styles.container}>
+      <CustomSearchInput />
+      <View style={styles.flatListRender}>
+        <FlatList data={customers}
+          keyExtractor={item => item.id}
+          renderItem={({ item, index }) => {
+            return <FlatListItem item={item} index={index} showModal={showModal} />
+          }}>
+        </FlatList>
+      </View>
+     
     </View>
   )
 }
@@ -190,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 5
   },
-    // modal
+  // modal
   modalContainer: {
     flex: 1,
   },
@@ -210,7 +196,7 @@ const styles = StyleSheet.create({
   modalHeader: {
     height: '7%',
     padding: 15,
-    backgroundColor: Colors.HEADER ,
+    backgroundColor: Colors.HEADER,
   },
   buttonBack: {
     flexDirection: 'row',

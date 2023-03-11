@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import InventoryManager from '../screens/inventoryManager';
-import GoodsReceived from '../screens/inventoryManager/GoodsReceived';
+import GoodsReceived from '../screens/inventoryManager/googdsReceived/GoodsReceived';
 import GoodsDelivery from '../screens/inventoryManager/GoodsDelivery';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../config/constants/Colors';
@@ -38,7 +38,7 @@ const InventoryNavigation = () => {
           fontSize: FontSize.BODY,
         }
       })}>
-      <Tab.Screen name="Kho" component={InventoryManager} />
+      <Tab.Screen name="Kho" component={InventoryManager}/>
       <Tab.Screen
         name="Nhập kho"
         component={GoodsReceived}

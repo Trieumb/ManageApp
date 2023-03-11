@@ -8,6 +8,7 @@ import Fonts from '../config/constants/Fonts';
 
 const CustomInput = ({
   resetInput,
+  keyboardType,
   reset,
   control,
   name,
@@ -34,6 +35,7 @@ const CustomInput = ({
               {borderColor: error ? 'red' : Colors.SECONDARY},
             ]}>
             <TextInput
+              keyboardType={keyboardType}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}

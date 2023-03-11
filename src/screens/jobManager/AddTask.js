@@ -44,9 +44,6 @@ const AddTask = () => {
         dispatch(fetchJobs());
         navigation.goBack();
     }
-    const onGotoBack = () => {
-        navigation.goBack();
-    }
     return (
         <View style={styles.container}>
             <ScrollView style={styles.body}>

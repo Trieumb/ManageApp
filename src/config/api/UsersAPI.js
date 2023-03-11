@@ -1,7 +1,6 @@
 import {firebase} from '@react-native-firebase/database';
 
 const database = firebase.app().database(
-  //process.env.FIREBASE_REALTIME_URL,
   'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
 );
 

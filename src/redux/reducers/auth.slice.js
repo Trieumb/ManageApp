@@ -14,7 +14,6 @@ const authSlice = createSlice({
     userUid: '',
     isSignedIn: false,
     isLoading: false,
-    //user: null,
   },
   reducers: {},
   extraReducers: builder => {
@@ -43,7 +42,6 @@ const authSlice = createSlice({
       .addCase(loginThunk.fulfilled, (state, action) => {
         if (action.payload) {
           state.userUid = action.payload.userId;
-          //state.user = action.payload.user;
           state.isSignedIn = true;
         }
         state.isLoading = false;
@@ -60,7 +58,6 @@ const authSlice = createSlice({
       .addCase(signupThunk.fulfilled, (state, action) => {
         if (action.payload) {
           state.userUid = action.payload.userId;
-          //state.user = action.payload.user;
           state.isSignedIn = true;
         }
         state.isLoading = false;

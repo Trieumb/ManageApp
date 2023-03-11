@@ -9,7 +9,7 @@ export const isUserAuthenticatedSelector = createSelector(
   },
 );
 export const userIdSelector = createSelector(authSelector, auth => {
-  return auth.userId;
+  return auth.userUid;
 });
 
 export const errorSelector = createSelector(authSelector, auth => {
