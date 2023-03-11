@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
 import InventoryManager from '../screens/inventoryManager';
 import GoodsReceived from '../screens/inventoryManager/GoodsReceived';
 import GoodsDelivery from '../screens/inventoryManager/GoodsDelivery';
@@ -31,6 +30,10 @@ const InventoryNavigation = () => {
         tabBarActiveTintColor: Colors.PRIMARY,
         tabBarInactiveTintColor: Colors.DARKGRAY,
         headerShown: false,
+        tabBarStyle:{
+          height: 60,
+          backgroundColor: Colors.PRIMARY_100,
+       },
         tabBarLabelStyle: {
           fontSize: FontSize.BODY,
         }
@@ -50,9 +53,3 @@ const InventoryNavigation = () => {
   )
 }
 export default InventoryNavigation;
-
-const styles = StyleSheet.create({
-  headerTitle: {
-
-  }
-})

@@ -28,6 +28,7 @@ const UserManager = () => {
     console.log('On press delete', id);
   };
   useEffect(() => {
+    console.log('getAllUsersThunk');
     dispatch(getAllUsersThunk());
   }, []);
   return (

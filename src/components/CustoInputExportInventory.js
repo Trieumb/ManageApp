@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet,TextInput, Pressable} from 'react-native';
 import Colors from '../config/constants/Colors';
 import Fonts from "../config/constants/Fonts";
 import FontSize from "../config/constants/FontSize";
 
 
-const InputCustomExportInventory = ({ setCustomInputs, customInputs }) => {
+const InputCustomExportInventory = () => {
 
+    const [customInputs, setCustomInputs] = useState([]);
+    
     const handleAddCustomInput = () => {
         const newCustomInput = { id: customInputs.length + 1, no: 'STT', code: 'Mã VT', name: 'Tên VT', unit: 'Đơn vị', quantity: 'Số lượng' };
         const newCustomInputs = [...customInputs, newCustomInput];
@@ -27,7 +29,7 @@ const InputCustomExportInventory = ({ setCustomInputs, customInputs }) => {
                         style={styles.inputNo}
                         value={customInput.no}
                         placeholder={customInput.no}
-                        onChangeText={text => handleInputChange(text, customInput.id, 'no')}
+                        onChangeText={text => handleInputChange(text, customInput.no, 'no')}
                     />
                     <TextInput
                         style={styles.inputCode}
@@ -42,7 +44,7 @@ const InputCustomExportInventory = ({ setCustomInputs, customInputs }) => {
                     <TextInput
                         style={styles.inputUnit}
                         value={customInput.unit}
-                        onChangeText={text => handleInputChange(text, customInput.name, 'unit')}
+                        onChangeText={text => handleInputChange(text, customInput.unit, 'unit')}
                     />
                     <TextInput
                         style={styles.inputQuantity}

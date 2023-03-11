@@ -4,7 +4,7 @@ import BigCustomButton from '../../components/BigCustomButton';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from  'react-native-vector-icons/Ionicons';
 import InputCustomExportInventory from '../../components/CustoInputExportInventory';
 
 const GoodsDelivery = () => {

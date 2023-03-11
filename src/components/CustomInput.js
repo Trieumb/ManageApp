@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {WINDOW_WITH} from '../config/constants/DimensionsWindown';
@@ -7,12 +7,20 @@ import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
 
 const CustomInput = ({
+  resetInput,
+  reset,
   control,
   name,
   rules = {},
   placeholder,
   secureTextEntry,
 }) => {
+  useEffect(() => {
+    if (resetInput) {
+      reset();
+    }
+  }, [resetInput]);
+
   return (
     <Controller
       control={control}

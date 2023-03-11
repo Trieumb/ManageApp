@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     titleBody: {
-        fontFamily: Fonts.POPPINS_BOLD,
+        fontFamily: Fonts.POPPINS,
         fontSize: FontSize.H5,
         paddingVertical: 15,
         color: Colors.PRIMARY
