@@ -41,6 +41,7 @@ const authSlice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         if (action.payload) {
+          console.log('payload', action.payload);
           state.userUid = action.payload.userId;
           state.isSignedIn = true;
         }
