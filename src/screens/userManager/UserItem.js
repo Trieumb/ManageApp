@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
@@ -7,7 +13,7 @@ import Colors from '../../config/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => {
         onPressCard(id);
       }}>
@@ -28,7 +34,7 @@ const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

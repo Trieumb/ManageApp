@@ -34,6 +34,15 @@ const EditUser = () => {
         <CustomButtonBack onPress={onGotoBack} />
         <Text style={styles.textHeader}>Cập nhật người dùng</Text>
       </ImageBackground>
+      <View>
+        <Text>Name</Text>
+      </View>
+      <View>
+        <Text>Email</Text>
+      </View>
+      <View>
+        <Text>Role</Text>
+      </View>
       <ScrollView style={styles.body}>
         <BigCustomButton disable={false} onPress={() => {}}>
           Xác nhận

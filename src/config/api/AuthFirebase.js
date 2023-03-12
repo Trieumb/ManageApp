@@ -51,13 +51,13 @@ export const signupWithEmail = async data => {
   }
 };
 
-export const resetPasswordWithEmail = async email => {
+export const resetPasswordWithEmail = async data => {
   try {
-    const res = await auth().sendPasswordResetEmail(email);
+    const res = await auth().sendPasswordResetEmail(data.email.trim());
     return res;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw error;
     }
   }
 };

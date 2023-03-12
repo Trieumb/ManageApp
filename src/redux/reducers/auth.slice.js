@@ -7,6 +7,7 @@ import {
   loginThunk,
   signupThunk,
   logoutThunk,
+  resetPasswordThunk,
 } from '../thunks/auth.thunks';
 const authSlice = createSlice({
   name: 'auth',
@@ -14,7 +15,7 @@ const authSlice = createSlice({
     userUid: '',
     isSignedIn: false,
     isLoading: false,
-    //user: null,
+    isEmailSent: false,
   },
   reducers: {},
   extraReducers: builder => {
@@ -69,12 +70,35 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSignedIn = false;
       })
+      .addCase(logoutThunk.pending, state => {
+        state.isLoading = true;
+        state.isSignedIn = true;
+      })
 
       .addCase(logoutThunk.fulfilled, state => {
         state.isSignedIn = false;
         state.isLoading = false;
       })
       .addCase(logoutThunk.rejected, (state, action) => {
+        state.isSignedIn = true;
+        state.isLoading = false;
+        state.error = action.error;
+      })
+      .addCase(resetPasswordThunk.pending, state => {
+        state.isEmailSent = false;
+        state.isLoading = true;
+        state.isSignedIn = false;
+      })
+
+      .addCase(resetPasswordThunk.fulfilled, state => {
+        state.isSignedIn = false;
+        state.isLoading = false;
+        state.isEmailSent = true;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, action) => {
+        state.isSignedIn = false;
+        state.isLoading = false;
+        state.isEmailSent = false;
         state.error = action.error;
       });
   },
