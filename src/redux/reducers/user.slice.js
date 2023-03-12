@@ -33,9 +33,7 @@ const usersSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllUsersThunk.fulfilled, (state, action) => {
-        console.log('payload: ', action.payload);
         if (action.payload) {
-          console.log('payload: ', action.payload);
           state.users = action.payload.users;
         }
         state.isLoading = false;

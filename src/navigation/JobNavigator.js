@@ -23,9 +23,9 @@ const JobNavigation = () => {
         },
         tabBarActiveTintColor: Colors.PRIMARY,
         tabBarInactiveTintColor: Colors.DARKGRAY,
-        tabBarStyle:{
-           height: 60,
-           backgroundColor: Colors.PRIMARY_100,
+        tabBarStyle: {
+          height: 60,
+          backgroundColor: Colors.PRIMARY_100,
         },
         headerShown: false,
         tabBarLabelStyle: {

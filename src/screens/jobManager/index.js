@@ -101,12 +101,12 @@ const JobManager = () => {
   return (
     <View style={styles.container}>
       <View>
-        {/* <FlatList
+        <FlatList
           data={jobs}
-          keyExtractor={item => item.key}
+          keyExtractor={item => item.id}
           renderItem={({item, index}) => {
             return <FlatListItem item={item} index={index} />;
-          }}></FlatList> */}
+          }}></FlatList>
       </View>
     </View>
   );
