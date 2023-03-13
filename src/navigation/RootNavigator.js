@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,11 +13,11 @@ export default  RootNavigator = () => {
   useEffect(() => {
     dispatch(checkLoginThunk());
   }, []);
+
   return (
     <NavigationContainer>
       {authenticated ? <MainNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
-}
-
+};
 

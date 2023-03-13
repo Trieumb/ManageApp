@@ -1,28 +1,47 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
-const UserItem = ({id, name, email, role}) => {
+import {useNavigation} from '@react-navigation/native';
+const roleMap = {
+  admin: 'Admin',
+  manager: 'Manager',
+  stock_manager: 'Stock Manager',
+  accountant: 'Accountant',
+  employee: 'Employee',
+};
+const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
   return (
-    <View style={styles.itemContainer}>
-      <Icon name="user" size={80} color={Colors.PRIMARY} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.aux}>Email: {email}</Text>
-        <Text style={styles.aux}>Role: {role}</Text>
+    <Pressable
+      onPress={() => {
+        onPressCard(id, name, email, role);
+      }}>
+      <View style={styles.itemContainer}>
+        <Icon name="user" size={80} color={Colors.PRIMARY} />
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.aux}>Email: {email}</Text>
+          <Text style={styles.aux}>Role: {roleMap[role]}</Text>
+        </View>
+        <View style={styles.deleteContainer}>
+          <TouchableOpacity
+            style={styles.deleteIcon}
+            onPress={() => {
+              onPressDelete(id);
+            }}>
+            <Icon name="trash" size={24} color={Colors.WHITE} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.deleteContainer}>
-        <TouchableOpacity
-          style={styles.deleteIcon}
-          onPress={() => {
-            console.log('On Delete', id);
-          }}>
-          <Icon name="trash" size={24} color={Colors.WHITE} />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </Pressable>
   );
 };
 

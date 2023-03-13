@@ -60,7 +60,11 @@ const HomeNavigator = () => {
       <Drawer.Screen
         name="Tài khoản"
         component={UserManager}
-       
+        // options={{
+        //   drawerIcon: ({color}) => {
+        //     <Ionicons name="home-outline" size={20} color={color} />;
+        //   },
+        // }}
       />
     </Drawer.Navigator>
   );

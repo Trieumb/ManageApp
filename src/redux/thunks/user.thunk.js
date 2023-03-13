@@ -1,5 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Alert} from 'react-native';
 import {
   getUserInfoById,
   getAllUsers,
@@ -22,10 +21,12 @@ export const getAllUsersThunk = createAsyncThunk(
   'user/get_users',
   async (_, thunkAPI) => {
     try {
+      console.log('getAllUsers');
       const res = await getAllUsers();
       console.log('res:', res);
       return res;
     } catch (error) {
+      console.log('getAllUsers error:', error.message);
       return thunkAPI.rejectWithValue({error: error.message});
     }
   },
