@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import HeaderCustom from '../../components/HeaderCustom';
 import {useDispatch, useSelector} from 'react-redux';
 import {resetPasswordThunk} from '../../redux/thunks/auth.thunks';
+import {resetIsEmailSent} from '../../redux/reducers/auth.slice';
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.auth.isLoading);
@@ -22,6 +23,7 @@ const ForgotPassword = () => {
   } = useForm();
 
   const onGotoLogin = () => {
+    dispatch(resetIsEmailSent());
     navigation.goBack();
   };
 
