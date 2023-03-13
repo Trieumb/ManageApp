@@ -11,7 +11,6 @@ import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeKeepingModal from './TimeKeepingModal';
 import TimeSection from './TimeSection';
 import { userIdSelector } from '../../redux/selectors/auth.selector';
-import { useSelector } from 'react-redux';
 import Api_URL from '../../config/api/Api_URL';
 
 const db = firebase

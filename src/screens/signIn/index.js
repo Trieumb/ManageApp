@@ -41,10 +41,10 @@ const SingIn = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerSignin}>
-        {/* <Image
+        <Image
           source={require('../../assets/images/together.jpg.jpg')}
           resizeMode="stretch"
-          style={styles.ImageSignin}></Image> */}
+          style={styles.ImageSignin}></Image>
         <Text style={styles.textHeader}>Cùng nhau đi đến thành công!</Text>
       </View>
       <ScrollView style={styles.formSignin}>

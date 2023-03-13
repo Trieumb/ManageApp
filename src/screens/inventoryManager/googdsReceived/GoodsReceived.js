@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
     buttonDate: {
         paddingRight: 10
     },
-})
+});

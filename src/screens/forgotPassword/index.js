@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   } = useForm();
 
   const onGotoLogin = () => {
-    navigation.goBack();
+    navigation.navigate('SignIn');
   };
 
   const onSendPasswordResetEmail = async data => {
