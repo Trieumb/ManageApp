@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import InventoryManager from '../screens/inventoryManager';
 import GoodsReceived from '../screens/inventoryManager/googdsReceived/GoodsReceived';
-import GoodsDelivery from '../screens/inventoryManager/GoodsDelivery';
+import GoodsDelivery from '../screens/inventoryManager/goodsDelivery/GoodsDelivery';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';

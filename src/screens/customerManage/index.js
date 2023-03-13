@@ -29,7 +29,7 @@ const CustomerManager = () => {
   useEffect(() => {
     dispatch(fetchCustomers());
     console.log(customers);
-  }, [dispatch])
+  }, [])
 
   const onGotoUpdteCustomer = () => {
     navigation.navigate('UpdateCustomer')

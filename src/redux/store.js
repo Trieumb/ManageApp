@@ -12,7 +12,7 @@ const store = configureStore({
     jobs: jobSlice.reducer,
     users: usersSlice.reducer,
     customers: customersSlice.reducer,
-    supplies: suppliesSlice,
+    supplies: suppliesSlice.reducer,
   },
 });
  export default store

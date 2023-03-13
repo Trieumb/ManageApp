@@ -55,7 +55,6 @@ const Timekeeping = () => {
   const [radioButtonsArrayState, setRadioButtonsArrayState] = useState([]);
 
   useEffect(() => {
-    console.log(userId);
     const checkAndCreateMonthData = async () => {
       const newDate = dayjs().format('YYYY-MM');
 
@@ -208,7 +207,7 @@ const Timekeeping = () => {
         return;
       }
 
-      // Tạo mới date date nếu chưa có trên Firebase
+      // Tạo mới data date nếu chưa có trên Firebase
       if (!selectedDayData) {
         await db
           .ref(

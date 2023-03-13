@@ -1,11 +1,8 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Timekeeping from '../screens/timekeeping';
+import TimeKeepingNavigation from './TimeKeepingNavigator';
 import UserManager from '../screens/userManager';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import IconFontisso from 'react-native-vector-icons/Fontisto';
 import CustomDrawer from '../components/CustomDrawer';
 import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
@@ -56,8 +53,8 @@ const HomeNavigator = () => {
        
       />
       <Drawer.Screen
-        name="Chấm công"
-        component={Timekeeping}
+        name="Chấm công nhân viên"
+        component={TimeKeepingNavigation}
        
       />
       <Drawer.Screen

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { saveImportData , fetchSupplies  } from '../thunks/inventory.thunk';
+import { saveImportData , updateInventory , fetchInventory } from '../thunks/inventory.thunk';
 
 const initialState = {
-    SuppliesData: [],
+    SuppliesData: {},
+    inventory: [],
     isLoading: false,
     error: null,
 };
@@ -11,6 +12,10 @@ const suppliesSlice = createSlice({
     name: 'supplies',
     initialState,
     reducers: {
+      updateInventorySuccess(state, action) {
+        state.inventory = action.payload;
+        state.isLoading = false;
+      },
     },
     extraReducers: (builder) => {
         builder.addCase(saveImportData.pending, (state) => {
@@ -19,24 +24,44 @@ const suppliesSlice = createSlice({
         });
         builder.addCase(saveImportData.fulfilled, (state, action) => {
             state.isLoading = false;
+            state.SuppliesData = action.payload;
             state.error = null;
         });
         builder.addCase(saveImportData.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error.message;
         });
-        builder.addCase(fetchSupplies.pending, (state) => {
+        builder.addCase(updateInventory.pending, (state) => {
           state.isLoading = true;
         });
-        builder.addCase(fetchSupplies.fulfilled, (state, action) => {
+        builder.addCase(updateInventory.fulfilled, (state, action) => {
           state.isLoading = false;
-          state.customersData = action.payload;
+          suppliesSlice.caseReducers.updateInventorySuccess(state, action);
         });
-        builder.addCase(fetchSupplies.rejected, (state, action) => {
+        builder.addCase(updateInventory.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+        });
+        builder.addCase(fetchInventory.pending, (state) => {
+          state.isLoading = true;
+        });
+        builder.addCase(fetchInventory.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.inventory = action.payload;
+        });
+        builder.addCase(fetchInventory.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.error.message;
         });
     },
 });
 
+export const saveAndRefreshInventory = (payload) => async (dispatch) => {
+  try {
+    await dispatch(saveImportData(payload));
+    await dispatch(updateInventory(payload));
+  } catch (error) {
+    console.log(error);
+  }
+};
 export default suppliesSlice;

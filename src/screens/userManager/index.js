@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
-  StatusBar,
   Pressable,
 } from 'react-native';
 import Colors from '../../config/constants/Colors';
@@ -26,7 +25,7 @@ const UserManager = () => {
     <View style={styles.container}>
       <FlatList
         data={userList}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.name}
         renderItem={({item}) => (
           <UserItem
             name={item.name}

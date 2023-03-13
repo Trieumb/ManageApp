@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, View, Text, StyleSheet, Modal, Button, ScrollView, Pressable, TextInput } from "react-native";
-import CustomInput from "../../../components/CustomInput";
-import Colors from "../../../config/constants/Colors";
-import FontSize from "../../../config/constants/FontSize";
-import Fonts from "../../../config/constants/Fonts";
+import { FlatList, View, Text, StyleSheet, Modal,ScrollView, Pressable} from "react-native";
+import CustomInput from "../../components/CustomInput";
+import Colors from "../../config/constants/Colors";
+import FontSize from "../../config/constants/FontSize";
+import Fonts from "../../config/constants/Fonts";
 import { useForm } from 'react-hook-form';
-import BigCustomButton from "../../../components/BigCustomButton";
+import BigCustomButton from "../../components/BigCustomButton";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
@@ -42,16 +42,16 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
         handleAddSupplies(data);
         handleHideFormCustomInput();
         handleResetInput();
-        console.log(supplies.length);
+        setSupplies([]);
     }
   
     const renderItem = ({ item, index }) => (
         <View style={styles.inputContainer}>
-            <Text style={[styles.inputNo]}>{index}</Text>
-            <Text style={[styles.inputCode]}>{item.model}</Text>
-            <Text style={styles.inputName}>{item.name}</Text>
-            <Text style={[styles.inputUnit]}>{item.unit}</Text>
-            <Text style={[styles.inputQuantity]}>{item.quantity}</Text>
+            <Text style={[styles.inputNo, styles.flatListItem]}>{index+1}</Text>
+            <Text style={[styles.inputCode,styles.flatListItem]}>{item.model}</Text>
+            <Text style={[styles.inputName,styles.flatListItem]}>{item.name}</Text>
+            <Text style={[styles.inputUnit,styles.flatListItem]}>{item.unit}</Text>
+            <Text style={[styles.inputQuantity,styles.flatListItem]}>{item.importQuantity}</Text>
         </View>
     );
 
@@ -59,7 +59,6 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
         <View style={styles.container}>
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={styles.title} >Phiếu nhập kho</Text>
                     <Pressable onPress={handleShowFormCustomInput}
                         style={styles.AddButton}>
                         <Text style={{ color: Colors.WHITE, fontSize: FontSize.H5 }}>+</Text>
@@ -111,8 +110,9 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
                             rules={{ required: 'Không để trống!' }}
                         />
                         <CustomInput
-                            name="quantity"
+                            name="importQuantity"
                             placeholder="Số lượng"
+                            keyboardType='numeric'
                             control={control}
                             rules={{ required: 'Không để trống!' }}
                         />
@@ -131,12 +131,6 @@ export default ListSupplies
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    title: {
-        color: Colors.PRIMARY,
-        fontSize: FontSize.H5,
-        fontFamily: Fonts.POPPINS,
-        padding: 10,
     },
     AddButton: {
         width: 40,
@@ -210,6 +204,14 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
+        paddingVertical: 10,
+    },
+    flatListItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 4,
+        fontSize: FontSize.BODY,
+        color: Colors.PRIMARY
     },
     // modal
     modalContainer: {

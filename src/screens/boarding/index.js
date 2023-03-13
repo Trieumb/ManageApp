@@ -33,7 +33,7 @@ const Boarding = ({ navigation }) => {
                     </Text>
                     <View style={styles.buttonContainer}>
                         <BigCustomButton onPress={handleMovetoLogin}>
-                            Get Started
+                            Đăng nhập
                         </BigCustomButton>
                     </View>
                 </View>
