@@ -16,13 +16,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {userListSelector} from '../../redux/selectors/users.selector';
 import {getAllUsersThunk} from '../../redux/thunks/user.thunk';
 import {useNavigation} from '@react-navigation/native';
+import {startEditUser} from '../../redux/reducers/user.slice';
+
 const UserManager = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userList = useSelector(userListSelector);
-  const handlePressCard = id => {
-    console.log('On press card', id);
-    navigation.navigate('EditUser');
+  const handlePressCard = (id, name, email, role) => {
+    console.log('On press card', id, name, email, role);
+    navigation.navigate('EditUser', {id, name, email, role});
+    dispatch(startEditUser({uid: id, name, email, role}));
   };
   const handlePressDelete = id => {
     console.log('On press delete', id);

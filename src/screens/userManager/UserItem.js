@@ -11,18 +11,25 @@ import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
+const roleMap = {
+  admin: 'Admin',
+  manager: 'Manager',
+  stock_manager: 'Stock Manager',
+  accountant: 'Accountant',
+  employee: 'Employee',
+};
 const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
   return (
     <Pressable
       onPress={() => {
-        onPressCard(id);
+        onPressCard(id, name, email, role);
       }}>
       <View style={styles.itemContainer}>
         <Icon name="user" size={80} color={Colors.PRIMARY} />
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.aux}>Email: {email}</Text>
-          <Text style={styles.aux}>Role: {role}</Text>
+          <Text style={styles.aux}>Role: {roleMap[role]}</Text>
         </View>
         <View style={styles.deleteContainer}>
           <TouchableOpacity
