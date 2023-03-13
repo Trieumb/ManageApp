@@ -12,9 +12,9 @@ export const writeUserData = async ({uid, name, email, role}) => {
       role,
     });
     console.log('write data: ', data);
-    return data;
+    return {uid, name, email, role};
   } catch (error) {
-    console.log(error);
+    console.log('Error:', error);
     throw error;
   }
 };
