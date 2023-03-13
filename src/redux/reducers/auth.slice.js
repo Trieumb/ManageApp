@@ -17,7 +17,12 @@ const authSlice = createSlice({
     isLoading: false,
     isEmailSent: false,
   },
-  reducers: {},
+  reducers: {
+    resetIsEmailSent: state => {
+      console.log(state);
+      state.isEmailSent = false;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(checkLoginThunk.pending, state => {
@@ -102,5 +107,5 @@ const authSlice = createSlice({
       });
   },
 });
-
+export const {resetIsEmailSent} = authSlice.actions;
 export default authSlice;
