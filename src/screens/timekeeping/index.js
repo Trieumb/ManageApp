@@ -1,8 +1,9 @@
 import {firebase} from '@react-native-firebase/database';
-import dayjs from 'dayjs';
+import {dayjs} from 'dayjs';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
+import {useDispatch, useSelector} from 'react-redux';
 import Card from '../../components/Card';
 import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
@@ -10,7 +11,6 @@ import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeKeepingModal from './TimeKeepingModal';
 import TimeSection from './TimeSection';
 import { userIdSelector } from '../../redux/selectors/auth.selector';
-import { useSelector } from 'react-redux';
 import Api_URL from '../../config/api/Api_URL';
 
 const db = firebase

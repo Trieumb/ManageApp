@@ -5,6 +5,7 @@ import {
   loginWithEmail,
   logOut,
   signupWithEmail,
+  resetPasswordWithEmail,
 } from '../../config/api/AuthFirebase';
 export const checkLoginThunk = createAsyncThunk(
   'auth/check_login',
@@ -63,6 +64,18 @@ export const logoutThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       await logOut();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({error: error.message});
+    }
+  },
+);
+
+export const resetPasswordThunk = createAsyncThunk(
+  'auth/resetPasswordWithEmail',
+  async (data, thunkAPI) => {
+    try {
+      const res = resetPasswordWithEmail(data);
+      return res;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});
     }

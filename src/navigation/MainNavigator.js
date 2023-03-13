@@ -5,6 +5,7 @@ import AddTask from '../screens/jobManager/AddTask';
 import CustomerNavigation from './CustomerNavigator';
 import UpdateTask from '../screens/jobManager/UpdateTask';
 import UpdateCustomer from '../screens/customerManage/UpdateCustomer';
+import EditUser from '../screens/userManager/EditUser';
 
 const MainStack = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ export default AuthNavigation = () => {
       <MainStack.Screen
         name="UpdateCustomer"
         component={UpdateCustomer}
+        options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name="EditUser"
+        component={EditUser}
         options={{headerShown: false}}
       />
     </MainStack.Navigator>

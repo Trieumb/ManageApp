@@ -15,5 +15,5 @@ const store = configureStore({
     supplies: suppliesSlice.reducer,
   },
 });
- export default store
+export default store;
 //export const useSelector = rawUseSelector;

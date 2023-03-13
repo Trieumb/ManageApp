@@ -10,14 +10,13 @@ import { deleteJob, fetchJobs } from '../../redux/thunks/job.thunks';
 
 
 const JobManager = () => {
-
-  const navigation = useNavigation()
-  const jobs = useSelector((state) => state.jobs.jobsData);
+  const navigation = useNavigation();
+  const jobs = useSelector(state => state.jobs.jobsData);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchJobs());
-    console.log(jobs);
+    console.log('job', jobs);
   }, []);
 
   const onGotoUpdteTask = () => {
@@ -35,7 +34,7 @@ const JobManager = () => {
     dispatch(fetchJobs());
   };
 
-  const FlatListItem = ({ item, index }) => {
+  const FlatListItem = ({item, index}) => {
     return (
       <View style={styles.flatListContainer}>
         <View style={styles.dateContainer}>
@@ -51,7 +50,9 @@ const JobManager = () => {
           <Text style={styles.textDate}>{item.value.receiver}</Text>
         </View>
         <View>
-          <Text style={[styles.textTitleItem, styles.textTitleDetail]}>Chi tiết công việc : </Text>
+          <Text style={[styles.textTitleItem, styles.textTitleDetail]}>
+            Chi tiết công việc :{' '}
+          </Text>
           <Text style={styles.textDetail}>{item.value.content}</Text>
         </View>
         <View style={styles.buttonActiveContainer}>
@@ -63,7 +64,7 @@ const JobManager = () => {
           </CustomButton>
         </View>
       </View>
-    )
+    );
   };
   return (
     <View style={styles.container}>
@@ -76,21 +77,21 @@ const JobManager = () => {
         </FlatList>
       </View>
     </View>
-  )
-}
-export default JobManager
+  );
+};
+export default JobManager;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.SECONDARY
+    backgroundColor: Colors.SECONDARY,
   },
   flatListContainer: {
     backgroundColor: Colors.WHITE,
     padding: 10,
     margin: 5,
     borderRadius: 8,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   dateContainer: {
     flexDirection: 'row',
@@ -103,29 +104,24 @@ const styles = StyleSheet.create({
   textTitleItem: {
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
-    color: Colors.BACKDROP
+    color: Colors.BACKDROP,
   },
   textTitleDetail: {
-    color: Colors.PRIMARY
+    color: Colors.PRIMARY,
   },
   textDate: {
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
-    color: Colors.PRIMARY
+    color: Colors.PRIMARY,
   },
   textDetail: {
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
   },
-  flatListItem: {
-
-
-  },
-  headerJob: {
-
-  },
+  flatListItem: {},
+  headerJob: {},
   buttonActiveContainer: {
-    flexDirection: "row",
-    margin: 5
+    flexDirection: 'row',
+    margin: 5,
   },
-})
+});

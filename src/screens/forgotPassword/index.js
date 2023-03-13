@@ -1,37 +1,38 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import {useForm} from 'react-hook-form';
+import {ScrollView, StyleSheet, View, Text} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import BigCustomButton from '../../components/BigCustomButton';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import HeaderCustom from '../../components/HeaderCustom';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {resetPasswordThunk} from '../../redux/thunks/auth.thunks';
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.auth.isLoading);
 
-  const isLoading = false;
-  const emailIsSent = false;
+  const emailIsSent = useSelector(state => state.auth.isEmailSent);
   const navigation = useNavigation();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
   const onGotoLogin = () => {
-    navigation.goBack();
-  }
-  const onSendPasswordResetEmail = () => {
-    console.log("ok");
-  }
+    navigation.navigate('SignIn');
+  };
+
+  const onSendPasswordResetEmail = async data => {
+    console.log('data: ', data);
+    dispatch(resetPasswordThunk(data));
+  };
   let form = (
     <View style={styles.form}>
       <Text style={styles.titleForm}>Nhập email</Text>
-      <CustomInput
-        name="email"
-        control={control}
-      />
+      <CustomInput name="email" control={control} />
       <BigCustomButton
         onPress={handleSubmit(onSendPasswordResetEmail)}
         disable={false}>
@@ -53,10 +54,8 @@ const ForgotPassword = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderCustom/>
-      <View style={styles.formContainer}>
-        {form}
-      </View>
+      <HeaderCustom />
+      <View style={styles.formContainer}>{form}</View>
     </View>
   );
 };

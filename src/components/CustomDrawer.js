@@ -7,10 +7,11 @@ import {
     Image,
     StatusBar,
     Pressable,
+    Linking,
 } from 'react-native';
 import {
     DrawerContentScrollView,
-    DrawerItemList
+    DrawerItemList,
 } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../config/constants/Colors';
@@ -18,11 +19,12 @@ import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
 import { logoutThunk } from "../redux/thunks/auth.thunks";
 import { useDispatch } from "react-redux";
+import auth from '@react-native-firebase/auth';
 
 const CustomDrawer = (props) => {
 
     const dispatch = useDispatch();
-    const handlePress = () => {
+    const handleFacebookLink = () => {
         dispatch(logoutThunk());
         console.log("LogedOut Success!");
     }
@@ -48,38 +50,40 @@ const CustomDrawer = (props) => {
                 <View style={styles.footer}>
                     <Pressable style={styles.buttonFooter}>
                         <View style={styles.buttonItem}>
-                            <Ionicons name='logo-facebook' size={20} color={Colors.PRIMARY_400}/>
+                            <Ionicons name='logo-facebook' size={20} color={Colors.PRIMARY_400} />
                             <Text style={styles.textFooter}>ThangMayHaNoi</Text>
                         </View>
                     </Pressable>
-                    <Pressable style={styles.buttonFooter} onPress={handlePress}>
+                    <Pressable
+                        onPress={() => {
+                            dispatch(logoutThunk());
+                        }}
+                        style={styles.buttonFooter}>
                         <View style={styles.buttonItem}>
-                            <Ionicons name='exit-outline' size={20} color={Colors.PRIMARY_400}/>
+                            <Ionicons name="exit-outline" size={20} />
                             <Text style={styles.textFooter}>Đăng xuất</Text>
                         </View>
                     </Pressable>
-                </View>
-
-            </View>
+                </View >
+            </View >
         </>
+    );
+};
 
-    )
-}
-
-export default CustomDrawer
+export default CustomDrawer;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     contentContainer: {
-        backgroundColor: Colors.WHITE
+        backgroundColor: Colors.WHITE,
     },
     listDrawerContainer: {
         flex: 1,
         backgroundColor: Colors.WHITE,
         marginTop: 10,
-        borderRadius: 8
+        borderRadius: 8,
     },
     imageBakground: {
         padding: 20,
@@ -93,16 +97,16 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     author: {
-        color: Colors.PRIMARY_600,
+        color: Colors.BLACK,
         fontFamily: Fonts.POPPINS_BOLD,
         fontSize: FontSize.BODY_18,
-        marginRight: 10
+        marginRight: 20,
     },
     footer: {
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         padding: 10,
         borderTopWidth: 1,
-        borderTopColor: Colors.PRIMARY_200,
+        borderTopColor: Colors.SECONDARY,
     },
     buttonFooter: {
         paddingVertical: 10,
@@ -113,7 +117,5 @@ const styles = StyleSheet.create({
     textFooter: {
         fontSize: FontSize.BODY,
         fontFamily: Fonts.POPPINS_BOLD,
-        color: Colors.PRIMARY_600
-
-    }
-})
+    },
+});
