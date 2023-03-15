@@ -46,9 +46,8 @@ const radioButtonsData = [
 const Timekeeping = () => {
   const dispatch = useDispatch();
   const userId = useSelector(userIdSelector);
-  const monthResData = useSelector(timekeepingListSelector);
+  const monthData = useSelector(timekeepingListSelector);
   const markedDatesData = useSelector(markedDateListSelector);
-  const [monthData, setMonthData] = useState([]);
   const [selectedDayData, setSelectedDayData] = useState({});
   const [isCheckDayModalVisible, setIsCheckDayModalVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState({});
@@ -123,39 +122,8 @@ const Timekeeping = () => {
 
   const handleMonthChange = async date => {
     const newDate = dayjs(`${date.year}-${date.month}`).format('YYYY-MM');
-
-    const data = await db.ref(`timekeeping/${userId}/${newDate}`).once('value');
-    let monthResData = data.val();
-
-    if (!monthResData) {
-      const numDays = dayjs(
-        `${date.year}-${date.month}`,
-        'YYYY-MM',
-      ).daysInMonth();
-
-      monthResData = [];
-
-      for (let i = 0; i < numDays; i++) {
-        monthResData.push({
-          day: i + 1,
-          overtime: 0,
-          type: 'working',
-        });
-      }
-
-      await db.ref(`timekeeping/${userId}/${newDate}`).set(monthResData);
-    }
-
-    const transformMonthData = monthResData.reduce((acc, curr) => {
-      acc[dayjs(`${newDate}-${curr.day}`).format('YYYY-MM-DD')] = {
-        selected: true,
-        selectedColor: TIME_KEEPING_COLORS[curr?.type],
-      };
-      return acc;
-    }, {});
-
-    setMarkedDatesData(transformMonthData);
-    setMonthData(monthResData);
+    console.log('userId', userId, 'date', newDate);
+    dispatch(getUserTimeKeepingByMonthThunk({userUid: userId, month: newDate}));
   };
 
   const handleOpenModal = useCallback(() => {
