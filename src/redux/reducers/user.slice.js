@@ -24,7 +24,6 @@ const usersSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(writeUserThunk.fulfilled, (state, action) => {
-        console.log('payload: ' + action.payload);
         const uid = action.payload.uid;
         const index = state.users.findIndex(user => user.uid === uid);
         if (index >= -1) {

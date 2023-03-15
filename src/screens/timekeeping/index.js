@@ -1,5 +1,5 @@
 import {firebase} from '@react-native-firebase/database';
-import {dayjs} from 'dayjs';
+import dayjs from 'dayjs';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
@@ -10,12 +10,15 @@ import Fonts from '../../config/constants/Fonts';
 import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeKeepingModal from './TimeKeepingModal';
 import TimeSection from './TimeSection';
-import { userIdSelector } from '../../redux/selectors/auth.selector';
+import {userIdSelector} from '../../redux/selectors/auth.selector';
+import {
+  timekeepingListSelector,
+  markedDateListSelector,
+} from '../../redux/selectors/timekeeping.selector';
+import {getUserTimeKeepingByMonthThunk} from '../../redux/thunks/timeKeeping.thunk';
 import Api_URL from '../../config/api/Api_URL';
 
-const db = firebase
-  .app()
-  .database( Api_URL);
+const db = firebase.app().database(Api_URL);
 
 const radioButtonsData = [
   {
@@ -41,12 +44,12 @@ const radioButtonsData = [
 ];
 
 const Timekeeping = () => {
-
+  const dispatch = useDispatch();
   const userId = useSelector(userIdSelector);
-
+  const monthResData = useSelector(timekeepingListSelector);
+  const markedDatesData = useSelector(markedDateListSelector);
   const [monthData, setMonthData] = useState([]);
   const [selectedDayData, setSelectedDayData] = useState({});
-  const [markedDatesData, setMarkedDatesData] = useState({});
   const [isCheckDayModalVisible, setIsCheckDayModalVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState({});
   const [initRadioButtonsData, setInitRadioButtonsData] =
@@ -55,45 +58,9 @@ const Timekeeping = () => {
   const [radioButtonsArrayState, setRadioButtonsArrayState] = useState([]);
 
   useEffect(() => {
-    const checkAndCreateMonthData = async () => {
-      const newDate = dayjs().format('YYYY-MM');
-
-      const data = await db
-        .ref(`timekeeping/${userId}/${newDate}`)
-        .once('value');
-      let monthResData = data.val();
-
-      if (!monthResData) {
-        const numDays = dayjs(
-          `${dayjs().get('year')}-${dayjs().get('month') + 1}`,
-          'YYYY-MM',
-        ).daysInMonth();
-
-        monthResData = [];
-
-        for (let i = 0; i < numDays; i++) {
-          monthResData.push({
-            day: i + 1,
-            overtime: 0,
-            type: 'working',
-          });
-        }
-
-        await db.ref(`timekeeping/${userId}/${newDate}`).set(monthResData);
-      }
-
-      const transformMonthData = monthResData.reduce((acc, curr) => {
-        acc[dayjs(`${newDate}-${curr.day}`).format('YYYY-MM-DD')] = {
-          selected: true,
-          selectedColor: TIME_KEEPING_COLORS[curr?.type],
-        };
-        return acc;
-      }, {});
-
-      setMarkedDatesData(transformMonthData);
-      setMonthData(monthResData);
-    };
-    checkAndCreateMonthData();
+    const newDate = dayjs().format('YYYY-MM');
+    console.log('userId', userId, 'date', newDate);
+    dispatch(getUserTimeKeepingByMonthThunk({userUid: userId, month: newDate}));
   }, []);
 
   const workingDays = useMemo(() => {

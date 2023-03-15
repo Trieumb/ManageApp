@@ -1,8 +1,10 @@
 import {firebase} from '@react-native-firebase/database';
 
-const database = firebase.app().database(
-  'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
-);
+const database = firebase
+  .app()
+  .database(
+    'https://managerapp-41d45-default-rtdb.asia-southeast1.firebasedatabase.app/',
+  );
 
 export const writeUserData = async ({uid, name, email, role}) => {
   try {

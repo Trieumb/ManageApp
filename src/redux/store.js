@@ -4,7 +4,7 @@ import jobSlice from './reducers/job.slice';
 import usersSlice from './reducers/user.slice';
 import customersSlice from './reducers/customer.slice';
 import suppliesSlice from './reducers/inventory.slice';
-//import {useSelector as rawUseSelector, TypedUseSelectorHook} from 'react-redux';
+import timekeepingSlice from './reducers/timekeeping.slice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +13,7 @@ const store = configureStore({
     users: usersSlice.reducer,
     customers: customersSlice.reducer,
     supplies: suppliesSlice.reducer,
+    timekeeping: timekeepingSlice.reducer,
   },
 });
 export default store;
