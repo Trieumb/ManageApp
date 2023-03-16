@@ -9,7 +9,6 @@ const timekeepingSlice = createSlice({
   name: 'timekeeping',
   initialState: {
     monthTimeKeepingList: [],
-    markedDateList: {},
     isLoading: false,
     isDatawritten: false,
   },
@@ -20,7 +19,14 @@ const timekeepingSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(writeNewTimeKeepingThunk.fulfilled, (state, action) => {
-        console.log('payload: ' + action.payload);
+        const index = state.monthTimeKeepingList.findIndex(
+          timekeeping => timekeeping.key === action.payload.key,
+        );
+        if (index >= 0) {
+          state.monthTimeKeepingList[index] = action.payload;
+        } else {
+          state.monthTimeKeepingList.push(action.payload);
+        }
         state.isLoading = false;
       })
       .addCase(writeNewTimeKeepingThunk.rejected, state => {
@@ -28,13 +34,11 @@ const timekeepingSlice = createSlice({
       })
       .addCase(getUserTimeKeepingByMonthThunk.pending, state => {
         state.monthTimeKeepingList = [];
-        state.markedDateList = {};
         state.isLoading = true;
       })
       .addCase(getUserTimeKeepingByMonthThunk.fulfilled, (state, action) => {
         if (action.payload) {
           state.monthTimeKeepingList = action.payload.monthTimeKeepingList;
-          state.markedDateList = action.payload.markedDateList;
         }
         state.isLoading = false;
       })

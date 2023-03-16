@@ -1,6 +1,4 @@
 import {firebase} from '@react-native-firebase/database';
-import Colors, {TIME_KEEPING_COLORS} from '../../config/constants/Colors';
-import dayjs from 'dayjs';
 const database = firebase
   .app()
   .database(
@@ -13,7 +11,6 @@ export const getUserTimeKeepingByMonth = async ({userUid, month}) => {
       .ref(`timekeeping/${userUid}/${month}`)
       .once('value');
     const monthTimeKeepingList = [];
-    console.log('snapshot:', snapshot);
     snapshot.forEach(snapshot => {
       monthTimeKeepingList.push({
         key: snapshot.key,
@@ -22,14 +19,8 @@ export const getUserTimeKeepingByMonth = async ({userUid, month}) => {
         type: snapshot.val().type,
       });
     });
-    const markedDateList = monthTimeKeepingList.reduce((acc, curr) => {
-      acc[dayjs(`${month}-${curr.day}`).format('YYYY-MM-DD')] = {
-        selected: true,
-        selectedColor: TIME_KEEPING_COLORS[curr?.type],
-      };
-      return acc;
-    }, {});
-    return {monthTimeKeepingList, markedDateList};
+
+    return {month, monthTimeKeepingList};
   } catch (error) {
     console.error(error);
     throw error;
@@ -49,7 +40,6 @@ export const writeNewTimeKeeping = async ({
         overtime: timeKeepingData.overtime,
         type: timeKeepingData.type,
       });
-    console.log('write TimeKeeping data: ', data);
     return timeKeepingData;
   } catch (error) {
     console.error(error);
