@@ -15,7 +15,10 @@ import {
   timekeepingListSelector,
   markedDateListSelector,
 } from '../../redux/selectors/timekeeping.selector';
-import {getUserTimeKeepingByMonthThunk} from '../../redux/thunks/timeKeeping.thunk';
+import {
+  getUserTimeKeepingByMonthThunk,
+  writeNewTimeKeepingThunk,
+} from '../../redux/thunks/timeKeeping.thunk';
 import Api_URL from '../../config/api/Api_URL';
 
 const db = firebase.app().database(Api_URL);
@@ -42,12 +45,11 @@ const radioButtonsData = [
     value: 'halfday',
   },
 ];
-
+var calendarDate;
 const Timekeeping = () => {
   const dispatch = useDispatch();
   const userId = useSelector(userIdSelector);
   const monthData = useSelector(timekeepingListSelector);
-  const markedDatesData = useSelector(markedDateListSelector);
   const [selectedDayData, setSelectedDayData] = useState({});
   const [isCheckDayModalVisible, setIsCheckDayModalVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState({});
@@ -59,8 +61,21 @@ const Timekeeping = () => {
   useEffect(() => {
     const newDate = dayjs().format('YYYY-MM');
     console.log('userId', userId, 'date', newDate);
+    calendarDate = newDate;
     dispatch(getUserTimeKeepingByMonthThunk({userUid: userId, month: newDate}));
   }, []);
+
+  const markedDatesData = useMemo(() => {
+    console.log('calendarDate', calendarDate);
+    const markedDateList = monthData.reduce((acc, curr) => {
+      acc[dayjs(`${calendarDate}-${curr.day}`).format('YYYY-MM-DD')] = {
+        selected: true,
+        selectedColor: TIME_KEEPING_COLORS[curr?.type],
+      };
+      return acc;
+    }, {});
+    return markedDateList;
+  }, [monthData]);
 
   const workingDays = useMemo(() => {
     if (monthData?.length > 0) {
@@ -122,6 +137,7 @@ const Timekeeping = () => {
 
   const handleMonthChange = async date => {
     const newDate = dayjs(`${date.year}-${date.month}`).format('YYYY-MM');
+    calendarDate = newDate;
     console.log('userId', userId, 'date', newDate);
     dispatch(getUserTimeKeepingByMonthThunk({userUid: userId, month: newDate}));
   };
@@ -142,43 +158,22 @@ const Timekeeping = () => {
         return;
       }
 
-      // Tạo mới data date nếu chưa có trên Firebase
-      if (!selectedDayData) {
-        await db
-          .ref(
-            `timekeeping/${userId}/${selectedDay.year}-${
-              selectedDay.month < 10
-                ? '0' + selectedDay.month
-                : selectedDay.month
-            }/${selectedDay.day - 1}`,
-          )
-          .set({
-            day: selectedDay.day,
-            type: selectedOption.value,
-            overtime: selectedOption.value === 'working' ? overtimeValue : 0,
-          });
-
-        setSelectedDayData({...selectedDayData, type: selectedOption.value});
-
-        return;
-      }
-
-      // cập nhật trên Firebase
-      await db
-        .ref(
-          `timekeeping/${userId}/${selectedDay.year}-${
-            selectedDay.month < 10 ? '0' + selectedDay.month : selectedDay.month
-          }/${selectedDay.day - 1}`,
-        )
-        .update({
-          type: selectedOption.value,
-          overtime: selectedOption.value === 'working' ? overtimeValue : 0,
-        });
-
-      await handleMonthChange(selectedDay);
-
+      const month = `${selectedDay.year}-${
+        selectedDay.month < 10 ? '0' + selectedDay.month : selectedDay.month
+      }`;
+      const key = selectedDay.day - 1;
+      const day = selectedDay.day;
+      const type = selectedOption.value;
+      const overtime = selectedOption.value === 'working' ? overtimeValue : 0;
+      const timeKeepingData = {key, day, type, overtime};
+      console.log('write data', month, timeKeepingData);
+      dispatch(
+        writeNewTimeKeepingThunk({userUid: userId, month, timeKeepingData}),
+      );
       setSelectedDayData({...selectedDayData, type: selectedOption.value});
+      return;
     },
+    //[],
     [selectedDay, selectedDayData],
   );
 
@@ -191,27 +186,29 @@ const Timekeeping = () => {
   );
 
   const showCheckDayModal = async date => {
-    const data = await db
-      .ref(
-        `timekeeping/${userId}/${date.year}-${
-          date.month < 10 ? '0' + date.month : date.month
-        }/${date.day - 1}`,
-      )
-      .once('value');
-
+    const data = monthData.find(timeKeeping => {
+      return timeKeeping.key == date.day - 1;
+    });
     if (!data) {
-      selectedDayData(null);
+      setSelectedDayData(null);
     } else {
-      setSelectedDayData(data.val());
+      const {day, overtime, type} = data;
+      setSelectedDayData({day, overtime, type});
     }
 
-    if (data && data?.val()) {
+    if (data) {
       const newInitRadioButtonsData = radioButtonsData.map(item => {
-        return item.value === data.val().type
+        return item.value === data.type
           ? {...item, selected: true}
           : {...item, selected: false};
       });
-
+      console.log('newInitRadioButtonsData,', newInitRadioButtonsData);
+      setInitRadioButtonsData(newInitRadioButtonsData);
+    } else {
+      const newInitRadioButtonsData = radioButtonsData.map(item => {
+        return {...item, selected: false};
+      });
+      console.log('newInitRadioButtonsData,', newInitRadioButtonsData);
       setInitRadioButtonsData(newInitRadioButtonsData);
     }
 

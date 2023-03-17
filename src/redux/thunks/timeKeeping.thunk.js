@@ -19,7 +19,6 @@ export const getUserTimeKeepingByMonthThunk = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await getUserTimeKeepingByMonth(data);
-      console.log('get_user_timekeeping: ', res);
       return res;
     } catch (error) {
       return thunkAPI.rejectWithValue({error: error.message});

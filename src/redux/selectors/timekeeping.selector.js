@@ -8,9 +8,3 @@ export const timekeepingListSelector = createSelector(
     return timekeeping.monthTimeKeepingList;
   },
 );
-export const markedDateListSelector = createSelector(
-  timekeepingSelector,
-  timekeeping => {
-    return timekeeping.markedDateList;
-  },
-);
