@@ -7,33 +7,8 @@ import LineHeight from '../../config/constants/LineHeight';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
 import { fetchInventory } from '../../redux/thunks/inventory.thunk';
+import { inventoryListSelector } from '../../redux/selectors/inventory.selector';
 
-const dataWarahouse = [
-  {
-    "id": 1,
-    "code": "TD01",
-    'name': "Tủ điện 600x400",
-    'quantity': 12,
-  },
-  {
-    "id": 2,
-    "code": "RL01",
-    'name': "Role Index 4 chân",
-    'quantity': 30,
-  },
-  {
-    "id": 3,
-    "code": "CKGB01",
-    'name': "Gối bi 45",
-    'quantity': 10,
-  },
-  {
-    "id": 4,
-    "code": "CKGB01",
-    'name': "Gối bi 45",
-    'quantity': 10,
-  }
-]
 
 const InventoryManager = () => {
 
@@ -41,13 +16,16 @@ const InventoryManager = () => {
   const [searchText, setSearchText] = useState('');
   const [filterData, setFilterData] = useState([]);
   const [masterData, setMasterData] = useState([]);
-  const inventory = useSelector((state) => state.supplies?.inventory);
+  const [displayedInventory, setDisplayedInventory] = useState([]);
+  
+  const inventory = useSelector(inventoryListSelector);
+  
   useEffect(() => {
     dispatch(fetchInventory());
-    console.log(inventory);
     setFilterData(inventory);
     setMasterData(inventory);
-  }, [dispatch])
+    console.log(inventory);
+  }, [dispatch]);
 
   // hand searchItem
   const handleSearchSupplie = (text) => {

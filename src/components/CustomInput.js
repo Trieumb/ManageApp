@@ -9,7 +9,9 @@ import Fonts from '../config/constants/Fonts';
 const CustomInput = ({
   resetInput,
   keyboardType,
+  defaultValue,
   reset,
+  type,
   control,
   name,
   rules = {},
@@ -39,6 +41,8 @@ const CustomInput = ({
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
+              defaultValue={defaultValue}
+              type={type}
               placeholder={placeholder}
               placeholderTextColor={Colors.BLACK_O2}
               style={styles.input}

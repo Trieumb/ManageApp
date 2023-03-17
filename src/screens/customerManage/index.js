@@ -24,7 +24,7 @@ const CustomerManager = () => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const customers = useSelector((state) => state.customers.customersData)
+  const customers = useSelector(customersList);
 
   useEffect(() => {
     dispatch(fetchCustomers());

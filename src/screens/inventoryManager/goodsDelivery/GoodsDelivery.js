@@ -7,37 +7,43 @@ import {
     Pressable
 } from 'react-native';
 import BigCustomButton from '../../../components/BigCustomButton';
-import ListSupplies from '../ListsSupplies';
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../../config/constants/Colors';
 import { WINDOW_WITH } from '../../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontSize from '../../../config/constants/FontSize';
 import Fonts from '../../../config/constants/Fonts';
+import { saveAndRefreshInventoryAfterExport} from '../../../redux/thunks/inventory.thunk';
+import ListSuppliesExport from './ListSuppliesExport';
 
 const GoodsDelivery = () => {
 
     const dispatch = useDispatch();
-    const [supplies, setSupplies] = useState([]);
+    const [suppliesExport, setSuppliesExport] = useState([]);
     const [dateStockOut, setDateStockOut] = useState('');
-    const [supplier, setSupplier] = useState('');
+    const [cause, setCause] = useState('');
 
-    const handleAddSupplies = (data) => {
-        setSupplies([...supplies, data]);
+    const handleAddSuppliesExport = (data) => {
+        setSuppliesExport([...suppliesExport, data]);
     };
-    const handleGoodsReceived = () => {
-        // dispatch(saveImportData({ dateStockin, supplier, supplies }));
-        // dispatch(updateInventory({ inventory }));
-        setSupplies([]);
-        console.log("click");
-        console.log(supplies);
-        console.log(dateStockin);
-        console.log(supplier);
+    const handleGoodsDelivery = () => {
+        try {
+            dispatch(saveAndRefreshInventoryAfterExport({ dateStockOut, cause, suppliesExport }));
+            setSuppliesExport([]);
+            setDateStockOut('');
+            setCause('');
+            console.log("click");
+            console.log(suppliesExport);
+            console.log(dateStockOut);
+            console.log(cause);
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <View style={styles.container}>
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-            <Text style={styles.title} >Phiếu xuất kho</Text>
+                <Text style={styles.title} >Phiếu xuất kho</Text>
                 <View style={styles.dateContainer}>
                     <TextInput
                         style={styles.inputDate}
@@ -51,16 +57,16 @@ const GoodsDelivery = () => {
                 </View>
                 <TextInput
                     style={styles.input}
-                    value={supplier}
+                    value={cause}
                     placeholder="Lý do xuất kho"
                     placeholderTextColor={Colors.DARKGRAY}
-                    onChangeText={(text) => setSupplier(text)} />
+                    onChangeText={(text) => setCause(text)} />
             </View>
             <View style={{ flex: 1 }}>
-                <ListSupplies supplies={supplies} handleAddSupplies={handleAddSupplies} />
+                <ListSuppliesExport suppliesExport={suppliesExport} handleAddSuppliesExport={handleAddSuppliesExport} />
             </View>
             <View style={styles.button}>
-                <BigCustomButton disable={false} onPress={handleGoodsReceived}>
+                <BigCustomButton disable={false} onPress={handleGoodsDelivery}>
                     Xuất
                 </BigCustomButton>
             </View>
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginVertical: 5,
         padding: 8,
-        
+
     },
     inputDate: {
         padding: 8,

@@ -7,14 +7,14 @@ import {
     Pressable
 } from 'react-native';
 import BigCustomButton from '../../../components/BigCustomButton';
-import ListSupplies from '../ListsSupplies';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveImportData, updateInventory } from '../../../redux/thunks/inventory.thunk';
+import { saveAndRefreshInventoryAfterImport } from '../../../redux/thunks/inventory.thunk';
 import Colors from '../../../config/constants/Colors';
 import { WINDOW_WITH } from '../../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontSize from '../../../config/constants/FontSize';
 import Fonts from '../../../config/constants/Fonts';
+import ListSuppliesImport from './ListsSuppliesImport';
 
 const GoodsDelivery = () => {
 
@@ -27,13 +27,10 @@ const GoodsDelivery = () => {
         setSupplies([...supplies, data]);
     };
     const handleGoodsReceived = () => {
-        dispatch(saveImportData({ dateStockin, supplier, supplies }));
-        dispatch(updateInventory({ inventory }));
+        dispatch(saveAndRefreshInventoryAfterImport({ dateStockin, supplier, supplies }));
         setSupplies([]);
-        console.log("click");
-        console.log(supplies);
-        console.log(dateStockin);
-        console.log(supplier);
+        setDateStockin('');
+        setSupplier('');
     }
     return (
         <View style={styles.container}>
@@ -58,7 +55,7 @@ const GoodsDelivery = () => {
                     onChangeText={(text) => setSupplier(text)} />
             </View>
             <View style={{ flex: 1 }}>
-                <ListSupplies supplies={supplies} handleAddSupplies={handleAddSupplies} />
+                <ListSuppliesImport supplies={supplies} handleAddSupplies={handleAddSupplies} />
             </View>
             <View style={styles.button}>
                 <BigCustomButton disable={false} onPress={handleGoodsReceived}>

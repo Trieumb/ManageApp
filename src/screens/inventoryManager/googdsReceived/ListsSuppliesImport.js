@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, View, Text, StyleSheet, Modal,ScrollView, Pressable} from "react-native";
-import CustomInput from "../../components/CustomInput";
-import Colors from "../../config/constants/Colors";
-import FontSize from "../../config/constants/FontSize";
-import Fonts from "../../config/constants/Fonts";
+import CustomInput from "../../../components/CustomInput";
+import Colors from "../../../config/constants/Colors";
+import FontSize from "../../../config/constants/FontSize";
+import Fonts from "../../../config/constants/Fonts";
 import { useForm } from 'react-hook-form';
-import BigCustomButton from "../../components/BigCustomButton";
+import BigCustomButton from "../../../components/BigCustomButton";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
+const ListSuppliesImport = ({ supplies, setSupplies, handleAddSupplies }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [resetInput, setResetInput] = useState(false);
 
-    const handleResetInput = () => {
-        setResetInput(true);
-    }
     useEffect(() => {
         if (!modalVisible) {
             reset();
@@ -28,6 +25,7 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
 
     const handleHideFormCustomInput = () => {
         setModalVisible(false);
+        setResetInput(false);
     };
 
     const {
@@ -37,12 +35,11 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
         handleSubmit,
     } = useForm();
 
-       // thêm vật tư vào supplies
+
     const addSupplie = (data) => {
         handleAddSupplies(data);
         handleHideFormCustomInput();
-        handleResetInput();
-        setSupplies([]);
+        console.log(data);
     }
   
     const renderItem = ({ item, index }) => (
@@ -126,7 +123,7 @@ const ListSupplies = ({ supplies, setSupplies, handleAddSupplies }) => {
     )
 }
 
-export default ListSupplies
+export default ListSuppliesImport
 
 const styles = StyleSheet.create({
     container: {
