@@ -39,7 +39,7 @@ const SingUp = () => {
     <View style={styles.container}>
       <View style={styles.headerSignin}>
         <Image
-          source={require('../../assets/images/together.jpg.jpg')}
+          source={require('../../assets/images/together.jpg')}
           resizeMode="stretch"
           style={styles.ImageSignin}></Image>
         <Text style={styles.textHeader}>Cùng nhau đi đến thành công!</Text>

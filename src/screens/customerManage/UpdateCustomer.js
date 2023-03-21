@@ -39,10 +39,10 @@ const UpdateCustomer = () => {
         backgroundColor={Colors.HEADER}
         translucent={true}
       />
-      <ImageBackground style={styles.header}>
+      <View style={styles.header}>
         <CustomButtonBack onPress={onGotoBack} />
         <Text style={styles.textHeader}>Sửa thông tin khách hàng</Text>
-      </ImageBackground>
+      </View>
       <ScrollView style={styles.body}>
         <CustomInput
           name="name"

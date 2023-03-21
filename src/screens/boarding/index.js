@@ -15,39 +15,39 @@ import {scaleUI} from '../../config/constants/ScaleUI';
 import {useNavigation} from '@react-navigation/native';
 import {WINDOW_HEIGHT} from '../../config/constants/DimensionsWindown';
 
-const Boarding = ({ navigation }) => {
-    const Navigation = useNavigation();
-    const handleMovetoLogin = () => {
-        Navigation.navigate('SignIn');
-    }
-    return (
-        <>
-            <StatusBar
-                barStyle="dark-content"
-                backgroundColor="transparent"
-                translucent={true}
-            />
-            <View style={styles.container}>
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../assets/images/boarding.jpg')}
-                        resizeMode="stretch"
-                        style={styles.image}></Image>
-                </View>
-                <View style={styles.content}>
-                    <Text style={styles.description}>
-                        Vì chúng tôi có thể giúp bạn tiết kiệm thời gian và nhân lực!
-                    </Text>
-                    <View style={styles.buttonContainer}>
-                        <BigCustomButton onPress={handleMovetoLogin}>
-                            Đăng nhập
-                        </BigCustomButton>
-                    </View>
-                </View>
-            </View>
-        </>
-    )
-}
+const Boarding = ({navigation}) => {
+  const Navigation = useNavigation();
+  const handleMovetoLogin = () => {
+    Navigation.navigate('SignIn');
+  };
+  return (
+    <>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/images/boarding.jpg')}
+            resizeMode="stretch"
+            style={styles.image}></Image>
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.description}>
+            Vì chúng tôi có thể giúp bạn tiết kiệm thời gian và nhân lực!
+          </Text>
+          <View style={styles.buttonContainer}>
+            <BigCustomButton onPress={handleMovetoLogin}>
+              Đăng nhập
+            </BigCustomButton>
+          </View>
+        </View>
+      </View>
+    </>
+  );
+};
 
 export default Boarding;
 

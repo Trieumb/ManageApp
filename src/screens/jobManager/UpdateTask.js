@@ -39,10 +39,10 @@ const UpdateTask = () => {
         backgroundColor={Colors.HEADER}
         translucent={true}
       />
-      <ImageBackground style={styles.header}>
+      <View style={styles.header}>
         <CustomButtonBack onPress={onGotoBack} />
         <Text style={styles.textHeader}>Sửa kế hoạch công việc</Text>
-      </ImageBackground>
+      </View>
       <ScrollView style={styles.body}>
         <CustomInput
           name="dateStart"

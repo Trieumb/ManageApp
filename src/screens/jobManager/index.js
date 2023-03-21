@@ -1,13 +1,20 @@
 import React, {useEffect} from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList, Alert,ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteJob, fetchJobs } from '../../redux/thunks/job.thunks';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteJob, fetchJobs} from '../../redux/thunks/job.thunks';
 
 const JobManager = () => {
   const navigation = useNavigation();
@@ -21,16 +28,20 @@ const JobManager = () => {
 
   const onGotoUpdteTask = () => {
     navigation.navigate('UpdateTask');
-  }
-  const handleDeleteJob = (id) => {
-    Alert.alert('Xóa dữ liệu', 'Bạn có muốn xóa không?', [
-      {
-        text: 'Hủy',
-        style: 'cancel',
-      },
-      {text: 'Đồng ý', onPress: () => dispatch(deleteJob(id))},
-    ],
-    { cancelable: false });
+  };
+  const handleDeleteJob = id => {
+    Alert.alert(
+      'Xóa dữ liệu',
+      'Bạn có muốn xóa không?',
+      [
+        {
+          text: 'Hủy',
+          style: 'cancel',
+        },
+        {text: 'Đồng ý', onPress: () => dispatch(deleteJob(id))},
+      ],
+      {cancelable: false},
+    );
     dispatch(fetchJobs());
   };
 
@@ -59,7 +70,9 @@ const JobManager = () => {
           <CustomButton style={styles.button} onPress={onGotoUpdteTask}>
             Sửa
           </CustomButton>
-          <CustomButton style={styles.button} onPress={() => handleDeleteJob(item.id)}>
+          <CustomButton
+            style={styles.button}
+            onPress={() => handleDeleteJob(item.id)}>
             Xóa
           </CustomButton>
         </View>
@@ -69,12 +82,12 @@ const JobManager = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList data={jobs}
+        <FlatList
+          data={jobs}
           keyExtractor={item => item.id}
-          renderItem={({ item, index }) => {
-            return <FlatListItem item={item} index={index} />
-          }}>
-        </FlatList>
+          renderItem={({item, index}) => {
+            return <FlatListItem item={item} index={index} />;
+          }}></FlatList>
       </View>
     </View>
   );
