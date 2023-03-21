@@ -37,12 +37,12 @@ const CustomDrawer = (props) => {
             />
             <View style={styles.container}>
                 <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: Colors.SECONDARY }}>
-                    <ImageBackground
+                    <View
                         style={styles.imageBakground}>
                         <Text style={styles.author}>Xin chào! Trieumb</Text>
                         <Image source={require('../assets/images/avata.png')}
                             style={styles.image} />
-                    </ImageBackground>
+                    </View>
                     <View style={styles.listDrawerContainer}>
                         <DrawerItemList  {...props} />
                     </View>
