@@ -57,28 +57,28 @@ const UpdateTask = ({route}) => {
         <CustomInput
           name="startDate"
           placeholder="Ngày khởi tạo"
-          defaultValue={item.value.startDate}
+          defaultValue={item.startDate}
           control={control}
           rules={{}}
         />
         <CustomInput
           name="endDate"
           placeholder="Ngày hoàn thành"
-          defaultValue={item.value.endDate}
+          defaultValue={item.endDate}
           control={control}
           rules={{}}
         />
         <CustomInput
           name="receiver"
           placeholder="Người nhận"
-          defaultValue={item.value.receiver}
+          defaultValue={item.receiver}
           control={control}
           rules={{}}
         />
         <CustomInput
           name="content"  
           placeholder="Chi tiết công việc"
-          defaultValue={item.value.content}
+          defaultValue={item.content}
           control={control}
           rules={{}}
         />

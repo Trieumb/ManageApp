@@ -68,6 +68,12 @@ const AddTask = () => {
                     control={control}
                     rules={{}}
                 />
+                   <CustomInput
+                    name="customer"
+                    placeholder="Khách hàng"
+                    control={control}
+                    rules={{}}
+                />
                 <CustomInput
                     name="content"
                     placeholder="Chi tiết công việc"
