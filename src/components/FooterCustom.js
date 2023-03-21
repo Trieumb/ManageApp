@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Colors from '../config/constants/Colors';
 
 const FooterCustom = () => {
@@ -8,8 +8,7 @@ const FooterCustom = () => {
     </View>
   )
 }
-
-export default FooterCustom
+export default FooterCustom;
 
 const styles = StyleSheet.create({
   footer: {

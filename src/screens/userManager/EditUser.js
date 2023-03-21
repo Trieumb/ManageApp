@@ -104,10 +104,10 @@ const EditUser = ({route}) => {
         backgroundColor={Colors.HEADER}
         translucent={true}
       />
-      <ImageBackground style={styles.header}>
+      <View style={styles.header}>
         <CustomButtonBack onPress={onGotoBack} />
         <Text style={styles.textHeader}>Cập nhật người dùng</Text>
-      </ImageBackground>
+      </View>
       <View style={styles.formContainer}>{form}</View>
     </View>
   );

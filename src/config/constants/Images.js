@@ -1,3 +1,3 @@
 export default {
-    SigninImage: require('../../assets/images/together.jpg.jpg'),
-}
+  SigninImage: require('../../assets/images/together.jpg'),
+};

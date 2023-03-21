@@ -11,17 +11,11 @@ import {scaleUI} from '../../config/constants/ScaleUI';
 import TimeKeepingModal from './TimeKeepingModal';
 import TimeSection from './TimeSection';
 import {userIdSelector} from '../../redux/selectors/auth.selector';
-import {
-  timekeepingListSelector,
-  markedDateListSelector,
-} from '../../redux/selectors/timekeeping.selector';
+import {timekeepingListSelector} from '../../redux/selectors/timekeeping.selector';
 import {
   getUserTimeKeepingByMonthThunk,
   writeNewTimeKeepingThunk,
 } from '../../redux/thunks/timeKeeping.thunk';
-import Api_URL from '../../config/api/Api_URL';
-
-const db = firebase.app().database(Api_URL);
 
 const radioButtonsData = [
   {
@@ -57,16 +51,27 @@ const Timekeeping = () => {
     useState(radioButtonsData);
 
   const [radioButtonsArrayState, setRadioButtonsArrayState] = useState([]);
+  const [workingDays, setWorkingDays] = useState(0);
+  const [absentDays, setAbsentDays] = useState(0);
+  const [leaveDays, setLeaveDays] = useState(0);
+  const [halfWorkingDays, setHalfWorkingDays] = useState(0);
+  const [totalOvertime, setTotalOvertime] = useState(0);
+  const [markedDatesData, setMarkedDatesData] = useState({});
+  var _workingDays = 0;
+  var _absentDays = 0;
+  var _leaveDays = 0;
+  var _halfWorkingDays = 0;
+  var _totalOvertime = 0;
 
   useEffect(() => {
     const newDate = dayjs().format('YYYY-MM');
     console.log('userId', userId, 'date', newDate);
     calendarDate = newDate;
+
     dispatch(getUserTimeKeepingByMonthThunk({userUid: userId, month: newDate}));
   }, []);
 
-  const markedDatesData = useMemo(() => {
-    console.log('calendarDate', calendarDate);
+  useEffect(() => {
     const markedDateList = monthData.reduce((acc, curr) => {
       acc[dayjs(`${calendarDate}-${curr.day}`).format('YYYY-MM-DD')] = {
         selected: true,
@@ -74,65 +79,55 @@ const Timekeeping = () => {
       };
       return acc;
     }, {});
-    return markedDateList;
-  }, [monthData]);
+    console.log('markedDateList:', markedDateList);
+    setMarkedDatesData(markedDateList);
 
-  const workingDays = useMemo(() => {
     if (monthData?.length > 0) {
-      return monthData.reduce((acc, curr) => {
+      _workingDays = monthData.reduce((acc, curr) => {
         if (curr?.type === 'working') {
           acc++;
         }
         return acc;
       }, 0);
-    }
-    return 0;
-  }, [monthData]);
 
-  const absentDays = useMemo(() => {
-    if (monthData?.length > 0) {
-      return monthData.reduce((acc, curr) => {
+      _absentDays = monthData.reduce((acc, curr) => {
         if (curr?.type === 'off') {
           acc++;
         }
         return acc;
       }, 0);
-    }
-    return 0;
-  }, [monthData]);
 
-  const leaveDays = useMemo(() => {
-    if (monthData?.length > 0) {
-      return monthData.reduce((acc, curr) => {
+      _leaveDays = monthData.reduce((acc, curr) => {
         if (curr?.type === 'leave') {
           acc++;
         }
         return acc;
       }, 0);
-    }
-    return 0;
-  }, [monthData]);
 
-  const halfWorkingDays = useMemo(() => {
-    if (monthData?.length > 0) {
-      return monthData.reduce((acc, curr) => {
+      _halfWorkingDays = monthData.reduce((acc, curr) => {
         if (curr?.type === 'halfday') {
           acc++;
         }
         return acc;
       }, 0);
-    }
-    return 0;
-  }, [monthData]);
 
-  const totalOvertime = useMemo(() => {
-    if (monthData?.length > 0) {
-      return monthData.reduce((acc, curr) => {
+      _totalOvertime = monthData.reduce((acc, curr) => {
         acc += curr.overtime;
         return acc;
       }, 0);
+    } else {
+      _absentDays = 0;
+      _workingDays = 0;
+      _leaveDays = 0;
+      _halfWorkingDays = 0;
+      _totalOvertime = 0;
     }
-    return 0;
+
+    setWorkingDays(_workingDays);
+    setAbsentDays(_absentDays);
+    setLeaveDays(_leaveDays);
+    setHalfWorkingDays(_halfWorkingDays);
+    setTotalOvertime(_totalOvertime);
   }, [monthData]);
 
   const handleMonthChange = async date => {
