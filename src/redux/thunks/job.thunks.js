@@ -6,7 +6,7 @@ export const saveJobDataToFirebase = createAsyncThunk(
   'jobs/saveJobDataToFirebase',
   async (data, {rejectWithValue}) => {
     try {
-      await firebase.app().database(Api_URL).ref('jobs').push({value: data});
+      await firebase.app().database(Api_URL).ref('jobs').push(data);
     } catch (error) {
       return rejectWithValue(error.message);
     }
