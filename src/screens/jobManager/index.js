@@ -1,20 +1,6 @@
-<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, Pressable, FlatList, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-=======
-import React, {useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  FlatList,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
->>>>>>> working_time_branch
 import CustomButton from '../../components/CustomButton';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
