@@ -19,13 +19,8 @@ import CustomButton from '../../components/CustomButton';
 import FontSize from '../../config/constants/FontSize';
 import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
-<<<<<<< HEAD
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteJob, fetchJobs } from '../../redux/thunks/job.thunks';
-=======
-import {useDispatch, useSelector} from 'react-redux';
-import {deleteJob, fetchJobs} from '../../redux/thunks/job.thunks';
->>>>>>> working_time_branch
 
 const JobManager = () => {
   const navigation = useNavigation();
