@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {
   saveImportData,
   updateInventoryAfterImport,
-  fetchInventory,
-  updateInventoryAfterExport
+  fetchInventoryThunk,
+  updateInventoryAfterExport,
 } from '../thunks/inventory.thunk';
 
 const initialState = {
@@ -22,8 +22,8 @@ const suppliesSlice = createSlice({
       state.isLoading = false;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(saveImportData.pending, (state) => {
+  extraReducers: builder => {
+    builder.addCase(saveImportData.pending, state => {
       state.isLoading = true;
       state.error = null;
     });
@@ -36,7 +36,7 @@ const suppliesSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
-    builder.addCase(updateInventoryAfterImport.pending, (state) => {
+    builder.addCase(updateInventoryAfterImport.pending, state => {
       state.isLoading = true;
     });
     builder.addCase(updateInventoryAfterImport.fulfilled, (state, action) => {
@@ -47,7 +47,7 @@ const suppliesSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
-    builder.addCase(updateInventoryAfterExport.pending, (state) => {
+    builder.addCase(updateInventoryAfterExport.pending, state => {
       state.isLoading = true;
     });
     builder.addCase(updateInventoryAfterExport.fulfilled, (state, action) => {
@@ -59,14 +59,14 @@ const suppliesSlice = createSlice({
       state.error = action.error.message;
     });
 
-    builder.addCase(fetchInventory.pending, (state) => {
+    builder.addCase(fetchInventoryThunk.pending, state => {
       state.isLoading = true;
     });
-    builder.addCase(fetchInventory.fulfilled, (state, action) => {
+    builder.addCase(fetchInventoryThunk.fulfilled, (state, action) => {
       state.isLoading = false;
       state.inventory = action.payload;
     });
-    builder.addCase(fetchInventory.rejected, (state, action) => {
+    builder.addCase(fetchInventoryThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

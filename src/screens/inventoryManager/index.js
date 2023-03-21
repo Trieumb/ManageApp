@@ -1,44 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, FlatList, StyleSheet, TextInput } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
+import React, {useState, useEffect} from 'react';
+import {Text, View, FlatList, StyleSheet, TextInput} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {WINDOW_WITH} from '../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LineHeight from '../../config/constants/LineHeight';
 import Colors from '../../config/constants/Colors';
 import FontSize from '../../config/constants/FontSize';
-import { fetchInventory } from '../../redux/thunks/inventory.thunk';
-import { inventoryListSelector } from '../../redux/selectors/inventory.selector';
-
+import {fetchInventoryThunk} from '../../redux/thunks/inventory.thunk';
 
 const InventoryManager = () => {
-
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
   const [filterData, setFilterData] = useState([]);
   const [masterData, setMasterData] = useState([]);
-  const [displayedInventory, setDisplayedInventory] = useState([]);
-  
-  const inventory = useSelector((state) => state.supplies.inventory);
-  
+  const inventory = useSelector(state => state.supplies.inventory);
+
   useEffect(() => {
-    dispatch(fetchInventory());
-    setFilterData(inventory);
-    setMasterData(inventory);
-    console.log(inventory);
+    dispatch(fetchInventoryThunk());
   }, [dispatch]);
 
+  useEffect(() => {
+    setFilterData(inventory);
+    setMasterData(inventory);
+  }, [inventory]);
   // hand searchItem
-  const handleSearchSupplie = (text) => {
+  const handleSearchSupplie = text => {
     if (text) {
-      const newData = masterData.filter(
-        (item) => {
-          const itemData = item.id
-            ? item.id.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        }
-      );
+      const newData = masterData.filter(item => {
+        const itemData = item.id ? item.id.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
       setFilterData(newData);
       setSearchText(text);
     } else {
@@ -46,17 +38,22 @@ const InventoryManager = () => {
       setSearchText(text);
     }
   };
-  const FlatListItem = ({ item, index }) => {
+  const FlatListItem = ({item, index}) => {
     return (
-      <View style={{
-        backgroundColor: index % 2 == 1 ? Colors.HEADER : Colors.WHITE,
-        padding: 10, flexDirection: 'row', justifyContent: 'center'
-      }}>
+      <View
+        style={{
+          backgroundColor: index % 2 == 1 ? Colors.HEADER : Colors.WHITE,
+          paddingVertical: 5,
+          paddingHorizontal: 10,
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
         <Text style={styles.flatListItem}>{item.id}</Text>
         <Text style={styles.flatListItemName}>{item.name}</Text>
         <Text style={styles.flatListItem}>{item.quantity}</Text>
+        {/* <Text style={styles.flatListItem}>{item.unit}</Text> */}
       </View>
-    )
+    );
   };
   const HeaderFlatList = () => {
     return (
@@ -64,38 +61,41 @@ const InventoryManager = () => {
         <Text style={styles.flatListItemHeader}>Mã VT</Text>
         <Text style={styles.flatListItemHeaderName}>Tên VT</Text>
         <Text style={styles.flatListItemHeader}>Số lượng</Text>
+        {/* <Text style={styles.flatListItemHeader}>Đơn vị</Text> */}
       </View>
-    )
+    );
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.Searchcontainer}>
-        <Ionicons name='search' size={20} color={Colors.PRIMARY} />
-        <TextInput style={styles.inputSearch}
+        <Ionicons name="search" size={20} color={Colors.PRIMARY} />
+        <TextInput
+          style={styles.inputSearch}
           value={searchText}
-          onChangeText={(text) => handleSearchSupplie(text)}
-          placeholder="Tìm kiếm" />
+          onChangeText={text => handleSearchSupplie(text)}
+          placeholder="Tìm kiếm"
+        />
       </View>
-      <View style={styles.flarListContainer}>
-        <FlatList data={filterData}
-          ListHeaderComponent={HeaderFlatList}
-          keyExtractor={item => item.id}
-          renderItem={({ item, index }) => {
-            return <FlatListItem item={item} index={index} />
-          }}>
-        </FlatList>
-      </View>
+
+      <FlatList
+        data={filterData}
+        ListHeaderComponent={HeaderFlatList}
+        stickyHeaderIndices={[0]}
+        keyExtractor={item => item.id}
+        renderItem={({item, index}) => (
+          <FlatListItem item={item} index={index} />
+        )}
+      />
     </View>
+  );
+};
 
-  )
-}
-
-export default InventoryManager
+export default InventoryManager;
 
 const styles = StyleSheet.create({
   Searchcontainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 40,
     backgroundColor: Colors.WHITE,
     alignItems: 'center',
@@ -110,18 +110,27 @@ const styles = StyleSheet.create({
     fontSize: FontSize.BODY,
     lineHeight: LineHeight.BODY,
   },
-  flarListContainer: {
-    flexDirection: 'row',
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  flatListContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
   flatListItem: {
     paddingVertical: 10,
-    width: "25%",
+    width: '25%',
     fontSize: FontSize.BODY,
   },
   flatListItemName: {
     paddingVertical: 10,
-    width: "45%",
+    width: '45%',
     fontSize: FontSize.BODY,
   },
   flatListTitle: {
@@ -133,11 +142,11 @@ const styles = StyleSheet.create({
   flatListItemHeader: {
     color: Colors.WHITE,
     fontSize: FontSize.BODY_18,
-    width: "25%",
+    width: '25%',
   },
   flatListItemHeaderName: {
-    width: "45%",
+    width: '45%',
     color: Colors.WHITE,
     fontSize: FontSize.BODY_18,
-  }
-})
+  },
+});
