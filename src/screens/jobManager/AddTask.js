@@ -51,13 +51,13 @@ const AddTask = () => {
                 <CustomInput
                     reset={reset}
                     resetInput={resetInput}
-                    name="dateStart"
+                    name="startDate"
                     placeholder="Ngày khởi tạo"
                     control={control}
                     rules={{ required: 'Không để trống!' }}
                 />
                 <CustomInput
-                    name="dateEnd"
+                    name="endDate"
                     placeholder="Ngày hoàn thành"
                     control={control}
                     rules={{}}

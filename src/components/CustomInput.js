@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.WHITE,
     width: WINDOW_WITH - 60,
-    borderColor: Colors.SECONDARY,
+    borderColor: Colors.DANGER,
     borderWidth: 0.5,
     borderRadius: 20,
-    marginVertical: 5,
+    marginVertical: 7,
   },
   input: {
     paddingLeft: 10,

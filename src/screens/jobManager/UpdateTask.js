@@ -17,8 +17,14 @@ import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 import {useNavigation} from '@react-navigation/native';
 import LineHeight from '../../config/constants/LineHeight';
+import { updateJob, fetchJobs } from '../../redux/thunks/job.thunks';
+import { useDispatch } from 'react-redux';
 
-const UpdateTask = () => {
+
+const UpdateTask = ({route}) => {
+
+  const {item} = route.params;
+  const dispatch = useDispatch();
   const {
     control,
     formState: {errors},
@@ -27,10 +33,14 @@ const UpdateTask = () => {
 
   const navigation = useNavigation();
   const UpdateTask = data => {
-    Alert.alert(JSON.stringify(data));
+    const jobId = item.id;
+    dispatch(updateJob({ jobId , data}));
+    console.log(data);
+    dispatch(fetchJobs());
+    navigation.goBack();
   };
   const onGotoBack = () => {
-    navigation.navigate('HomeNavigator');
+    navigation.goBack();
   };
   return (
     <View style={styles.container}>
@@ -45,28 +55,32 @@ const UpdateTask = () => {
       </ImageBackground>
       <ScrollView style={styles.body}>
         <CustomInput
-          name="dateStart"
+          name="startDate"
           placeholder="Ngày khởi tạo"
+          defaultValue={item.value.startDate}
           control={control}
-          rules={{required: 'Không để trống!'}}
+          rules={{}}
         />
         <CustomInput
-          name="dateEnd"
+          name="endDate"
           placeholder="Ngày hoàn thành"
+          defaultValue={item.value.endDate}
           control={control}
           rules={{}}
         />
         <CustomInput
           name="receiver"
           placeholder="Người nhận"
+          defaultValue={item.value.receiver}
           control={control}
           rules={{}}
         />
         <CustomInput
-          name="content"
+          name="content"  
           placeholder="Chi tiết công việc"
+          defaultValue={item.value.content}
           control={control}
-          rules={{required: 'Không để trống!'}}
+          rules={{}}
         />
         <BigCustomButton disable={false} onPress={handleSubmit(UpdateTask)}>
           Xác nhận

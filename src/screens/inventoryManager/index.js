@@ -18,7 +18,7 @@ const InventoryManager = () => {
   const [masterData, setMasterData] = useState([]);
   const [displayedInventory, setDisplayedInventory] = useState([]);
   
-  const inventory = useSelector(inventoryListSelector);
+  const inventory = useSelector((state) => state.supplies.inventory);
   
   useEffect(() => {
     dispatch(fetchInventory());

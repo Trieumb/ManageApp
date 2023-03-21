@@ -4,11 +4,22 @@ import Api_URL from '../../config/api/Api_URL';
 
 export const saveJobDataToFirebase = createAsyncThunk(
   'jobs/saveJobDataToFirebase',
-  async (data, {rejectWithValue}) => {
+  async (data, thunkAPI) => {
     try {
-      await firebase.app().database(Api_URL).ref('jobs').push({value: data});
+      await firebase.app().database(Api_URL).ref('jobs').push(data);
     } catch (error) {
-      return rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+export const updateJob = createAsyncThunk(
+  'jobs/updateJob',
+  async ( {jobId, data}, thunkAPI) => {
+    try {
+      await firebase.app().database(Api_URL).ref(`jobs/${jobId}`).update(data);
+      console.log("đã cập nhật job");
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
