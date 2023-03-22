@@ -28,3 +28,23 @@ export const getAllUsersThunk = createAsyncThunk(
     }
   },
 );
+
+export const getInfoUserByIdThunk = createAsyncThunk(
+  'user/getInfoUser',
+  async (userId, thunkAPI) => {
+    try {
+      const res = await getUserInfoById(userId);
+      return res;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({error: error.message});
+    }
+  },
+);
+export const deleteUser = createAsyncThunk('user/deleteUser', async (userId) => {
+  try {
+      const res = await firebase.app().database(Api_URL).ref(`users/${userId}`).remove();
+      return res;
+  } catch (error) {
+      console.log(error);
+  }
+});

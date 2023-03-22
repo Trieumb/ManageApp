@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { saveCustomerData, fetchCustomers, deleteCustomer  } from '../thunks/customer.thunk';
+import { saveCustomerData, fetchCustomers, deleteCustomer, searchCustomers  } from '../thunks/customer.thunk';
 
 const initialState = {
     customersData: [],
@@ -36,10 +36,24 @@ const customersSlice = createSlice({
           state.isLoading = false;
           state.error = action.error.message;
         });
+        builder.addCase(deleteCustomer.pending, (state) => {
+          state.isLoading = true;
+        });
         builder.addCase(deleteCustomer.fulfilled, (state, action) => {
           state.isLoading = false;
         });
         builder.addCase(deleteCustomer.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+        });
+        builder.addCase(searchCustomers.pending, (state) => {
+          state.isLoading = true;
+        });
+        builder.addCase(searchCustomers.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.customersData = action.payload;
+        });
+        builder.addCase(searchCustomers.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.error.message;
         });

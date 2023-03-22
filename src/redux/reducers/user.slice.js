@@ -1,12 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Alert} from 'react-native';
 
-import {writeUserThunk, getAllUsersThunk} from '../thunks/user.thunk';
+import {writeUserThunk, getAllUsersThunk, getInfoUserByIdThunk} from '../thunks/user.thunk';
 
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
+    user: {},
     editingUser: null,
     isDataWritten: false,
     isLoading: false,
@@ -49,6 +50,19 @@ const usersSlice = createSlice({
       })
       .addCase(getAllUsersThunk.rejected, state => {
         state.users = [];
+        state.isLoading = false;
+      })
+      .addCase(getInfoUserByIdThunk.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getInfoUserByIdThunk.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.user = action.payload;
+        }
+        state.isLoading = false;
+      })
+      .addCase(getInfoUserByIdThunk.rejected, state => {
+        state.user = [];
         state.isLoading = false;
       });
   },

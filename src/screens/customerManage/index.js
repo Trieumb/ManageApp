@@ -7,13 +7,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
+import LineHeight from '../../config/constants/LineHeight';
 import CustomButton from '../../components/CustomButton';
 import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import FooterCustom from '../../components/FooterCustom';
 import { useNavigation } from '@react-navigation/native';
-import CustomSearchInput from '../../components/CustomSearchInput';
+import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCustomers  , deleteCustomer } from '../../redux/thunks/customer.thunk';
+import { fetchCustomers  , deleteCustomer, searchCustomers } from '../../redux/thunks/customer.thunk';
 import { customersList } from '../../redux/selectors/customer.selector';
 
 
@@ -21,6 +22,7 @@ const CustomerManager = () => {
 
   const [modaVisible, setModaVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [query, setQuery] = useState('');
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -31,8 +33,13 @@ const CustomerManager = () => {
     console.log(customers);
   }, [])
 
-  const onGotoUpdteCustomer = () => {
-    navigation.navigate('UpdateCustomer')
+  const handleSearch = (text) => {
+    setQuery(text);
+    dispatch(searchCustomers(text));
+  };
+
+  const onGotoUpdateCustomer = (item) => {
+    navigation.navigate('UpdateCustomer', {item})
   }
 
   const handleDeleteCustomer = (id) => {
@@ -53,23 +60,27 @@ const CustomerManager = () => {
   }; 
 
   const FlatListItem = ({ item, showModal }) => {
+
+    const handleUpdateCustomer = () => {
+        onGotoUpdateCustomer(item)
+    }
     return (
       <View style={styles.flatListContainer}>
         <ScrollView>
           <View style={styles.dateContainer}>
             <Text style={styles.textTitleItem}>Tên khách hàng: </Text>
-            <Text style={styles.textDate}>{item.value.name}</Text>
+            <Text style={styles.textDate}>{item.name}</Text>
           </View>
           <View style={styles.dateContainer}>
             <Text style={styles.textTitleItem}>Địa chỉ : </Text>
-            <Text style={styles.textDate}>{item.value.address}</Text>
+            <Text style={styles.textDate}>{item.address}</Text>
           </View>
           <View style={styles.receiveContainer}>
             <Text style={styles.textTitleItem}>Số ĐT : </Text>
-            <Text style={styles.textDate}>{item.value.phone}</Text>
+            <Text style={styles.textDate}>{item.phone}</Text>
           </View>
           <View style={styles.buttonActiveContainer}>
-            <CustomButton style={styles.button} onPress={onGotoUpdteCustomer}>
+            <CustomButton style={styles.button} onPress={handleUpdateCustomer}>
               Sửa
             </CustomButton>
             <CustomButton style={styles.button} onPress={() => handleDeleteCustomer(item.id)}>
@@ -92,12 +103,12 @@ const CustomerManager = () => {
         </View>
         <ScrollView style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalItem}>Tên khách hàng : {selectedItem && selectedItem.value.name}</Text>
-            <Text style={styles.modalItem}>Địa chỉ : {selectedItem && selectedItem.value.address}</Text>
-            <Text style={styles.modalItem}>Số ĐT: {selectedItem && selectedItem.value.phone}</Text>
-            <Text style={styles.modalItem}>Ngày lắp đặt: {selectedItem && selectedItem.value.installationDate}</Text>
-            <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.value.category}</Text>
-            <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.value.description}</Text>
+            <Text style={styles.modalItem}>Tên khách hàng : {selectedItem && selectedItem.name}</Text>
+            <Text style={styles.modalItem}>Địa chỉ : {selectedItem && selectedItem.address}</Text>
+            <Text style={styles.modalItem}>Số ĐT: {selectedItem && selectedItem.phone}</Text>
+            <Text style={styles.modalItem}>Ngày lắp đặt: {selectedItem && selectedItem.installationDate}</Text>
+            <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.category}</Text>
+            <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.description}</Text>
           </View>
         </ScrollView>
         <FooterCustom />
@@ -108,7 +119,13 @@ const CustomerManager = () => {
 
   return (
     <View style={styles.container}>
-      <CustomSearchInput />
+      <View style={styles.Searchcontainer}>
+        <Ionicons name='search' size={20} color={Colors.PRIMARY} />
+        <TextInput style={styles.inputSearch}
+          value={query}
+          onChangeText={handleSearch}
+          placeholder="Tìm kiếm" />
+      </View>
       <View style={styles.flatListRender}>
         <FlatList data={customers}
           keyExtractor={item => item.id}
@@ -165,16 +182,25 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
   },
-  flatListItem: {
-
-
-  },
-  headerJob: {
-
-  },
   buttonActiveContainer: {
     flexDirection: "row",
     margin: 5
+  },
+  Searchcontainer: {
+    flexDirection: "row",
+    height: 40,
+    backgroundColor: Colors.WHITE,
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderColor: Colors.PRIMARY,
+    borderRadius: 10,
+    paddingLeft: 10,
+    margin: 15,
+  },
+  inputSearch: {
+    width: WINDOW_WITH - 60,
+    fontSize: FontSize.BODY,
+    lineHeight: LineHeight.BODY,
   },
   // modal
   modalContainer: {

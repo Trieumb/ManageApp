@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { saveJobDataToFirebase, fetchJobs, deleteJob} from '../thunks/job.thunks';
+import { saveJobDataToFirebase, updateJob, fetchJobs, deleteJob} from '../thunks/job.thunks';
 
 const initialState = {
     jobsData: [],
@@ -41,6 +41,16 @@ const jobSlice = createSlice({
           state.jobsData = action.payload;
         });
         builder.addCase(deleteJob.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+        });
+        builder.addCase(updateJob.pending, (state) => {
+          state.isLoading = true;
+        });
+        builder.addCase(updateJob.fulfilled, (state, action) => {
+          state.isLoading = false;
+        });
+        builder.addCase(updateJob.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.error.message;
         });
