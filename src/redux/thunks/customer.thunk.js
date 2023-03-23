@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { firebase } from '@react-native-firebase/database';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {firebase} from '@react-native-firebase/database';
 import Api_URL from '../../config/api/Api_URL';
 
 export const saveCustomerData = createAsyncThunk(
@@ -11,6 +11,7 @@ export const saveCustomerData = createAsyncThunk(
              return thunkAPI.rejectWithValue(error.message);
         }
     }
+  },
 );
 export const updateCustomer = createAsyncThunk(
     'customer/updateCustomer',
@@ -25,21 +26,35 @@ export const updateCustomer = createAsyncThunk(
   );
 export const fetchCustomers = createAsyncThunk('customers/fetchCustomer', async () => {
     try {
-        const snapshot = await firebase.app().database(Api_URL).ref('customers').once('value');
-        const data = snapshot.val();
-        const customers = Object.keys(data || {}).map((key) => ({ id: key, ...data[key] }));
-        return customers;
+      const snapshot = await firebase
+        .app()
+        .database(Api_URL)
+        .ref('customers')
+        .once('value');
+      const data = snapshot.val();
+      const customers = Object.keys(data || {}).map(key => ({
+        id: key,
+        ...data[key],
+      }));
+      return customers;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-});
+  },
+);
 
-export const deleteCustomer = createAsyncThunk('customer/deleteCustomer', async (id) => {
+export const deleteCustomer = createAsyncThunk(
+  'customer/deleteCustomer',
+  async id => {
     try {
-        const res = await firebase.app().database(Api_URL).ref(`customers/${id}`).remove();
-        return res;
+      const res = await firebase
+        .app()
+        .database(Api_URL)
+        .ref(`customers/${id}`)
+        .remove();
+      return res;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
 });
 export const searchCustomers = createAsyncThunk(
@@ -57,3 +72,4 @@ export const searchCustomers = createAsyncThunk(
       return customers;
     }
   );
+
