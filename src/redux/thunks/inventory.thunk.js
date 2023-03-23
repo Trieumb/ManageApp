@@ -42,9 +42,7 @@ export const saveImportData = createAsyncThunk(
       await newImportRef.set(newImportData);
       const inventoryRef = firebase.app().database(Api_URL).ref(`supplies/inventory`);
       await inventoryRef.update(updatedInventory);
-
       console.log('Nhập kho thành công!');
-      await dispatch(updateInventory({ supplies }));
       return payload;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });

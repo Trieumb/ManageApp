@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {
   View,
-  Text,
+  Alert,
   FlatList,
   StyleSheet,
   Pressable,
@@ -13,7 +13,7 @@ import FontSize from '../../config/constants/FontSize';
 import UserItem from './UserItem';
 import {useDispatch, useSelector} from 'react-redux';
 import {userListSelector} from '../../redux/selectors/users.selector';
-import {getAllUsersThunk} from '../../redux/thunks/user.thunk';
+import {getAllUsersThunk, deleteUser} from '../../redux/thunks/user.thunk';
 import {useNavigation} from '@react-navigation/native';
 import {startEditUser} from '../../redux/reducers/user.slice';
 
@@ -27,7 +27,15 @@ const UserManager = () => {
     dispatch(startEditUser({uid: id, name, email, role}));
   };
   const handlePressDelete = id => {
-    console.log('On press delete', id);
+    Alert.alert('Xóa dữ liệu', 'Bạn có muốn xóa không?', [
+      {
+        text: 'Thoát',
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () =>  dispatch(deleteUser(id))},
+    ],
+      { cancelable: false });
+      dispatch(getAllUsersThunk());
   };
   useEffect(() => {
     console.log('getAllUsersThunk');
@@ -49,11 +57,11 @@ const UserManager = () => {
           />
         )}
       />
-      <View style={styles.buttonAddContainer}>
+      {/* <View style={styles.buttonAddContainer}>
         <Pressable onPress={() => {}} style={styles.addButton}>
           <Text style={styles.addText}>+</Text>
         </Pressable>
-      </View>
+      </View> */}
     </View>
   );
 };

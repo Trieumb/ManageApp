@@ -1,28 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firebase } from '@react-native-firebase/database';
-import messaging from'@react-native-firebase/messaging';
 import Api_URL from '../../config/api/Api_URL';
 
 export const saveJobDataToFirebase = createAsyncThunk(
   'jobs/saveJobDataToFirebase',
   async (data, thunkAPI) => {
     try {
-      messaging.getToken({ vapidKey: 'BHyLllkeIo_OVOtX85epmqq48zUq1AX1yHmkLV6mvSo4YqI1kn7vIERIoXDEhHPzS95HjM95dgTz7-acguBLooE' }).then((currentToken) => {
-        if (currentToken) {
-          messaging().onNotificationOpenedApp((remoteMessage) => {
-            console.log('Opened notification:', remoteMessage);
-          });
-          messaging().send({
-            notification: {
-              title: 'Có công việc mới',
-              body: 'Vui lòng kiểm tra lại',
-            },
-            token: currentToken,
-          });
-        } else {
-          console.log('lỗi!');
-        }
-      })
       await firebase.app().database(Api_URL).ref('jobs').push(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

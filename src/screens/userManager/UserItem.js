@@ -13,10 +13,10 @@ import Colors from '../../config/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 const roleMap = {
   admin: 'Admin',
-  manager: 'Manager',
-  stock_manager: 'Stock Manager',
-  accountant: 'Accountant',
-  employee: 'Employee',
+  manager: 'Quản lý',
+  stock_manager: 'Thủ kho',
+  accountant: 'Kế toán',
+  employee: 'Nhân viên',
 };
 const UserItem = ({id, name, email, role, onPressCard, onPressDelete}) => {
   return (

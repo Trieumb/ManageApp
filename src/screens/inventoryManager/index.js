@@ -28,7 +28,7 @@ const InventoryManager = () => {
   }, [dispatch]);
 
   // hand searchItem
-  const handleSearchSupplie = (text) => {
+  const handleSearchSupplies = (text) => {
     if (text) {
       const newData = masterData.filter(
         (item) => {
@@ -74,7 +74,7 @@ const InventoryManager = () => {
         <Ionicons name='search' size={20} color={Colors.PRIMARY} />
         <TextInput style={styles.inputSearch}
           value={searchText}
-          onChangeText={(text) => handleSearchSupplie(text)}
+          onChangeText={(text) => handleSearchSupplies(text)}
           placeholder="Tìm kiếm" />
       </View>
       <View style={styles.flarListContainer}>

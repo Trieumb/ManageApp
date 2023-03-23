@@ -33,7 +33,6 @@ const CustomDrawer = props => {
 
   useEffect(() => {
       dispatch(getInfoUserByIdThunk(userId));
-      console.log(data?.name);
   }, [userId]);
   
   return (

@@ -4,11 +4,11 @@ import Api_URL from '../../config/api/Api_URL';
 
 export const saveCustomerData = createAsyncThunk(
     'customer/saveCustomerData',
-    async (data, { rejectWithValue }) => {
+    async (data, thunkAPI) => {
         try {
             await firebase.app().database(Api_URL).ref('customers').push(data);
         } catch (error) {
-            return rejectWithValue(error.message);
+             return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
@@ -46,7 +46,7 @@ export const searchCustomers = createAsyncThunk(
     'customers/search',
     async (query) => {
       const ref = firebase.app().database(Api_URL).ref('customers');
-      const snapshot = await ref.orderByChild('name').startAt(query).endAt(`${query}\uf8ff`).once('value');
+      const snapshot = await ref.orderByChild('name').startAt(query).endAt(query + "\uf8ff").once('value');
       const customers = [];
       snapshot.forEach((child) => {
         customers.push({

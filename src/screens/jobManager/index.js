@@ -7,14 +7,22 @@ import Fonts from '../../config/constants/Fonts';
 import Colors from '../../config/constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteJob, fetchJobs } from '../../redux/thunks/job.thunks';
+import { userIdSelector } from '../../redux/selectors/auth.selector';
+import { user } from '../../redux/selectors/users.selector';
+import { getInfoUserByIdThunk } from '../../redux/thunks/user.thunk';
 
 const JobManager = () => {
   const navigation = useNavigation();
   const jobs = useSelector(state => state.jobs.jobsData);
   const dispatch = useDispatch();
+  const userId = useSelector(userIdSelector);
+  const data = useSelector(user);
+
+  const isEmployee = data && data?.role === 'employee';
 
   useEffect(() => {
     dispatch(fetchJobs());
+    dispatch(getInfoUserByIdThunk(userId));
     console.log('job', jobs);
   }, []);
 
@@ -61,16 +69,20 @@ const JobManager = () => {
           </Text>
           <Text style={styles.textDetail}>{item.content}</Text>
         </View>
-        <View style={styles.buttonActiveContainer}>
-          <CustomButton style={styles.button} onPress={handleUpdateTask}>
-            Sửa
-          </CustomButton>
-          <CustomButton
-            style={styles.button}
-            onPress={() => handleDeleteJob(item.id)}>
-            Xóa
-          </CustomButton>
-        </View>
+        {
+          isEmployee ? null : (
+            <View style={styles.buttonActiveContainer}>
+              <CustomButton style={styles.button} onPress={handleUpdateTask}>
+                Sửa
+              </CustomButton>
+              <CustomButton
+                style={styles.button}
+                onPress={() => handleDeleteJob(item.id)}>
+                Xóa
+              </CustomButton>
+            </View>
+          )
+        }
       </View>
     );
   };
@@ -80,7 +92,7 @@ const JobManager = () => {
         <FlatList
           data={jobs}
           keyExtractor={item => item.id}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return <FlatListItem item={item} index={index} />;
           }}></FlatList>
       </View>

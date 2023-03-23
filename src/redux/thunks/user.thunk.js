@@ -4,6 +4,9 @@ import {
   getAllUsers,
   writeUserData,
 } from '../../config/api/UsersAPI';
+import Api_URL from '../../config/api/Api_URL';
+import { firebase } from '@react-native-firebase/database';
+
 export const writeUserThunk = createAsyncThunk(
   'user/write_data',
   async (data, thunkAPI) => {

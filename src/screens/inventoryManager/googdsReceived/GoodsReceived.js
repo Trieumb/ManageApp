@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import BigCustomButton from '../../../components/BigCustomButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveAndRefreshInventoryAfterImport } from '../../../redux/thunks/inventory.thunk';
+import { saveAndRefreshInventoryAfterImport, saveImportData } from '../../../redux/thunks/inventory.thunk';
 import Colors from '../../../config/constants/Colors';
 import { WINDOW_WITH } from '../../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,7 +27,7 @@ const GoodsDelivery = () => {
         setSupplies([...supplies, data]);
     };
     const handleGoodsReceived = () => {
-        dispatch(saveAndRefreshInventoryAfterImport({ dateStockin, supplier, supplies }));
+        dispatch(saveImportData({ dateStockin, supplier, supplies }));
         setSupplies([]);
         setDateStockin('');
         setSupplier('');
