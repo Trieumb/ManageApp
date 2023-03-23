@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Text, View, StyleSheet, TextInput,
-  FlatList, Alert, Pressable, Modal, ScrollView
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  Alert,
+  Pressable,
+  Modal,
+  ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../config/constants/Colors';
@@ -9,7 +16,7 @@ import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 import LineHeight from '../../config/constants/LineHeight';
 import CustomButton from '../../components/CustomButton';
-import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons'
+import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import FooterCustom from '../../components/FooterCustom';
 import { useNavigation } from '@react-navigation/native';
 import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
@@ -19,7 +26,6 @@ import { customersList } from '../../redux/selectors/customer.selector';
 
 
 const CustomerManager = () => {
-
   const [modaVisible, setModaVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [query, setQuery] = useState('');
@@ -30,8 +36,7 @@ const CustomerManager = () => {
 
   useEffect(() => {
     dispatch(fetchCustomers());
-    console.log(customers);
-  }, [])
+  }, []);
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -42,25 +47,28 @@ const CustomerManager = () => {
     navigation.navigate('UpdateCustomer', {item})
   }
 
-  const handleDeleteCustomer = (id) => {
-    Alert.alert('Xóa dữ liệu', 'Bạn có muốn xóa không?', [
-      {
-        text: 'Thoát',
-        style: 'cancel',
-      },
-      { text: 'OK', onPress: () => dispatch(deleteCustomer(id)) },
-    ],
-      { cancelable: false });
+  const handleDeleteCustomer = id => {
+    Alert.alert(
+      'Xóa dữ liệu',
+      'Bạn có muốn xóa không?',
+      [
+        {
+          text: 'Thoát',
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => dispatch(deleteCustomer(id))},
+      ],
+      {cancelable: false},
+    );
     dispatch(fetchCustomers());
-  }
+  };
 
-  const showModal = (item) => {
+  const showModal = item => {
     setSelectedItem(item);
     setModaVisible(true);
-  }; 
+  };
 
   const FlatListItem = ({ item, showModal }) => {
-
     const handleUpdateCustomer = () => {
         onGotoUpdateCustomer(item)
     }
@@ -83,15 +91,20 @@ const CustomerManager = () => {
             <CustomButton style={styles.button} onPress={handleUpdateCustomer}>
               Sửa
             </CustomButton>
-            <CustomButton style={styles.button} onPress={() => handleDeleteCustomer(item.id)}>
+            <CustomButton
+              style={styles.button}
+              onPress={() => handleDeleteCustomer(item.id)}>
               Xóa
             </CustomButton>
           </View>
         </ScrollView>
         <Pressable onPress={() => showModal(item)}>
-          <IconMeterial name='account-details' size={20} color={Colors.PRIMARY} />
+          <IconMeterial
+            name="account-details"
+            size={20}
+            color={Colors.PRIMARY}
+          />
         </Pressable>
-        <Modal
         animationType="fade"
         visible={modaVisible}
         onRequestClose={() => setModaVisible(false)}>
@@ -110,11 +123,33 @@ const CustomerManager = () => {
             <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.category}</Text>
             <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.description}</Text>
           </View>
-        </ScrollView>
-        <FooterCustom />
-      </Modal>
+          <ScrollView style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalItem}>
+                Tên khách hàng : {selectedItem && selectedItem.value.name}
+              </Text>
+              <Text style={styles.modalItem}>
+                Địa chỉ : {selectedItem && selectedItem.value.address}
+              </Text>
+              <Text style={styles.modalItem}>
+                Số ĐT: {selectedItem && selectedItem.value.phone}
+              </Text>
+              <Text style={styles.modalItem}>
+                Ngày lắp đặt:{' '}
+                {selectedItem && selectedItem.value.installationDate}
+              </Text>
+              <Text style={styles.modalItem}>
+                Loại thang: {selectedItem && selectedItem.value.category}
+              </Text>
+              <Text style={styles.modalItem}>
+                Mô tả: {selectedItem && selectedItem.value.description}
+              </Text>
+            </View>
+          </ScrollView>
+          <FooterCustom />
+        </Modal>
       </View>
-    )
+    );
   };
 
   return (
@@ -127,25 +162,26 @@ const CustomerManager = () => {
           placeholder="Tìm kiếm" />
       </View>
       <View style={styles.flatListRender}>
-        <FlatList data={customers}
+        <FlatList
+          data={customers}
           keyExtractor={item => item.id}
-          renderItem={({ item, index }) => {
-            return <FlatListItem item={item} index={index} showModal={showModal} />
-          }}>
-        </FlatList>
+          renderItem={({item, index}) => {
+            return (
+              <FlatListItem item={item} index={index} showModal={showModal} />
+            );
+          }}></FlatList>
       </View>
-     
     </View>
-  )
-}
+  );
+};
 
-export default CustomerManager
+export default CustomerManager;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: "center",
-    justifyContent: "center",
+    textAlign: 'center',
+    justifyContent: 'center',
   },
   flatListContainer: {
     flexDirection: 'row',
@@ -153,7 +189,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 8,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   flatListRender: {
     flex: 1,
@@ -169,10 +205,10 @@ const styles = StyleSheet.create({
   textTitleItem: {
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
-    color: Colors.BACKDROP
+    color: Colors.BACKDROP,
   },
   textTitleDetail: {
-    color: Colors.PRIMARY
+    color: Colors.PRIMARY,
   },
   textDate: {
     fontFamily: Fonts.POPPINS,
@@ -183,8 +219,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.BODY,
   },
   buttonActiveContainer: {
-    flexDirection: "row",
-    margin: 5
+    flexDirection: 'row',
+    margin: 5,
   },
   Searchcontainer: {
     flexDirection: "row",
@@ -217,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     marginVertical: 5,
     borderRadius: 10,
-    color: Colors.BLACK
+    color: Colors.BLACK,
   },
   modalHeader: {
     height: '7%',
@@ -232,6 +268,6 @@ const styles = StyleSheet.create({
   },
   textModalHeader: {
     color: Colors.PRIMARY,
-    marginLeft: 5
+    marginLeft: 5,
   },
-})
+});

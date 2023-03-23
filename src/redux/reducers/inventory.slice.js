@@ -3,7 +3,9 @@ import {
   saveImportData,
   updateInventoryAfterImport,
   fetchInventoryThunk,
+  writeImportSuppliesThunk,
   updateInventoryAfterExport,
+  writeExportSuppliesThunk,
 } from '../thunks/inventory.thunk';
 
 const initialState = {
@@ -55,6 +57,29 @@ const suppliesSlice = createSlice({
       suppliesSlice.caseReducers.updateInventorySuccess(state, action);
     });
     builder.addCase(updateInventoryAfterExport.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(writeImportSuppliesThunk.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(writeImportSuppliesThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.inventory = action.payload;
+    });
+    builder.addCase(writeImportSuppliesThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+    builder.addCase(writeExportSuppliesThunk.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(writeExportSuppliesThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.inventory = action.payload;
+    });
+    builder.addCase(writeExportSuppliesThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

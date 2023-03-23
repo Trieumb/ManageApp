@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { saveCustomerData, fetchCustomers, deleteCustomer, searchCustomers  } from '../thunks/customer.thunk';
-
 const initialState = {
-    customersData: [],
-    isLoading: false,
-    error: null,
+  customersData: [],
+  isLoading: false,
+  error: null,
 };
 
 const customersSlice = createSlice({
