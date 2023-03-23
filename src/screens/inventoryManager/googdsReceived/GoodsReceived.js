@@ -2,11 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, StyleSheet, Pressable} from 'react-native';
 import BigCustomButton from '../../../components/BigCustomButton';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  saveAndRefreshInventoryAfterImport,
-  writeImportSuppliesThunk,
-} from '../../../redux/thunks/inventory.thunk';
-
+import {writeImportSuppliesThunk} from '../../../redux/thunks/inventory.thunk';
 import Colors from '../../../config/constants/Colors';
 import {WINDOW_WITH} from '../../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -19,14 +15,7 @@ const GoodsDelivery = () => {
   const [supplies, setSupplies] = useState([]);
   const [dateStockin, setDateStockin] = useState('');
   const [supplier, setSupplier] = useState('');
-  const exampleData = {
-    dateStockin: '23/03/2023',
-    supplier: 'Minh',
-    supplies: [
-      {importQuantity: '100', model: 'D02', name: 'Đèn tròn', unit: 'cái'},
-      {importQuantity: '200', model: 'D01', name: 'day 20 loi', unit: 'm'},
-    ],
-  };
+ 
   const inventory = useSelector(state => state.supplies.inventory);
 
   const handleAddSupplies = data => {

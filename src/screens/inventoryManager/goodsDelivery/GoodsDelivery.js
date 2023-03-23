@@ -8,7 +8,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontSize from '../../../config/constants/FontSize';
 import Fonts from '../../../config/constants/Fonts';
 import {
-  saveAndRefreshInventoryAfterExport,
   writeExportSuppliesThunk,
 } from '../../../redux/thunks/inventory.thunk';
 import ListSuppliesExport from './ListSuppliesExport';
@@ -19,14 +18,7 @@ const GoodsDelivery = () => {
   const [suppliesExport, setSuppliesExport] = useState([]);
   const [dateStockOut, setDateStockOut] = useState('');
   const [cause, setCause] = useState('');
-  const exampleData = {
-    dateStockOut: '23/03/2023',
-    cause: 'Minh',
-    suppliesExport: [
-      {exportQuantity: '100', model: 'D02', name: 'Đèn tròn', unit: 'cái'},
-      {exportQuantity: '11', model: 'R02', name: 'Ray 8K', unit: 'cây'},
-    ],
-  };
+  
   const handleAddSuppliesExport = data => {
     setSuppliesExport([...suppliesExport, data]);
   };

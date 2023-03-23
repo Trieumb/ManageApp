@@ -105,6 +105,7 @@ const CustomerManager = () => {
             color={Colors.PRIMARY}
           />
         </Pressable>
+        <Modal
         animationType="fade"
         visible={modaVisible}
         onRequestClose={() => setModaVisible(false)}>
@@ -115,34 +116,25 @@ const CustomerManager = () => {
           </Pressable>
         </View>
         <ScrollView style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalItem}>Tên khách hàng : {selectedItem && selectedItem.name}</Text>
-            <Text style={styles.modalItem}>Địa chỉ : {selectedItem && selectedItem.address}</Text>
-            <Text style={styles.modalItem}>Số ĐT: {selectedItem && selectedItem.phone}</Text>
-            <Text style={styles.modalItem}>Ngày lắp đặt: {selectedItem && selectedItem.installationDate}</Text>
-            <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.category}</Text>
-            <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.description}</Text>
-          </View>
-          <ScrollView style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalItem}>
-                Tên khách hàng : {selectedItem && selectedItem.value.name}
+                Tên khách hàng : {selectedItem && selectedItem.name}
               </Text>
               <Text style={styles.modalItem}>
-                Địa chỉ : {selectedItem && selectedItem.value.address}
+                Địa chỉ : {selectedItem && selectedItem.address}
               </Text>
               <Text style={styles.modalItem}>
-                Số ĐT: {selectedItem && selectedItem.value.phone}
+                Số ĐT: {selectedItem && selectedItem.phone}
               </Text>
               <Text style={styles.modalItem}>
                 Ngày lắp đặt:{' '}
-                {selectedItem && selectedItem.value.installationDate}
+                {selectedItem && selectedItem.installationDate}
               </Text>
               <Text style={styles.modalItem}>
-                Loại thang: {selectedItem && selectedItem.value.category}
+                Loại thang: {selectedItem && selectedItem.category}
               </Text>
               <Text style={styles.modalItem}>
-                Mô tả: {selectedItem && selectedItem.value.description}
+                Mô tả: {selectedItem && selectedItem.description}
               </Text>
             </View>
           </ScrollView>

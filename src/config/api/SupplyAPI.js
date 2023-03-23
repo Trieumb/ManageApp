@@ -1,4 +1,5 @@
 import {firebase} from '@react-native-firebase/database';
+import {Alert} from 'react-native';
 import uuid from 'react-native-uuid';
 const database = firebase
   .app()
@@ -73,14 +74,10 @@ export const writeExportSupplies = async (exportSupplies, inventory) => {
         if (inventories[index].quantity >= parseInt(cur.exportQuantity)) {
           inventories[index].quantity -= parseInt(cur.exportQuantity);
         } else {
-          throw new Error(
-            'Can not export this item because the quantity is not enough',
-          );
+          Alert.alert('Số lượng trong kho không đủ!');
         }
       } else {
-        throw new Error(
-          'Can not export this item because it is not exist in inventory',
-        );
+        Alert.alert('Vật tư không có trong kho!');
       }
       acc.push({...cur, exportQuantity: parseInt(cur.exportQuantity)});
       return acc;
