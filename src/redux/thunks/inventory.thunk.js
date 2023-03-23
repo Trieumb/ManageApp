@@ -1,7 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {firebase} from '@react-native-firebase/database';
 import Api_URL from '../../config/api/Api_URL';
-import {fetchInventory} from '../../config/api/SupplyAPI';
+import {
+  fetchInventory,
+  writeImportSupplies,
+  writeExportSupplies,
+} from '../../config/api/SupplyAPI';
 export const saveImportData = createAsyncThunk(
   'import/saveImportData',
   async (payload, thunkAPI) => {
@@ -160,7 +164,31 @@ export const fetchInventoryThunk = createAsyncThunk(
     }
   },
 );
-
+export const writeImportSuppliesThunk = createAsyncThunk(
+  'supplies/writeImportSupplies',
+  async (data, thunkAPI) => {
+    try {
+      console.log('suppliesData:', data);
+      const res = await writeImportSupplies(data.supplies, data.inventory);
+      return res;
+    } catch (error) {
+      console.log('Failed writeImportSupplies:', error.message);
+      return thunkAPI.rejectWithValue({error: error.message});
+    }
+  },
+);
+export const writeExportSuppliesThunk = createAsyncThunk(
+  'supplies/writeExportSupplies',
+  async (data, thunkAPI) => {
+    try {
+      const res = await writeExportSupplies(data.supplies, data.inventory);
+      return res;
+    } catch (error) {
+      console.log('Failed writeExportSupplies:', error.message);
+      return thunkAPI.rejectWithValue({error: error.message});
+    }
+  },
+);
 export const saveAndRefreshInventoryAfterExport = payload => async dispatch => {
   try {
     const {dateStockOut, cause, suppliesExport} = payload;
