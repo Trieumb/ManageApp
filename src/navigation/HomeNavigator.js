@@ -1,6 +1,5 @@
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import React, { useEffect } from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import TimeKeepingNavigation from './TimeKeepingNavigator';
 import UserManager from '../screens/userManager';
 import CustomDrawer from '../components/CustomDrawer';
@@ -10,10 +9,27 @@ import Fonts from '../config/constants/Fonts';
 import JobNavigation from './JobNavigator';
 import CustomerNavigation from './CustomerNavigator';
 import InventoryNavigation from './InventoryNavigator';
+import { useDispatch, useSelector } from 'react-redux';
+import { userIdSelector } from '../redux/selectors/auth.selector';
+import { user } from '../redux/selectors/users.selector';
+import { getInfoUserByIdThunk } from '../redux/thunks/user.thunk';
 
 const Drawer = createDrawerNavigator();
 
 const HomeNavigator = () => {
+
+
+  const userId = useSelector(userIdSelector);
+  const data = useSelector(user);
+  const dispatch = useDispatch();
+
+  const isEmployee = data && data?.role === 'employee';
+  const isStockManager = data && data?.role === 'stock_manager';
+
+  useEffect(() => {
+    dispatch(getInfoUserByIdThunk(userId));
+    console.log(isEmployee);
+  }, [userId]);
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
@@ -42,29 +58,28 @@ const HomeNavigator = () => {
         name="Quản lý công việc"
         component={JobNavigation}
       />
-      <Drawer.Screen
-        name="Quản lý khách hàng"
-        component={CustomerNavigation}
-       
-      />
-      <Drawer.Screen
-        name="Quản lý kho"
-        component={InventoryNavigation}
-       
-      />
+      {isEmployee || isStockManager ? null : (
+        <Drawer.Screen
+          name="Quản lý khách hàng"
+          component={CustomerNavigation}
+        />
+      )}
+      {isEmployee ? null : (
+        <Drawer.Screen
+          name="Quản lý kho"
+          component={InventoryNavigation}
+        />
+      )}
+
+      {isEmployee || isStockManager ? null : (
+        <Drawer.Screen
+          name="Tài khoản"
+          component={UserManager}
+        />
+      )}
       <Drawer.Screen
         name="Chấm công nhân viên"
         component={TimeKeepingNavigation}
-       
-      />
-      <Drawer.Screen
-        name="Tài khoản"
-        component={UserManager}
-        // options={{
-        //   drawerIcon: ({color}) => {
-        //     <Ionicons name="home-outline" size={20} color={color} />;
-        //   },
-        // }}
       />
     </Drawer.Navigator>
   );

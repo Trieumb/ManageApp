@@ -14,21 +14,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../config/constants/Colors';
 import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
+import LineHeight from '../../config/constants/LineHeight';
 import CustomButton from '../../components/CustomButton';
 import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import FooterCustom from '../../components/FooterCustom';
-import {useNavigation} from '@react-navigation/native';
-import CustomSearchInput from '../../components/CustomSearchInput';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  fetchCustomers,
-  deleteCustomer,
-} from '../../redux/thunks/customer.thunk';
-import {customersList} from '../../redux/selectors/customer.selector';
+import { useNavigation } from '@react-navigation/native';
+import { WINDOW_WITH } from '../../config/constants/DimensionsWindown';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCustomers  , deleteCustomer, searchCustomers } from '../../redux/thunks/customer.thunk';
+import { customersList } from '../../redux/selectors/customer.selector';
+
 
 const CustomerManager = () => {
   const [modaVisible, setModaVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [query, setQuery] = useState('');
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -38,9 +38,14 @@ const CustomerManager = () => {
     dispatch(fetchCustomers());
   }, []);
 
-  const onGotoUpdteCustomer = () => {
-    navigation.navigate('UpdateCustomer');
+  const handleSearch = (text) => {
+    setQuery(text);
+    dispatch(searchCustomers(text));
   };
+
+  const onGotoUpdateCustomer = (item) => {
+    navigation.navigate('UpdateCustomer', {item})
+  }
 
   const handleDeleteCustomer = id => {
     Alert.alert(
@@ -63,7 +68,10 @@ const CustomerManager = () => {
     setModaVisible(true);
   };
 
-  const FlatListItem = ({item, showModal}) => {
+  const FlatListItem = ({ item, showModal }) => {
+    const handleUpdateCustomer = () => {
+        onGotoUpdateCustomer(item)
+    }
     return (
       <View style={styles.flatListContainer}>
         <ScrollView>
@@ -80,7 +88,7 @@ const CustomerManager = () => {
             <Text style={styles.textDate}>{item.phone}</Text>
           </View>
           <View style={styles.buttonActiveContainer}>
-            <CustomButton style={styles.button} onPress={onGotoUpdteCustomer}>
+            <CustomButton style={styles.button} onPress={handleUpdateCustomer}>
               Sửa
             </CustomButton>
             <CustomButton
@@ -97,17 +105,23 @@ const CustomerManager = () => {
             color={Colors.PRIMARY}
           />
         </Pressable>
-        <Modal
-          animationType="fade"
-          visible={modaVisible}
-          onRequestClose={() => setModaVisible(false)}>
-          <View style={styles.modalHeader}>
-            <Pressable
-              style={styles.buttonBack}
-              onPress={() => setModaVisible(false)}>
-              <Ionicons name="chevron-back" size={20} style={styles.icon} />
-              <Text style={styles.textModalHeader}>Quay lại</Text>
-            </Pressable>
+        animationType="fade"
+        visible={modaVisible}
+        onRequestClose={() => setModaVisible(false)}>
+        <View style={styles.modalHeader}>
+          <Pressable style={styles.buttonBack} onPress={() => setModaVisible(false)}>
+            <Ionicons name="chevron-back" size={20} style={styles.icon} />
+            <Text style={styles.textModalHeader}>Quay lại</Text>
+          </Pressable>
+        </View>
+        <ScrollView style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalItem}>Tên khách hàng : {selectedItem && selectedItem.name}</Text>
+            <Text style={styles.modalItem}>Địa chỉ : {selectedItem && selectedItem.address}</Text>
+            <Text style={styles.modalItem}>Số ĐT: {selectedItem && selectedItem.phone}</Text>
+            <Text style={styles.modalItem}>Ngày lắp đặt: {selectedItem && selectedItem.installationDate}</Text>
+            <Text style={styles.modalItem}>Loại thang: {selectedItem && selectedItem.category}</Text>
+            <Text style={styles.modalItem}>Mô tả: {selectedItem && selectedItem.description}</Text>
           </View>
           <ScrollView style={styles.modalContainer}>
             <View style={styles.modalContent}>
@@ -140,7 +154,13 @@ const CustomerManager = () => {
 
   return (
     <View style={styles.container}>
-      <CustomSearchInput />
+      <View style={styles.Searchcontainer}>
+        <Ionicons name='search' size={20} color={Colors.PRIMARY} />
+        <TextInput style={styles.inputSearch}
+          value={query}
+          onChangeText={handleSearch}
+          placeholder="Tìm kiếm" />
+      </View>
       <View style={styles.flatListRender}>
         <FlatList
           data={customers}
@@ -198,11 +218,25 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS,
     fontSize: FontSize.BODY,
   },
-  flatListItem: {},
-  headerJob: {},
   buttonActiveContainer: {
     flexDirection: 'row',
     margin: 5,
+  },
+  Searchcontainer: {
+    flexDirection: "row",
+    height: 40,
+    backgroundColor: Colors.WHITE,
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderColor: Colors.PRIMARY,
+    borderRadius: 10,
+    paddingLeft: 10,
+    margin: 15,
+  },
+  inputSearch: {
+    width: WINDOW_WITH - 60,
+    fontSize: FontSize.BODY,
+    lineHeight: LineHeight.BODY,
   },
   // modal
   modalContainer: {

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
   Image,
   StatusBar,
   Pressable,
@@ -18,15 +17,24 @@ import Colors from '../config/constants/Colors';
 import FontSize from '../config/constants/FontSize';
 import Fonts from '../config/constants/Fonts';
 import {logoutThunk} from '../redux/thunks/auth.thunks';
-import {useDispatch} from 'react-redux';
-import auth from '@react-native-firebase/auth';
+import {useDispatch, useSelector} from 'react-redux';
+import { userIdSelector } from '../redux/selectors/auth.selector';
+import { user } from '../redux/selectors/users.selector';
+import {getInfoUserByIdThunk } from '../redux/thunks/user.thunk';
 
 const CustomDrawer = props => {
+
+  const userId = useSelector(userIdSelector);
+  const data = useSelector(user);
   const dispatch = useDispatch();
   const handleFacebookLink = () => {
-    dispatch(logoutThunk());
-    console.log('LogedOut Success!');
+    Linking.openURL('https://www.facebook.com/thangmaytaihanghanoi');
   };
+
+  useEffect(() => {
+      dispatch(getInfoUserByIdThunk(userId));
+  }, [userId]);
+  
   return (
     <>
       <StatusBar
@@ -39,7 +47,7 @@ const CustomDrawer = props => {
           {...props}
           contentContainerStyle={{backgroundColor: Colors.SECONDARY}}>
           <View style={styles.imageBakground}>
-            <Text style={styles.author}>Xin chào! Trieumb</Text>
+            <Text style={styles.author}>Xin chào! {data?.name}  </Text>
             <Image
               source={require('../assets/images/avata.png')}
               style={styles.image}
@@ -50,7 +58,7 @@ const CustomDrawer = props => {
           </View>
         </DrawerContentScrollView>
         <View style={styles.footer}>
-          <Pressable style={styles.buttonFooter}>
+          <Pressable style={styles.buttonFooter} onPress={handleFacebookLink}>
             <View style={styles.buttonItem}>
               <Ionicons
                 name="logo-facebook"
@@ -66,7 +74,7 @@ const CustomDrawer = props => {
             }}
             style={styles.buttonFooter}>
             <View style={styles.buttonItem}>
-              <Ionicons name="exit-outline" size={20} />
+              <Ionicons name="exit-outline" size={20} color={Colors.PRIMARY}/>
               <Text style={styles.textFooter}>Đăng xuất</Text>
             </View>
           </Pressable>
@@ -95,10 +103,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
   image: {
-    height: 80,
-    width: 80,
+    height: 50,
+    width: 50,
     borderRadius: 40,
     marginBottom: 10,
   },

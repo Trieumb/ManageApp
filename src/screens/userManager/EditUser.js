@@ -89,7 +89,7 @@ const EditUser = ({route}) => {
   if (!edittingUser && isDataWritten && !isLoading) {
     form = (
       <View style={styles.form}>
-        <Text style={styles.notiText}>Cập nhật thông tin thành cồng</Text>
+        <Text style={styles.notiText}>Cập nhật thông tin thành công!</Text>
         <BigCustomButton disable={isLoading} onPress={onGotoBack}>
           Go back
         </BigCustomButton>

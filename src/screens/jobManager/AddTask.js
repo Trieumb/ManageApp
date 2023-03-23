@@ -19,7 +19,6 @@ import { fetchJobs, saveJobDataToFirebase } from '../../redux/thunks/job.thunks'
 const AddTask = () => {
 
     const dispatch = useDispatch();
-
     const [resetInput, setResetInput] = useState(false);
 
     const handleResetInput = () => {

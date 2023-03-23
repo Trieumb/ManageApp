@@ -21,7 +21,7 @@ export const writeUserData = async ({uid, name, email, role}) => {
   }
 };
 
-export const getUserInfoById = async ({uid}) => {
+export const getUserInfoById = async (uid) => {
   try {
     const snapshot = await database.ref(`users/${uid}`).once('value');
     var name = (snapshot.val() && snapshot.val().name) || 'Anonymous';

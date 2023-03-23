@@ -55,7 +55,6 @@ export const saveImportData = createAsyncThunk(
         .database(Api_URL)
         .ref(`supplies/inventory`);
       await inventoryRef.update(updatedInventory);
-
       console.log('Nhập kho thành công!');
       await dispatch(updateInventory({supplies}));
       return payload;

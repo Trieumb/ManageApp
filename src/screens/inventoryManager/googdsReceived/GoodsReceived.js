@@ -6,6 +6,7 @@ import {
   saveAndRefreshInventoryAfterImport,
   writeImportSuppliesThunk,
 } from '../../../redux/thunks/inventory.thunk';
+
 import Colors from '../../../config/constants/Colors';
 import {WINDOW_WITH} from '../../../config/constants/DimensionsWindown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -62,6 +63,8 @@ const GoodsDelivery = () => {
           <Pressable style={styles.buttonDate}>
             <Ionicons name="calendar" size={20} color={Colors.PRIMARY} />
           </Pressable>
+
+    
         </View>
         <TextInput
           style={styles.input}

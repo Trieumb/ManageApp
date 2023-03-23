@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Alert,
   ScrollView,
   StatusBar,
-  ImageBackground,
 } from 'react-native';
 import BigCustomButton from '../../components/BigCustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -17,8 +15,12 @@ import Fonts from '../../config/constants/Fonts';
 import FontSize from '../../config/constants/FontSize';
 import {useNavigation} from '@react-navigation/native';
 import LineHeight from '../../config/constants/LineHeight';
+import { fetchCustomers, updateCustomer } from '../../redux/thunks/customer.thunk';
+import { useDispatch } from 'react-redux';
 
-const UpdateCustomer = () => {
+const UpdateCustomer = ({route}) => {
+
+  const {item} = route.params;
   const {
     control,
     formState: {errors},
@@ -26,8 +28,14 @@ const UpdateCustomer = () => {
   } = useForm();
 
   const navigation = useNavigation();
-  const UpdateTask = data => {
-    Alert.alert(JSON.stringify(data));
+  const dispatch = useDispatch();
+
+  const UpdateCustomer = data => {
+    const customerId = item.id;
+    dispatch(updateCustomer({ customerId , data}));
+    console.log(data);
+    dispatch(fetchCustomers());
+    navigation.goBack();
   };
   const onGotoBack = () => {
     navigation.navigate('HomeNavigator');
@@ -47,12 +55,14 @@ const UpdateCustomer = () => {
         <CustomInput
           name="name"
           placeholder="Tên khách hàng"
+          defaultValue={item.name}
           control={control}
           rules={{required: 'Không để trống!'}}
         />
         <CustomInput
           name="address"
           placeholder="Địa chỉ"
+          defaultValue={item.address}
           control={control}
           rules={{}}
         />
@@ -60,27 +70,31 @@ const UpdateCustomer = () => {
           name="phone"
           placeholder="Số ĐT"
           control={control}
+          defaultValue={item.phone}
           rules={{require: 'Không để trống!'}}
         />
         <CustomInput
           name="installationDate"
           placeholder="Ngày lắp đặt"
           control={control}
+          defaultValue={item.installationDate}
           rules={{required: 'Không để trống!'}}
         />
         <CustomInput
           name="category"
           placeholder="Loại thang"
           control={control}
+          defaultValue={item.category}
           rules={{required: 'Không để trống!'}}
         />
         <CustomInput
           name="description"
           placeholder="Mô tả"
           control={control}
+          defaultValue={item.description}
           rules={{required: 'Không để trống!'}}
         />
-        <BigCustomButton disable={false} onPress={handleSubmit(UpdateTask)}>
+        <BigCustomButton disable={false} onPress={handleSubmit(UpdateCustomer)}>
           Xác nhận
         </BigCustomButton>
       </ScrollView>
